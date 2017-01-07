@@ -1,14 +1,12 @@
 var express = require('express');
 var server = express()
 
-server.all('/', function (req, res, next) {
-  console.log(req.path)
-  next() // pass control to the next handler
+server.all('*', function (req, res, next) {
+  console.log(req.url);
+  next(); // pass control to the next handler
 })
 
-server.get('/', function(req, res){
-	res.sendFile('/resources/index.html', { root: __dirname });
-});
+server.use(express.static('./public'));
 
 server.get('/temperature/:sensorId', function(req, res){ //websockets
 	res.json({temperature: 'sensorId'});
