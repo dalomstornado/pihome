@@ -1,11 +1,12 @@
-var httpDispatcher = require('httpdispatcher');
-var dispatcher = new httpDispatcher();
+var Dispatcher = require('./dispatcher.js');
+
 //Lets require/import the HTTP module
 var http = require('http');
 
 //Lets define a port we want to listen to
 const PORT=8080; 
 
+var dispatcher = new Dispatcher();
 //Lets use our dispatcher
 function handleRequest(request, response){
     try {
@@ -17,21 +18,6 @@ function handleRequest(request, response){
         console.log(err);
     }
 }
-
-//For all your static (js/css/images/etc.) set the directory name (relative path).
-dispatcher.setStatic('resources');
-
-//A sample GET request    
-dispatcher.onGet("/page1", function(req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Page One');
-});    
-
-//A sample POST request
-dispatcher.onPost("/post1", function(req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Got Post Data');
-});
 
 //Create a server
 var server = http.createServer(handleRequest);
