@@ -1,29 +1,20 @@
-var Dispatcher = require('./dispatcher.js');
+var express = require('express');
+var server = express()
 
-//Lets require/import the HTTP module
-var http = require('http');
+server.all('/', function (req, res, next) {
+  console.log(req.path)
+  next() // pass control to the next handler
+})
 
-//Lets define a port we want to listen to
-const PORT=8080; 
+server.get('/', function(req, res){
+	res.sendFile('/resources/index.html', { root: __dirname });
+});
 
-var dispatcher = new Dispatcher();
-//Lets use our dispatcher
-function handleRequest(request, response){
-    try {
-        //log the request on console
-        console.log(request.url);
-        //Disptach
-        dispatcher.dispatch(request, response);
-    } catch(err) {
-        console.log(err);
-    }
-}
+server.get('/temperature/:sensorId', function(req, res){ //websockets
+	res.json({temperature: 'sensorId'});
+});
 
-//Create a server
-var server = http.createServer(handleRequest);
-
-//Lets start our server
-server.listen(PORT, function(){
-    //Callback triggered when server is successfully listening. Hurray!
-    console.log("Server listening on: http://localhost:%s", PORT);
+const PORT = 8080;
+server.listen(PORT, function () {
+  console.log('Example app listening on port ' + PORT);
 });
