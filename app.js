@@ -12,7 +12,7 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 	res.json({temperature: + req.params.sensorId });
 });
 
-const PORT = 8080;
-app.listen(PORT, function () {
-  console.log('Example app listening on port ' + PORT);
+const PORT = 8081;
+var server = app.listen(PORT, function () {
+  console.log('Server listening on port %s', PORT);
 });
