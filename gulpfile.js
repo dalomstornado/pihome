@@ -31,7 +31,11 @@ gulp.task('sass', function(){
 		.pipe(gulp.dest('./app/css'));
 });
 
-gulp.task('css-dist', function() {
+gulp.task('del-dist', function(){
+	del('./dist/**/*', { force: true });
+});
+
+gulp.task('css-dist', ['sass'], function() {
 	gulp.src(['./app/css/**/*'])
 		.pipe(gulp.dest('./dist/css/'));
 });
@@ -51,4 +55,14 @@ gulp.task('views-dist', function() {
 		.pipe(gulp.dest('./dist/views/'));
 });
 
-gulp.task('dist', ['css-dist', 'js-dist', 'public-dist', 'views-dist']);
+gulp.task('node-dist', function(){
+	gulp.src(['./package.json'])
+		.pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('dist', ['del-dist', 'css-dist', 'js-dist', 'public-dist', 'views-dist', 'node-dist']);
+
+gulp.task('dist-pi', ['dist'], function(){
+	gulp.src(['./dist/**/*'])
+		.pipe(gulp.dest('afp://raspberrypi.local/Websites/pihome/'));
+});
