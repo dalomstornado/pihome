@@ -4,6 +4,7 @@ var nodemon = require('gulp-nodemon');
 var notify = require('gulp-notify');
 var livereload = require('gulp-livereload');
 var sass = require('gulp-sass');
+var del = require('del');
  
 
 gulp.task('default', ['nodemon', 'sass']);
@@ -29,3 +30,25 @@ gulp.task('sass', function(){
 		.pipe(sass().on('error', sass.logError))
 		.pipe(gulp.dest('./app/css'));
 });
+
+gulp.task('css-dist', function() {
+	gulp.src(['./app/css/**/*'])
+		.pipe(gulp.dest('./dist/css/'));
+});
+
+gulp.task('js-dist', function() {
+	gulp.src(['./app/js/**/*'])
+		.pipe(gulp.dest('./dist/js/'));
+});
+
+gulp.task('public-dist', function() {
+	gulp.src(['./app/public/**/*'])
+		.pipe(gulp.dest('./dist/public/'));
+});
+
+gulp.task('views-dist', function() {
+	gulp.src(['./app/views/**/*'])
+		.pipe(gulp.dest('./dist/views/'));
+});
+
+gulp.task('dist', ['css-dist', 'js-dist', 'public-dist', 'views-dist']);
