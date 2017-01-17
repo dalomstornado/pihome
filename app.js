@@ -3,12 +3,12 @@ var app = express()
 
 app.set('view engine', 'jade');
 
+app.use(express.static('./public'));
+
 app.all('*', function (req, res, next) {
   console.log(req.url);
   next(); // pass control to the next handler
 })
-
-app.use(express.static('./public'));
 
 app.get('/temperature/:sensorId', function(req, res){ //websockets
 	res.json({temperature: + req.params.sensorId });
