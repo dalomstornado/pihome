@@ -14,7 +14,7 @@ gulp.task('nodemon', function() {
 	// configure nodemon
 	nodemon({
 		// the script to run the app
-		script: 'app.js',
+		script: './app/js/app.js',
 		ext: 'js html jade scss'
 	}).on('restart', function(){
 		// when the app has restarted, run livereload.
@@ -25,7 +25,7 @@ gulp.task('nodemon', function() {
 });
 
 gulp.task('sass', function(){
-	return gulp.src('./sass/**/*.scss')
+	return gulp.src('./app/sass/**/*.scss')
 		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest('./css'));
+		.pipe(gulp.dest('./app/css'));
 });
