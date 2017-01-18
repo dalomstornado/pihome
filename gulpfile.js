@@ -1,4 +1,3 @@
-// Dependencies
 var gulp = require('gulp');
 var nodemon = require('gulp-nodemon');
 var notify = require('gulp-notify');
@@ -10,15 +9,11 @@ var del = require('del');
 gulp.task('default', ['nodemon', 'sass']);
 
 gulp.task('nodemon', function() {
-	// listen for changes
 	livereload.listen();
-	// configure nodemon
 	nodemon({
-		// the script to run the app
 		script: './app/js/app.js',
-		ext: 'js html jade scss'
+		ext: 'js html pug scss'
 	}).on('restart', function(){
-		// when the app has restarted, run livereload.
 		gulp.src('app.js')
 			.pipe(livereload())
 			.pipe(notify('Reloading page, please wait...'));
@@ -32,7 +27,7 @@ gulp.task('sass', function(){
 });
 
 gulp.task('del-dist', function(){
-	del('./dist/**/*', { force: true });
+	return del.sync('./dist/**/*', { force: true });
 });
 
 gulp.task('css-dist', ['sass'], function() {
