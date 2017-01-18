@@ -20,6 +20,10 @@ app.get('/test', function(req, res){
 	res.render('test', { name: 'banan' });
 });
 
+app.get('/gauge', function(req, res){
+	res.render('gauge', { name: 'banan' });
+});
+
 const PORT = 8081;
 var server = app.listen(PORT, function () {
   console.log('Server listening on port %s', PORT);
