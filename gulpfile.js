@@ -11,7 +11,7 @@ gulp.task('default', ['nodemon', 'sass']);
 gulp.task('nodemon', function() {
 	livereload.listen();
 	nodemon({
-		script: './app/js/app.js',
+		script: './app/js/server/app.js',
 		ext: 'js html pug scss'
 	}).on('restart', function(){
 		gulp.src('app.js')
@@ -32,17 +32,22 @@ gulp.task('del-dist', function(){
 
 gulp.task('css-dist', ['sass'], function() {
 	gulp.src(['./app/css/**/*'])
-		.pipe(gulp.dest('./dist/css/'));
+		.pipe(gulp.dest('./dist/static/css/'));
 });
 
-gulp.task('js-dist', function() {
-	gulp.src(['./app/js/**/*'])
-		.pipe(gulp.dest('./dist/js/'));
+gulp.task('js-server-dist', function() {
+	gulp.src(['./app/js/server/**/*'])
+		.pipe(gulp.dest('./dist/server/'));
 });
 
-gulp.task('public-dist', function() {
-	gulp.src(['./app/public/**/*'])
-		.pipe(gulp.dest('./dist/public/'));
+gulp.task('js-client-dist', function() {
+	gulp.src(['./app/js/client/**/*'])
+		.pipe(gulp.dest('./dist/static/js/'));
+});
+
+gulp.task('static-dist', function() {
+	gulp.src(['./app/static/**/*'])
+		.pipe(gulp.dest('./dist/static/'));
 });
 
 gulp.task('views-dist', function() {
@@ -55,7 +60,7 @@ gulp.task('node-dist', function(){
 		.pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('dist', ['del-dist', 'css-dist', 'js-dist', 'public-dist', 'views-dist', 'node-dist']);
+gulp.task('dist', ['del-dist', 'css-dist', 'js-server-dist', 'js-client-dist', 'static-dist', 'views-dist', 'node-dist']);
 
 gulp.task('dist-pi', ['dist'], function(){
 	gulp.src(['./dist/**/*'])
