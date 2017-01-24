@@ -14,7 +14,7 @@ const optionsTemp = {
   max: 30
 };
 
-function drawChart (options) {
+const drawChart = (options) => {
   var data = google.visualization.arrayToDataTable([
     ['Label', 'Value'],
     [options.sensorType, options.value]
@@ -29,4 +29,4 @@ function drawChart (options) {
   chart.draw(data, optionsGauge);
 };
 
-//export { drawChart };
+module.exports = { drawChart };

@@ -45,3 +45,4 @@ dist
 #Custom static
 app/static/css
 app/static/js
+app/js/app.js

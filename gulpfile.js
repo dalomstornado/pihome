@@ -4,6 +4,9 @@ var notify = require('gulp-notify');
 var livereload = require('gulp-livereload');
 var sass = require('gulp-sass');
 var del = require('del');
+var fs = require('fs');
+var browserify = require('browserify');
+var babelify = require('babelify');
  
 
 gulp.task('default', ['nodemon']);
@@ -26,9 +29,11 @@ gulp.task('sass', function(){
 		.pipe(gulp.dest('./app/static/css/'));
 });
 
-gulp.task('js', function(){
-	return gulp.src('./app/js/**/*')
-		.pipe(gulp.dest('./app/static/js/'));
+gulp.task('js', function() {
+   	browserify('./app/js/app.js')
+    .transform(babelify, {presets: ["es2016"], extensions: ['.js']})
+    .bundle()
+    .pipe(fs.createWriteStream('./app/static/js/app.js'));
 });
 
 //DIST
