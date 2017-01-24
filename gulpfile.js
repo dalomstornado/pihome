@@ -6,12 +6,12 @@ var sass = require('gulp-sass');
 var del = require('del');
  
 
-gulp.task('default', ['nodemon', 'sass']);
+gulp.task('default', ['nodemon', 'sass', 'js']);
 
 gulp.task('nodemon', function() {
 	livereload.listen();
 	nodemon({
-		script: './app/js/server/app.js',
+		script: './app/app.js',
 		ext: 'js html pug scss'
 	}).on('restart', function(){
 		gulp.src('app.js')
@@ -21,28 +21,29 @@ gulp.task('nodemon', function() {
 });
 
 gulp.task('sass', function(){
-	return gulp.src('./app/scss/**/*.scss')
+	return gulp.src('./app/scss/**/*')
 		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest('./app/css'));
+		.pipe(gulp.dest('./app/static/css/'));
 });
 
+gulp.task('js', function(){
+	return gulp.src('./app/js/**/*')
+		.pipe(gulp.dest('./app/static/js/'));
+});
+
+//DIST
 gulp.task('del-dist', function(){
 	return del.sync('./dist/**/*', { force: true });
 });
 
-gulp.task('css-dist', ['sass'], function() {
-	gulp.src(['./app/css/**/*'])
-		.pipe(gulp.dest('./dist/static/css/'));
+gulp.task('app-dist', function() {
+	gulp.src(['./app/app.js'])
+		.pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('js-server-dist', function() {
-	gulp.src(['./app/js/server/**/*'])
-		.pipe(gulp.dest('./dist/server/'));
-});
-
-gulp.task('js-client-dist', function() {
-	gulp.src(['./app/js/client/**/*'])
-		.pipe(gulp.dest('./dist/static/js/'));
+gulp.task('node-dist', function(){
+	gulp.src(['./package.json'])
+		.pipe(gulp.dest('./dist/'));
 });
 
 gulp.task('static-dist', function() {
@@ -55,12 +56,7 @@ gulp.task('views-dist', function() {
 		.pipe(gulp.dest('./dist/views/'));
 });
 
-gulp.task('node-dist', function(){
-	gulp.src(['./package.json'])
-		.pipe(gulp.dest('./dist/'));
-});
-
-gulp.task('dist', ['del-dist', 'css-dist', 'js-server-dist', 'js-client-dist', 'static-dist', 'views-dist', 'node-dist']);
+gulp.task('dist', ['del-dist', 'app-dist', 'node-dist', 'static-dist', 'views-dist']);
 
 gulp.task('dist-pi', ['dist'], function(){
 	gulp.src(['./dist/**/*'])
