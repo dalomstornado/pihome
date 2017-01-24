@@ -4,6 +4,7 @@ var path = require('path');
 
 app.set('view engine', 'pug');
 app.locals.pretty = true;
+app.set('views', path.join(__dirname, '/views'));
 
 app.use(express.static(path.join(__dirname, './static')));
 

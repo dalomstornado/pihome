@@ -6,9 +6,9 @@ var sass = require('gulp-sass');
 var del = require('del');
  
 
-gulp.task('default', ['nodemon', 'sass', 'js']);
+gulp.task('default', ['nodemon']);
 
-gulp.task('nodemon', function() {
+gulp.task('nodemon', ['sass', 'js'], function() {
 	livereload.listen();
 	nodemon({
 		script: './app/app.js',
