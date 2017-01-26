@@ -19,8 +19,9 @@ gulp.task('nodemon', ['sass', 'js'], function() {
 	livereload.listen();
 	nodemon({
 		script: './app/app.js',
-		ext: 'js html pug scss'
-	}).on('restart', function(){
+		ext: 'js html pug scss',
+		ignore: './app/static/',
+	}).on('restart', ['sass', 'js'], function(){
 		gulp.src('app.js')
 			.pipe(livereload())
 			.pipe(notify('Reloading page, please wait...'));

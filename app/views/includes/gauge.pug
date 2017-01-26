@@ -1,4 +1,5 @@
 script.
+	// var guid = window.App.gauge.guid();
 	google.charts.load('current', {'packages':['gauge']});
 	google.charts.setOnLoadCallback(function(){window.App.gauge.drawChart({ sensorType: 'Temp', value: 20, chartId: 'chart_div' })});
 
