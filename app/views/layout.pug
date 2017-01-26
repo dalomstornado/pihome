@@ -7,6 +7,9 @@ html
   body
     script(src="https://www.gstatic.com/charts/loader.js")
     script(src="/js/bundle.js")
+    script.
+      google.charts.load('current', {'packages':['gauge']});
+
     #content
       block content
     #content2

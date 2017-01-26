@@ -3,8 +3,10 @@ extends ./layout
 block title  
 	Title
 
-block content  
-	#component1
-		include includes/gauge.pug
-	#component2
-		include includes/gauge.pug
+block content
+	script.
+		window.app.gauge.init();  
+	#gauge1
+		// include includes/gauge.pug
+	#gauge2
+		

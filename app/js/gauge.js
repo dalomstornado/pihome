@@ -15,7 +15,7 @@ const optionsTemp = {
 };
 
 const drawChart = (options) => {
-  var data = google.visualization.arrayToDataTable([
+  const data = google.visualization.arrayToDataTable([
     ['Label', 'Value'],
     [options.sensorType, options.value]
   ]);
@@ -25,18 +25,27 @@ const drawChart = (options) => {
     optionsGauge = optionsHumidity;
   };
 
-  let chart = new google.visualization.Gauge(document.getElementById(options.chartId));
+  const chart = new google.visualization.Gauge(document.getElementById(options.chartId));
+  //date.setValue(0, 10) säät första gauge till 10
   chart.draw(data, optionsGauge);
 };
 
-const guid = () => {
-  function s4() {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  }
-  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-    s4() + '-' + s4() + s4() + s4();
+const init = () => {
+    google.charts.setOnLoadCallback(function(){
+      drawChart({ 
+        sensorType: 'Temp',
+        value: 20,
+        chartId: 'gauge1' 
+      })
+    });
+
+    google.charts.setOnLoadCallback(function(){
+      drawChart({
+        sensorType: 'Humidity',
+        value: 55,
+        chartId: 'gauge2' 
+      })
+    });
 };
 
-export { drawChart, guid };
+export { drawChart, init };
