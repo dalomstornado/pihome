@@ -18,7 +18,7 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
-	res.render('index', { name: 'banan' });
+	res.render('index', { name: 'banan', year: 2015 });
 });
 
 app.get('/gauge', function(req, res){
