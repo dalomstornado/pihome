@@ -7,7 +7,11 @@ var del = require('del');
 var fs = require('fs');
 var browserify = require('browserify');
 var babelify = require('babelify');
- 
+var sourcemaps = require('gulp-sourcemaps');
+var source = require('vinyl-source-stream');
+var buffer = require('vinyl-buffer');
+var uglify = require('gulp-uglify');
+var gutil = require('gulp-util');
 
 gulp.task('default', ['nodemon']);
 
@@ -30,10 +34,25 @@ gulp.task('sass', function(){
 });
 
 gulp.task('js', function() {
-   	browserify('./app/js/app.js')
-    .transform(babelify, {presets: ["es2016"], extensions: ['.js']})
-    .bundle()
-    .pipe(fs.createWriteStream('./app/static/js/app.js'));
+	// set up the browserify instance on a task basis
+  	var b = browserify({
+    	entries: './app/js/entry.js',
+    	debug: true,
+    	// defining transforms here will avoid crashing your stream
+    	transform: [babelify.configure({
+      		presets: ['es2015']
+    	})]
+  	});
+
+  return b.bundle()
+    .pipe(source('bundle.js'))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+        // Add transformation tasks to the pipeline here.
+        //.pipe(uglify())
+        .on('error', gutil.log)
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest('./app/static/js/'));
 });
 
 //DIST
