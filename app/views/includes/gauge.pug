@@ -1,6 +1,6 @@
 script.
 	google.charts.load('current', {'packages':['gauge']});
-	google.charts.setOnLoadCallback(drawChart({ sensorType: 'Temp', value: 20, chartId: 'chart_div' }));
+	google.charts.setOnLoadCallback(function(){window.App.gauge.drawChart({ sensorType: 'Temp', value: 20, chartId: 'chart_div' })});
 
 #chart_div
 	style="width: 400px; height: 120px;"

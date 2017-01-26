@@ -25,7 +25,7 @@ app.get('/gauge', function(req, res){
 	res.render('gauge', { name: 'banan' });
 });
 
-const PORT = 8081;
+const PORT = 8082;
 var server = app.listen(PORT, function () {
   console.log('Server listening on port %s', PORT);
 });

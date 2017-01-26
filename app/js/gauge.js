@@ -29,4 +29,4 @@ const drawChart = (options) => {
   chart.draw(data, optionsGauge);
 };
 
-module.exports = { drawChart };
+export { drawChart };
