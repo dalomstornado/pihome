@@ -26,11 +26,18 @@ const getOptions = (type) => {
 };
 
 
-let chartsData; 
+let chartsData = undefined;
+const charts = new Map();
 
 const drawGauge = (gauge, value) => {
   const data = google.visualization.arrayToDataTable(chartsData.get(gauge.id));
-  const chart = new google.visualization.Gauge(document.getElementById(gauge.id));
+  
+  let chart = charts.get(gauge.id);
+  if (!chart) {
+    chart = new google.visualization.Gauge(document.getElementById(gauge.id));
+    charts.set(gauge.id, chart);
+  }
+
   if (value) {
     data.setValue(0, 1, value);
   }
