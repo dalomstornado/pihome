@@ -1,31 +1,36 @@
 {
-	"sensors": [
-	{
-		"id": "sensor_1",
-		"title": "Sensor 1",
-		"gauges": [
-		{
-			"id": "gauge_1",
-			"title": "Temp",
-			"type": "temp"
-		},
-		{
-			"id": "gauge_2",
-			"title": "Humidity",
-			"type": "humidity"
-		}],
-		"id": "sensor_2",
-		"title": "Sensor 2",
-		"gauges": [
-		{
-			"id": "gauge_3",
-			"title": "Temp",
-			"type": "temp"
-		},
-		{
-			"id": "gauge_4",
-			"title": "Humidity",
-			"type": "humidity"
-		}]
-	}]
+  "sensors": [
+    {
+      "id": "sensor1",
+      "title": "Sensor 1",
+      "gauges": [
+        {
+          "id": "gauge11",
+          "title": "Temp",
+          "type": "temp"
+        },
+        {
+          "id": "gauge12",
+          "title": "Humidity",
+          "type": "humidity"
+        }
+      ]
+    },
+    {
+      "id": "sensor2",
+      "title": "Sensor 2",
+      "gauges": [
+        {
+          "id": "gauge21",
+          "title": "Temp",
+          "type": "temp"
+        },
+        {
+          "id": "gauge22",
+          "title": "Humidity",
+          "type": "humidity"
+        }
+      ]
+    }
+  ]
 }

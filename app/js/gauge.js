@@ -30,10 +30,10 @@ const drawChart = (options) => {
   chart.draw(data, optionsGauge);
 };
 
-const init = (config) => {
+const init = (sensors) => {
   //let data = google.visualization.arrayToDataTable  
-  for (let sensor in config.sensors){
-    for (let gauge in sensor.gauges){
+  for (let sensor of sensors){
+    for (let gauge of sensor.gauges){
       console.log(gauge.id);
     };
   };

@@ -9,8 +9,7 @@ block title
 
 block content
 	script.
-		//mySensor = sensors;
-		window.app.gauge.init('sensors');
+		window.app.gauge.init(!{JSON.stringify(sensors)});
 
 	p #{sensors[0].gauges[0].id}
 
