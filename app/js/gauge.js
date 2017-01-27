@@ -14,60 +14,42 @@ const optionsTemp = {
   max: 30
 };
 
-const drawChart = (options) => {
-  const data = google.visualization.arrayToDataTable([
-    ['Label', 'Value'],
-    [options.sensorType, options.value]
-  ]);
-
-  let optionsGauge = optionsTemp;
-  if (options.sensorType === 'Humidity') {
-    optionsGauge = optionsHumidity;
+const getOptions = (type) => {
+  switch (type) {
+    case 'temp':
+      return optionsTemp;
+    case 'humidity':
+      return optionsHumidity;
+    default:
+      return undefined;
   };
+};
 
-  const chart = new google.visualization.Gauge(document.getElementById(options.chartId));
-  //date.setValue(0, 10) säät första gauge till 10
-  chart.draw(data, optionsGauge);
+
+let chartsData; 
+
+const drawGauge = (gauge, value) => {
+  const data = google.visualization.arrayToDataTable(chartsData.get(gauge.id));
+  const chart = new google.visualization.Gauge(document.getElementById(gauge.id));
+  if (value) {
+    data.setValue(0, 1, value);
+  }
+  chart.draw(data, getOptions(gauge.type));
 };
 
 const init = (sensors) => {
-  //let data = google.visualization.arrayToDataTable  
+  chartsData = new Map();
+  
   for (let sensor of sensors){
     for (let gauge of sensor.gauges){
-      console.log(gauge.id);
+      let chartData = [['Label', 'Value'], [gauge.title, 0]];
+      chartsData.set(gauge.id, chartData);
+
+      google.charts.setOnLoadCallback(function(){
+        drawGauge(gauge, 0);
+      });
     };
   };
-
-  google.charts.setOnLoadCallback(function(){
-    drawChart({ 
-      sensorType: 'Temp',
-      value: 0,
-      chartId: 'gauge1' 
-    })
-  });
-
-  google.charts.setOnLoadCallback(function(){
-    drawChart({
-      sensorType: 'Humidity',
-      value: 0,
-      chartId: 'gauge2' 
-    })
-  });
-  google.charts.setOnLoadCallback(function(){
-    drawChart({ 
-      sensorType: 'Temp',
-      value: 20,
-      chartId: 'gauge3' 
-    })
-  });
-
-  google.charts.setOnLoadCallback(function(){
-    drawChart({
-      sensorType: 'Humidity',
-      value: 55,
-      chartId: 'gauge4' 
-    })
-  });
 };
 
-export { drawChart, init };
+export { drawGauge, init };
