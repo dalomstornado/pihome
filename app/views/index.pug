@@ -9,9 +9,10 @@ block title
 
 block content
 	script.
-		window.app.gauge.init();
+		//mySensor = sensors;
+		window.app.gauge.init('sensors');
 
-	p #{name}
+	p #{sensors[0].gauges[0].id}
 
 	.sensor
 		h3 Sensor 1

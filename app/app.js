@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express()
 var path = require('path');
+var config = require('./config.json');
 
 app.set('view engine', 'pug');
 app.locals.pretty = true;
@@ -18,7 +19,8 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
-	res.render('index', { name: 'banan', year: 2015 });
+	console.log('Config: ' + config);
+	res.render('index', config);
 });
 
 app.get('/gauge', function(req, res){

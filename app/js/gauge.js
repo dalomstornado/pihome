@@ -30,37 +30,44 @@ const drawChart = (options) => {
   chart.draw(data, optionsGauge);
 };
 
-const init = () => {
-    google.charts.setOnLoadCallback(function(){
-      drawChart({ 
-        sensorType: 'Temp',
-        value: 20,
-        chartId: 'gauge1' 
-      })
-    });
+const init = (config) => {
+  //let data = google.visualization.arrayToDataTable  
+  for (let sensor in config.sensors){
+    for (let gauge in sensor.gauges){
+      console.log(gauge.id);
+    };
+  };
 
-    google.charts.setOnLoadCallback(function(){
-      drawChart({
-        sensorType: 'Humidity',
-        value: 55,
-        chartId: 'gauge2' 
-      })
-    });
-    google.charts.setOnLoadCallback(function(){
-      drawChart({ 
-        sensorType: 'Temp',
-        value: 20,
-        chartId: 'gauge3' 
-      })
-    });
+  google.charts.setOnLoadCallback(function(){
+    drawChart({ 
+      sensorType: 'Temp',
+      value: 0,
+      chartId: 'gauge1' 
+    })
+  });
 
-    google.charts.setOnLoadCallback(function(){
-      drawChart({
-        sensorType: 'Humidity',
-        value: 55,
-        chartId: 'gauge4' 
-      })
-    });
+  google.charts.setOnLoadCallback(function(){
+    drawChart({
+      sensorType: 'Humidity',
+      value: 0,
+      chartId: 'gauge2' 
+    })
+  });
+  google.charts.setOnLoadCallback(function(){
+    drawChart({ 
+      sensorType: 'Temp',
+      value: 20,
+      chartId: 'gauge3' 
+    })
+  });
+
+  google.charts.setOnLoadCallback(function(){
+    drawChart({
+      sensorType: 'Humidity',
+      value: 55,
+      chartId: 'gauge4' 
+    })
+  });
 };
 
 export { drawChart, init };
