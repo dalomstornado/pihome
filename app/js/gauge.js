@@ -46,6 +46,21 @@ const init = () => {
         chartId: 'gauge2' 
       })
     });
+    google.charts.setOnLoadCallback(function(){
+      drawChart({ 
+        sensorType: 'Temp',
+        value: 20,
+        chartId: 'gauge3' 
+      })
+    });
+
+    google.charts.setOnLoadCallback(function(){
+      drawChart({
+        sensorType: 'Humidity',
+        value: 55,
+        chartId: 'gauge4' 
+      })
+    });
 };
 
 export { drawChart, init };
