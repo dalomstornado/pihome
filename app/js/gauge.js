@@ -37,10 +37,10 @@ const drawGauge = (gauge, value) => {
     chart = new google.visualization.Gauge(document.getElementById(gauge.id));
     charts.set(gauge.id, chart);
   }
-
   if (value) {
     data.setValue(0, 1, value);
   }
+  
   chart.draw(data, getOptions(gauge.type));
 };
 
