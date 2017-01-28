@@ -1,12 +1,12 @@
-import { drawGauge } from 'gauge';
+import { drawGauge } from './gauge';
 
-const updateGauges = (gauge) => {
+const updateGauge = (gauge) => {
 	const valueHumidity = 35 + Math.round(65 * Math.random());
 	const valueTemp = - 10 + Math.round(40 * Math.random());
 	if (gauge.type == 'temp'){
 		drawGauge(gauge, valueTemp);	
 	} else {
-		window.app.gauge.drawGauge(gauge, valueHumidity);
+		drawGauge(gauge, valueHumidity);
 	}
 };
 
@@ -14,7 +14,7 @@ const init = (sensors) => {
 	for(let sensor of sensors){
 		for(let gauge of sensor.gauges) {
 			setInterval(() => {
-				updateGauges('gauge ' + gauge);
+				updateGauge(gauge);
 			}, 3000 + Math.round(10000 * Math.random()));
 		};
 	};
