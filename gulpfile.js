@@ -23,15 +23,11 @@ gulp.task('nodemon', ['sass', 'js'], function() {
 		script: './app/app.js',
 		ext: 'js html pug scss',
 		ignore: './app/static/',
-	}).on('restart', ['sass', 'js'], function(){
-		console.log('restarting');
-		gulp.src('app.js')
-			//.pipe(console.log('after gulp src'))
-			.pipe(livereload())
-			.pipe(notify('Reloading page, please wait...'));
-		livereload();
-		notify('done restarting');
-		console.log('done restarting');
+	}).on('restart', ['sass', 'js']
+	).on('start', function(){
+		livereload.reload('/');
+		gulp.src('./app.js')
+		.pipe(notify('Reloading page'));
 	});
 });
 
