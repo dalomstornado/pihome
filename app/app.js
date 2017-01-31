@@ -2,7 +2,7 @@ var express = require('express');
 var app = express()
 var path = require('path');
 var config = require('./config.json');
-var telldus = require('telldus');
+//var telldus = require('telldus');
 
 app.set('view engine', 'pug');
 app.locals.pretty = true;
@@ -20,12 +20,14 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
+	/*
 	telldus.turnOn(1,function(err) {
 	  console.log('1 is now ON');
 	});
 	telldus.turnOff(1,function(err) {
 	  console.log('2 is now OFF');
 	});
+	*/
 
 	res.render('index', config);
 });

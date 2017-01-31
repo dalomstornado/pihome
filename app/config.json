@@ -2,7 +2,16 @@
   "sensors": [
     {
       "id": "sensor1",
-      "title": "Sensor 1",
+      "name": "Sensor 1",
+      "type": 0,
+      "temperature": {
+        "gaugeId": "gauge11",
+        "lineChartId": "lineChart11"
+      },
+      "humidity": {
+        "gaugeId": "gauge12",
+        "lineChartId": "lineChart12"
+      },
       "gauges": [
         {
           "id": "gauge11",
@@ -14,11 +23,23 @@
           "title": "Humidity",
           "type": "humidity"
         }
+      ],
+      "lineCharts": [
+        {
+          "id": "lineChart11",
+          "title": "Temp",
+          "type": "temp"
+        },
+        {
+          "id": "lineChart12",
+          "title": "Humidity",
+          "type": "humidity"
+        }
       ]
     },
     {
       "id": "sensor2",
-      "title": "Sensor 2",
+      "name": "Sensor 2",
       "gauges": [
         {
           "id": "gauge21",
@@ -27,6 +48,18 @@
         },
         {
           "id": "gauge22",
+          "title": "Humidity",
+          "type": "humidity"
+        }
+      ],
+      "lineCharts": [
+        {
+          "id": "lineChart21",
+          "title": "Temp",
+          "type": "temp"
+        },
+        {
+          "id": "lineChart22",
           "title": "Humidity",
           "type": "humidity"
         }

@@ -1,26 +1,25 @@
 extends ./layout
 
-mixin gauge(divId)
-		.gauge
-			div(id=divId)
+mixin sensor(sensor) 
+	.sensor(id=sensor.id)
+		h3= sensor.name 
+		each gauge in sensor.gauges
+			.gauge(id=gauge.id)
+		each lineChart in sensor.lineCharts
+			.line-chart(id=lineChart.id)
 
 block title  
 	Title
 
 block content
 	script.
+		google.charts.load('current', {'packages':['gauge', 'line', 'corechart']});
 		let sensors = !{JSON.stringify(sensors)};
 		window.app.gauge.init(sensors);
 		window.app.page.init(sensors);
+		window.app.lineChart.init();
 
 	p #{sensors[0].gauges[0].id}
 
-	.sensor
-		h3 Sensor 1
-		+gauge('gauge11')
-		+gauge('gauge12')
-	.sensor
-		h3 Sensor 2
-		+gauge('gauge21')
-		+gauge('gauge22')
-		
+	each sensor in sensors
+		+sensor(sensor)
