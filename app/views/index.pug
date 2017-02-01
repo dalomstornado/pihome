@@ -1,12 +1,14 @@
 extends ./layout
 
-mixin sensor(sensor) 
+mixin tempHumiditySensor(sensor) 
 	.sensor(id=sensor.id)
 		h3= sensor.name 
-		each gauge in sensor.gauges
-			.gauge(id=gauge.id)
-		each lineChart in sensor.lineCharts
-			.line-chart(id=lineChart.id)
+			.temperature
+				.gauge(id=sensor.gauges[0].id)
+				.lineChart(id=sensor.lineCharts[0].id)
+			.humidity
+				.gauge(id=sensor.gauges[1].id)
+				.lineChart(id=sensor.lineCharts[1].id)
 
 block title  
 	Title
@@ -19,7 +21,6 @@ block content
 		window.app.page.init(sensors);
 		window.app.lineChart.init();
 
-	p #{sensors[0].gauges[0].id}
-
 	each sensor in sensors
-		+sensor(sensor)
+		if sensor.type == 0
+			+tempHumiditySensor(sensor)

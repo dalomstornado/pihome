@@ -14,14 +14,6 @@ const lineCharts =
     {
       "id": "lineChart12",
       "type": "humidity"
-    },
-    {
-      "id": "lineChart21",
-      "type": "temp"
-    },
-    {
-      "id": "lineChart22",
-      "type": "humidity"
     }
   ];
 

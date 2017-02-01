@@ -1,3 +1,5 @@
+const common = require('./common');
+
 const optionsHumidity = {
   width: 400, height: 120,
   redFrom: 75, redTo: 100,
@@ -15,10 +17,10 @@ const optionsTemp = {
 };
 
 const getOptions = (type) => {
-  switch (type) {
-    case 'temp':
+  switch (common.MeasureType) {
+    case common.MeasureType.Temp:
       return optionsTemp;
-    case 'humidity':
+    case common.MeasureType.Humidity:
       return optionsHumidity;
     default:
       return undefined;
@@ -49,7 +51,7 @@ const init = (sensors) => {
   
   for (let sensor of sensors){
     for (let gauge of sensor.gauges){
-      let chartData = [['Label', 'Value'], [gauge.title, 0]];
+      let chartData = [['Label', 'Value'], [gauge.name, 0]];
       chartsData.set(gauge.id, chartData);
 
       google.charts.setOnLoadCallback(function(){
