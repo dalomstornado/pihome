@@ -12,4 +12,4 @@ const connect = () => {
 	});
 }
 
-export { connect };
+module.exports = {connect}

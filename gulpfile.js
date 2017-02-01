@@ -15,18 +15,18 @@ var gutil = require('gulp-util');
 
 gulp.task('default', ['nodemon']);
 
-gulp.task('nodemon', ['serverJs', 'sass', 'clientJs'], function() {
+gulp.task('nodemon', ['sass', 'clientJs'], function() {
 	livereload.listen();
 	console.log('listens');
 
 	nodemon({
-		script: './app/server.js',
+		script: './app/app.js',
 		ext: 'js html pug scss',
 		ignore: './app/static/',
-	}).on('restart', ['serverJs', 'sass', 'clientJs']
+	}).on('restart', ['sass', 'clientJs']
 	).on('start', function(){
 		livereload.reload('/');
-		gulp.src('./app.js')
+		gulp.src('./app/app.js')
 		.pipe(notify('Reloading page'));
 	});
 });
@@ -37,31 +37,10 @@ gulp.task('sass', function(){
 		.pipe(gulp.dest('./app/static/css/'));
 });
 
-gulp.task('serverJs', function() {
-	// set up the browserify instance on a task basis
-  	var b = browserify({
-    	entries: './app/js/server/entry.js',
-    	debug: true,
-    	// defining transforms here will avoid crashing your stream
-    	transform: [babelify.configure({
-      		presets: ['es2015']
-    	})]
-  	});
-
-  return b.bundle()
-    .pipe(source('server.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
-        // Add transformation tasks to the pipeline here.
-        //.pipe(uglify())
-        .on('error', gutil.log)
-    .pipe(gulp.dest('./app/'));
-});
-
 gulp.task('clientJs', function() {
 	// set up the browserify instance on a task basis
   	var b = browserify({
-    	entries: './app/js/client/entry.js',
+    	entries: './app/client/entry.js',
     	debug: true,
     	// defining transforms here will avoid crashing your stream
     	transform: [babelify.configure({
@@ -86,8 +65,12 @@ gulp.task('del-dist', function(){
 });
 
 gulp.task('app-dist', function() {
-	gulp.src(['./app/server.js'])
+	gulp.src(['./app/app.js'])
 		.pipe(gulp.dest('./dist/'));
+	gulp.src(['./app/config.json'])
+		.pipe(gulp.dest('./dist/'));
+	gulp.src(['./app/helpers/**/*'])
+		.pipe(gulp.dest('./dist/helpers/'));
 });
 
 gulp.task('node-dist', function(){

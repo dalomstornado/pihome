@@ -1,8 +1,8 @@
 var express = require('express');
-var app = express()
+var app = express();
 var path = require('path');
 var config = require('./config.json');
-//var mongodb = require('./app/js/mongodb');
+var mongodb = require('./helpers/mongodb');
 //var telldus = require('telldus');
 
 app.set('view engine', 'pug');
@@ -21,7 +21,7 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
-	//mongodb.connect();
+	mongodb.connect();
 	/*
 	telldus.turnOn(1,function(err) {
 	  console.log('1 is now ON');
