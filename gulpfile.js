@@ -17,11 +17,9 @@ gulp.task('default', ['nodemon']);
 
 gulp.task('nodemon', ['sass', 'clientJs'], function() {
 	livereload.listen();
-	console.log('listens');
-
 	nodemon({
 		script: './app/app.js',
-		ext: 'js html pug scss',
+		ext: 'js html pug scss json',
 		ignore: './app/static/',
 	}).on('restart', ['sass', 'clientJs']
 	).on('start', function(){

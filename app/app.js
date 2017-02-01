@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var config = require('./config.json');
+var config = require('./models/config.json');
 var mongodb = require('./helpers/mongodb');
 //var telldus = require('telldus');
 
