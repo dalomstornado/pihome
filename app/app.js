@@ -3,6 +3,7 @@ var app = express();
 var path = require('path');
 var config = require('./models/config.json');
 var mongodb = require('./helpers/mongodb');
+const types = require('./common/types');
 //var telldus = require('telldus');
 
 app.set('view engine', 'pug');
@@ -21,6 +22,9 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
+	mongodb.insertPresenceStatus(types.PresenceStatus.HOME)
+	let status = mongodb.findPresenceStatus()
+	console.log('status ' + status);
 	/*
 	telldus.turnOn(1,function(err) {
 	  console.log('1 is now ON');

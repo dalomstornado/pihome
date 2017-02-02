@@ -1,20 +1,20 @@
 const MeasureType = {
-	TEMPERATURE: 0,
-	HUMIDITY: 1,
-	ON_OFF: 2
+	TEMPERATURE: 'temp',
+	HUMIDITY: 'humidity',
+	ON_OFF: 'on_off'
 };
 
 const SensorType = {
-	TEMP_HUMIDITY: 0,
-	ON_OFF: 1,
-	TEMP_HUMIDITY_REFERENCE: 2,
+	TEMP_HUMIDITY: 'temp_humidity',
+	ON_OFF: 'on_off',
+	TEMP_HUMIDITY_REFERENCE: 'temp_humidity_reference',
 };
 
 const PresenceStatus = {
-	HOME: 0,
-	AWAY: 1
+	HOME: 'home',
+	AWAY: 'away'
 }
 
 
 
-export {MeasureType, SensorType};
+module.exports = { MeasureType, SensorType, PresenceStatus };
