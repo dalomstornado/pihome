@@ -21,7 +21,6 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
-	mongodb.connect();
 	/*
 	telldus.turnOn(1,function(err) {
 	  console.log('1 is now ON');

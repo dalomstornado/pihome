@@ -1,4 +1,4 @@
-import { drawGauge } from './gauge';
+import { drawGauge } from './gauge'; //es6 -> require och export.module
 
 const updateGauge = (gauge) => {
 	const valueHumidity = 35 + Math.round(65 * Math.random());

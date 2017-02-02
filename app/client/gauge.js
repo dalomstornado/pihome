@@ -1,4 +1,4 @@
-const common = require('./common');
+const types = require('../common/types');
 
 const optionsHumidity = {
   width: 400, height: 120,
@@ -17,10 +17,10 @@ const optionsTemp = {
 };
 
 const getOptions = (type) => {
-  switch (common.MeasureType) {
-    case common.MeasureType.Temp:
+  switch (types.MeasureType) {
+    case types.MeasureType.Temp:
       return optionsTemp;
-    case common.MeasureType.Humidity:
+    case types.MeasureType.Humidity:
       return optionsHumidity;
     default:
       return undefined;

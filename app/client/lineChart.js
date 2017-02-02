@@ -1,4 +1,4 @@
-import { MeasureType, SensorType } from './common';
+import { MeasureType, SensorType } from '../common/types';
 
 const options = {
   width: 400,
