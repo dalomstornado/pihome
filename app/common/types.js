@@ -13,8 +13,14 @@ const SensorType = {
 const PresenceStatus = {
 	HOME: 'HOME',
 	AWAY: 'AWAY'
-}
+};
+
+const Severity = {
+	INFO: 'INFO',
+	WARNING: 'WARNING',
+	ALARM: 'ALARM'
+};
 
 
 
-module.exports = { MeasureType, SensorType, PresenceStatus };
+module.exports = { MeasureType, SensorType, PresenceStatus, Severity };
