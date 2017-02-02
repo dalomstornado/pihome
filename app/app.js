@@ -23,8 +23,10 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 
 app.get('/', function(req, res){
 	mongodb.insertPresenceStatus(types.PresenceStatus.HOME)
-	let status = mongodb.findPresenceStatus()
-	console.log('status ' + status);
+	mongodb.findPresenceStatus().then((presenceStatus) => {
+		console.log('status ' + presenceStatus);
+	});
+	
 	/*
 	telldus.turnOn(1,function(err) {
 	  console.log('1 is now ON');

@@ -1,18 +1,18 @@
 const MeasureType = {
-	TEMPERATURE: 'temp',
-	HUMIDITY: 'humidity',
-	ON_OFF: 'on_off'
+	TEMPERATURE: 'TEMPERATURE',
+	HUMIDITY: 'HUMIDITY',
+	ON_OFF: 'ON_OFF'
 };
 
 const SensorType = {
-	TEMP_HUMIDITY: 'temp_humidity',
-	ON_OFF: 'on_off',
-	TEMP_HUMIDITY_REFERENCE: 'temp_humidity_reference',
+	TEMP_HUMIDITY: 'TEMP_HUMIDITY',
+	ON_OFF: 'ON_OFF',
+	TEMP_HUMIDITY_REFERENCE: 'TEMP_HUMIDITY_REFERENCE',
 };
 
 const PresenceStatus = {
-	HOME: 'home',
-	AWAY: 'away'
+	HOME: 'HOME',
+	AWAY: 'AWAY'
 }
 
 

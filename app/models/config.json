@@ -3,29 +3,29 @@
     {
       "id": "sensor1",
       "name": "Sensor 1",
-      "type": 0,
+      "type": "TEMP_HUMIDITY",
       "gauges": [
         {
           "id": "gauge11",
           "name": "Temp",
-          "type": 0
+          "type": "TEMPERATURE"
         },
         {
           "id": "gauge12",
           "name": "Humidity",
-          "type": 1
+          "type": "HUMIDITY"
         }
       ],
       "lineCharts": [
         {
           "id": "lineChart11",
           "name": "Temp",
-          "type": 0
+          "type": "TEMPERATURE"
         },
         {
           "id": "lineChart12",
           "name": "Humidity",
-          "type": 1
+          "type": "HUMIDITY"
         }
       ]
     }

@@ -1,13 +1,14 @@
 import { drawGauge } from './gauge'; //es6 -> require och export.module
+import { MeasureType, SensorType } from '../common/types';
 
 const updateGauge = (gauge) => {
 	const valueHumidity = 35 + Math.round(65 * Math.random());
 	const valueTemp = - 10 + Math.round(40 * Math.random());
-	if (gauge.type == 'temp'){
-		drawGauge(gauge, valueTemp);	
-	} else {
-		drawGauge(gauge, valueHumidity);
-	}
+	switch(gauge.type) {
+		case MeasureType.TEMPERATURE:
+			drawGauge(gauge, valueTemp);
+		case MeasureType.HUMIDITY:
+	}		drawGauge(gauge, valueHumidity);
 };
 
 const init = (sensors) => {

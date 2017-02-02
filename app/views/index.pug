@@ -22,5 +22,5 @@ block content
 		window.app.lineChart.init();
 
 	each sensor in sensors
-		if sensor.type == 0
+		if sensor.type == 'TEMP_HUMIDITY'
 			+tempHumiditySensor(sensor)

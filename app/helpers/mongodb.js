@@ -20,24 +20,26 @@ const insertPresenceStatus = (presenceStatus) => {
 };
 
 const findPresenceStatus = () => {
-	let presenceStatus = types.PresenceStatus.AWAY;
-
-	mongoClient.connect(url, (err, db) => {
-		assert.equal(null, err);
-
-		let collectionName = 'presence';
-		db.collection(collectionName, (err, collection) => {
+	return new Promise((resolve, reject) => {
+		mongoClient.connect(url, (err, db) => {
 			assert.equal(null, err);
-			collection.find().sort({ date: -1 }).limit(1).toArray((err, items) => {
-				console.log(items);
-				console.log('item: ' + items[0].presenceStatus);
-				presenceStatus = types.PresenceStatus[items[0].presenceStatus];
-				console.log('status: ' + presenceStatus);
+
+			let collectionName = 'presence';
+			db.collection(collectionName, (err, collection) => {
+				assert.equal(null, err);
+				
+				collection.find().sort({ date: -1 }).limit(1).toArray((err, items) => {
+					if (err) {
+						reject(err);
+					} else {
+						let presenceStatus = types.PresenceStatus[items[0].presenceStatus];	
+						resolve(presenceStatus)
+					}
+				});
 			});
+			db.close();
 		});
-		db.close();
 	});
-	return presenceStatus
 };
 
 

@@ -1,4 +1,4 @@
-const types = require('../common/types');
+import { MeasureType, SensorType } from '../common/types';
 
 const optionsHumidity = {
   width: 400, height: 120,
@@ -17,10 +17,10 @@ const optionsTemp = {
 };
 
 const getOptions = (type) => {
-  switch (types.MeasureType) {
-    case types.MeasureType.Temp:
+  switch (type) {
+    case MeasureType.Temp:
       return optionsTemp;
-    case types.MeasureType.Humidity:
+    case MeasureType.Humidity:
       return optionsHumidity;
     default:
       return undefined;
