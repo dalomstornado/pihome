@@ -31,4 +31,4 @@ const postNotification = (message) => {
 	});
 };
 
-module.exports = (severity, message) => { return notify(severity, message) };
+module.exports = notify;
