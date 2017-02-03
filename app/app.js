@@ -4,7 +4,7 @@ var path = require('path');
 var config = require('./models/config.json');
 var mongodb = require('./helpers/mongodb');
 const types = require('./common/types');
-const notification = require('./helpers/notification')
+const notify = require('./helpers/notify');
 //var telldus = require('telldus');
 
 app.set('view engine', 'pug');
@@ -23,7 +23,7 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
-	// notification.notify(types.Severity.ALARM, 'banan'); //how to require notify?
+	//notify(types.Severity.ALARM, 'banan'); //how to require notify?
 
 	mongodb.insertPresenceStatus(types.PresenceStatus.HOME)
 	mongodb.findPresenceStatus().then((presenceStatus) => {

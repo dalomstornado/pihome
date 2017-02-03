@@ -24,8 +24,8 @@ gulp.task('nodemon', ['sass', 'clientJs'], function() {
 	}).on('restart', ['sass', 'clientJs']
 	).on('start', function(){
 		livereload.reload('/');
-		gulp.src('./app/app.js')
-		.pipe(notify('Reloading page'));
+		gulp.src('./app/app.js');
+		//.pipe(notify('Reloading page'));
 	});
 });
 
