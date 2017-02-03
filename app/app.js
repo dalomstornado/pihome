@@ -5,6 +5,7 @@ var config = require('./models/config.json');
 var mongodb = require('./helpers/mongodb');
 const types = require('./common/types');
 const notify = require('./helpers/notify');
+const router = require('./api/routes');
 //var telldus = require('telldus');
 
 app.set('view engine', 'pug');
@@ -12,6 +13,7 @@ app.locals.pretty = true;
 app.set('views', path.join(__dirname, '/views'));
 
 app.use(express.static(path.join(__dirname, './static')));
+app.use('/api', router);
 
 app.all('*', function (req, res, next) {
   console.log(req.url);
@@ -23,24 +25,6 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
-	//notify(types.Severity.ALARM, 'banan'); //how to require notify?
-
-	//mongodb.insertPresenceStatus(types.PresenceStatus.AWAY)
-	mongodb.findPresenceStatus().then((presenceStatus) => {
-		console.log('status ' + presenceStatus);
-	});
-
-
-	
-	/*
-	telldus.turnOn(1,function(err) {
-	  console.log('1 is now ON');
-	});
-	telldus.turnOff(1,function(err) {
-	  console.log('2 is now OFF');
-	});
-	*/
-
 	res.render('index', config);
 });
 
