@@ -25,7 +25,7 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 app.get('/', function(req, res){
 	//notify(types.Severity.ALARM, 'banan'); //how to require notify?
 
-	mongodb.insertPresenceStatus(types.PresenceStatus.AWAY)
+	//mongodb.insertPresenceStatus(types.PresenceStatus.AWAY)
 	mongodb.findPresenceStatus().then((presenceStatus) => {
 		console.log('status ' + presenceStatus);
 	});
