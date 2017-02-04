@@ -3,13 +3,15 @@ const types = require('../common/types');
 
 const insertPresenceStatus = (status, res) => {
 	mongodb.insertPresenceStatus(status).then(() => {
-		console.log(`Presence: ${status}`);
+		console.log(`Presence is set to: ${status}`);
 		res.sendStatus(200);
+	}, (error) => {
+		console.log(`Error inserting presencestatus: ${error}`);
+		res.sendStatus(500);
 	});
 };
 
 const home = (req, res) => {
-	console.log('in controller');
 	insertPresenceStatus(types.PresenceStatus.HOME, res);
 };
 
