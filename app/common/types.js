@@ -16,9 +16,9 @@ const PresenceStatus = {
 };
 
 const Severity = {
-	INFO: 'INFO',
-	WARNING: 'WARNING',
-	ALARM: 'ALARM'
+	INFO: 0,
+	WARNING: 1,
+	ALARM: 2
 };
 
 

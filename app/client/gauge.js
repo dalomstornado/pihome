@@ -5,7 +5,7 @@ const optionsHumidity = {
   redFrom: 75, redTo: 100,
   yellowFrom:65, yellowTo: 75,
   minorTicks: 5, min: 35,
-  max: 100
+  max: 100  
 };
 
 const optionsTemp = {
@@ -18,9 +18,9 @@ const optionsTemp = {
 
 const getOptions = (type) => {
   switch (type) {
-    case MeasureType.Temp:
+    case MeasureType.TEMPERATURE:
       return optionsTemp;
-    case MeasureType.Humidity:
+    case MeasureType.HUMIDITY:
       return optionsHumidity;
     default:
       return undefined;

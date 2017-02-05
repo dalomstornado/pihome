@@ -18,8 +18,6 @@ const lineCharts =
   ];
 
 const draw = () => {
-  console.log('TEMP: ' + MeasureType.TEMPERATURE);
-
   var data = new google.visualization.DataTable();
   data.addColumn('date', 'Date');
   data.addColumn('number', 'Temp');
