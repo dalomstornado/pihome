@@ -31,7 +31,7 @@ app.get('/', function(req, res){
 
 app.get('/list', function(req, res){
 	telldus.getDevices(function(err,devices) {
-	  if ( err ) {
+	  if (err) {
 	    console.log('Error: ' + err);
 	  } else {
 	    // The list of devices is returned
@@ -39,10 +39,6 @@ app.get('/list', function(req, res){
 	  }
 	});
 	res.render('index', config);
-});
-
-app.get('/gauge', function(req, res){
-	res.render('gauge', { name: 'banan' });
 });
 
 const PORT = 8082;
