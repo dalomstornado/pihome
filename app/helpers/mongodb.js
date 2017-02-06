@@ -30,7 +30,13 @@ const insertPresenceStatus = (presenceStatus) => {
 				}
 			});
 		};
-		return openDB('presence', insertPresence);
+		try {
+			console.log('in try');
+			return openDB('presence', insertPresence);	
+		} catch (ex) {
+			console.log('in catch');
+			reject(ex);
+		}
 	});
 };
 

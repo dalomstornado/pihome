@@ -7,6 +7,15 @@ const processEvent = (event) => {
 	if (severity >= types.Severity.ALARM) {
 		notify(severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.reading}`);
 	}
+	switch (event.measureType) {
+		case types.MeasureType.ON_OFF:
+		//insert to door log
+		break;
+		case types.MeasureType.TEMPERATURE:
+		break;
+		case types.MeasureType.HUMIDITY:
+		break;
+	}
 };
 
 const getSeverity = (event) => {
