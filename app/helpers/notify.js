@@ -10,14 +10,6 @@ const getPrettyDate = () => {
 		.replace(/\..+/, '');
 };
 
-const notify = (severity, message) => {
-	switch (severity) {
-		case types.Severity.WARNING:
-		case types.Severity.ALARM:
-		postNotification(`${getPrettyDate()} ${severity}: ${message}`);
-	}		
-};
-
 const postNotification = (message) => {
 	request({
 		url: `${baseUrl}/api/notifications`,
@@ -29,6 +21,12 @@ const postNotification = (message) => {
 			console.log(`Error when posting notification. ${error}`)
 		}
 	});
+};
+
+const notify = (severity, message) => {
+	sSeverity = Object.keys(types.Severity)[severity];
+	postNotification(`${getPrettyDate()} ${sSeverity}: ${message}`);
+			
 };
 
 module.exports = notify;

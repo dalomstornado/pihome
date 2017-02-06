@@ -2,10 +2,10 @@ const types = require('../common/types');
 const notify = require('../helpers/notify');
 const limits = require('../common/limits');
 
-const addEvent = (event) => {
+const processEvent = (event) => {
 	var severity = getSeverity(event);
 	if (severity >= types.Severity.ALARM) {
-		notify(`Sensor ${event.sensorName} has a ${event.measureType} of ${event.reading}`, severity);
+		notify(severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.reading}`);
 	}
 };
 
@@ -26,4 +26,6 @@ const getSeverity = (event) => {
 	return -1;
 };
 
-module.export = { addEvent }
+processEvent({sensorName: 'Test sensor', measureType: 'TEMPERATURE', reading: -20});
+
+module.export = processEvent
