@@ -2,7 +2,7 @@ const request = require('request');
 const types = require('../common/types');
 
 const baseUrl = 'https://my.locative.io'
-const sessionId= '709f2632415bd579d26343feae85a5a07d6c7d0c'
+const sessionId= '709f2632415bd579d26343feae85a5a07d6c7d0'
 
 const getPrettyDate = () => {
 	return new Date().toISOString()
