@@ -15,6 +15,7 @@ const openDB = (collectionName, work) => {
 		});
 		db.close();
 	});
+	console.log('Promise: ' + promise);
 	return promise;
 };
 
@@ -55,5 +56,7 @@ const findPresenceStatus = () => {
 		return openDB('presence', findPresence);
 	});
 };
+
+insertPresenceStatus('HOME');
 
 module.exports = { insertPresenceStatus, findPresenceStatus };
