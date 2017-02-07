@@ -5,6 +5,20 @@ const types = require('../common/types');
 const url = 'mongodb://localhost:27017/pihome';
 const date = 'date';
 
+const insertPresenceStatus3 = (presenceStatus) => {
+	mongoClient.connect(url).then((err, db) => {
+		db.collection('presence').then((collection) => {
+			var doc = { date: new Date(), 'presenceStatus': presenceStatus }
+			collection.insert(doc, (err, item) => {
+				if (err) {
+					return Promise.reject(err);
+				}
+				return Promise.resolve(presenceStatus);
+			});
+		});
+	});
+};
+
 const openDB = (collectionName, work) => {	
 	let promise = undefined;
 	mongoClient.connect(url, (err, db) => {
@@ -57,6 +71,6 @@ const findPresenceStatus = () => {
 	});
 };
 
-insertPresenceStatus('HOME');
+insertPresenceStatus3('HOME');
 
 module.exports = { insertPresenceStatus, findPresenceStatus };

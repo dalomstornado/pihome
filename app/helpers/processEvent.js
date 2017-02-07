@@ -4,7 +4,7 @@ const limits = require('../common/limits');
 const mongodb = require('../helpers/mongodb');
 
 const processEvent = (event) => {
-	var severity = getSeverity(event).then((severity) => { //TODO promise från getSeverity...
+	var severity = getSeverity(event).then((severity) => {
 		if (severity >= types.Severity.ALARM) {
 			notify(severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.reading}`);
 		}
@@ -29,7 +29,7 @@ const getSeverity = (event) => {
 			if (prescence === types.PresenceStatus.AWAY) {
 				return types.Severity.ALARM;
 			}
-			return -1;
+			return types.Severity.INFO;
 		});	
 	} else if (type === types.MeasureType.TEMPERATURE || type === types.MeasureType.HUMIDITY) {
 		const upperLimit = limits.UpperLimit[type];
@@ -37,12 +37,10 @@ const getSeverity = (event) => {
 		console.log(lowerLimit.ALARM);
 		if((upperLimit.ALARM && reading >= upperLimit.ALARM)
 			|| (lowerLimit.ALARM && reading <= lowerLimit.ALARM)) {
-				//return types.Severity.ALARM;
 				return Promise.resolve(types.Severity.ALARM);
 		}
 		if((upperLimit.WARNING && reading >= upperLimit.WARNING)
 			|| (lowerLimit.WARNING && reading <= lowerLimit.WARNING)) {
-				//return types.Severity.WARNING;
 				return Promise.resolve(types.Severity.WARNING);
 		}
 	}
