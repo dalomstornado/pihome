@@ -3,48 +3,77 @@ const notify = require('../helpers/notify');
 const limits = require('../common/limits');
 const mongodb = require('../helpers/mongodb');
 
-const processEvent = (event) => {
+const processEvent = (event) => { //TODO: Speca event. Och lägg in sensor och Measure i egna typer
 	var severity = getSeverity(event).then((severity) => {
 		if (severity >= types.Severity.ALARM) {
 			notify(severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.reading}`);
 		}
 		switch (event.measureType) {
 			case types.MeasureType.ON_OFF:
-			//insert to door log
-			break;
+				break;
 			case types.MeasureType.TEMPERATURE:
-			break;
+				mongodb.insertTemperature(event);
+				break;
 			case types.MeasureType.HUMIDITY:
-			break;
+				mongodb.insertHumidity(event);
+				break;
 		}
+	})
+	.catch((err) => {
+		console.log('ERROR', err);
 	});
+};
+
+const getLowerLimit = (event) => {
+	const type = types.MeasureType[event.measureType];
+	// console.log(event.sensorId);
+	// console.log(limits)
+	// console.log(limits[event.sensorId]);
+	if (limits[event.sensorId]){
+		return limits[event.sensorId].LowerLimit[type];
+	}
+	return limits.LowerLimit[type];
+};
+
+const getUpperLimit = (event) => {
+	const type = types.MeasureType[event.measureType];
+	if (limits[event.sensorId]){
+		return limits[event.sensorId].UpperLimit[type];
+	}
+	return limits.UpperLimit[type];
 };
 
 const getSeverity = (event) => {
 	const type = types.MeasureType[event.measureType];
 	const reading = event.reading;
 	
-	if (type === types.MeasureType.ON_OFF){
-		return mongodb.findPresenceStatus().then((prescence) => {
-			if (prescence === types.PresenceStatus.AWAY) {
-				return types.Severity.ALARM;
+	return new Promise((resolve, reject) => {
+		if (type === types.MeasureType.ON_OFF){
+			return mongodb.findPresenceStatus().then((prescence) => {
+				if (prescence === types.PresenceStatus.AWAY) {
+					resolve(types.Severity.ALARM);
+				}
+				resolve(types.Severity.INFO);
+			})
+			.catch((err) => {
+				console.log('ERROR', err);
+			});
+		} else if (type === types.MeasureType.TEMPERATURE || type === types.MeasureType.HUMIDITY) {
+			const upperLimit = getUpperLimit(event);
+			const lowerLimit = getLowerLimit(event);
+			if((upperLimit.ALARM && reading >= upperLimit.ALARM)
+				|| (lowerLimit.ALARM && reading <= lowerLimit.ALARM)) {
+					resolve(types.Severity.ALARM);
 			}
-			return types.Severity.INFO;
-		});	
-	} else if (type === types.MeasureType.TEMPERATURE || type === types.MeasureType.HUMIDITY) {
-		const upperLimit = limits.UpperLimit[type];
-		const lowerLimit = limits.LowerLimit[type];
-		console.log(lowerLimit.ALARM);
-		if((upperLimit.ALARM && reading >= upperLimit.ALARM)
-			|| (lowerLimit.ALARM && reading <= lowerLimit.ALARM)) {
-				return Promise.resolve(types.Severity.ALARM);
+			if((upperLimit.WARNING && reading >= upperLimit.WARNING)
+				|| (lowerLimit.WARNING && reading <= lowerLimit.WARNING)) {
+					resolve(types.Severity.WARNING);
+			}
 		}
-		if((upperLimit.WARNING && reading >= upperLimit.WARNING)
-			|| (lowerLimit.WARNING && reading <= lowerLimit.WARNING)) {
-				return Promise.resolve(types.Severity.WARNING);
-		}
-	}
-	return Promise.reject();
+		resolve(types.Severity.INFO);
+	});
 };
+
+processEvent({ date: new Date(), sensorId: 'sensor1', sensorName:'sensor 1', measureType: 'HUMIDITY', reading: 95 });
 
 module.export = processEvent

@@ -1,19 +1,20 @@
 import { MeasureType, SensorType } from '../common/types';
+import { LowerLimit, UpperLimit } from '../common/limits';
 
 const optionsHumidity = {
   width: 400, height: 120,
-  redFrom: 75, redTo: 100,
-  yellowFrom:65, yellowTo: 75,
-  minorTicks: 5, min: 35,
-  max: 100  
+  redFrom: UpperLimit.HUMIDITY.ALARM, redTo: 95,
+  yellowFrom:UpperLimit.HUMIDITY.WARNING, yellowTo: UpperLimit.HUMIDITY.ALARM,
+  minorTicks: 5, min: 30,
+  max: 95  
 };
 
 const optionsTemp = {
   width: 400, height: 120,
-  redFrom: -10, redTo: 5,
-  yellowFrom:5, yellowTo: 8,
-  minorTicks: 5, min: -10,
-  max: 30
+  redFrom: -30, redTo: LowerLimit.TEMPERATURE.ALARM,
+  yellowFrom: LowerLimit.TEMPERATURE.ALARM, yellowTo: LowerLimit.TEMPERATURE.WARNING,
+  minorTicks: 5, min: -30,
+  max: 50
 };
 
 const getOptions = (type) => {
