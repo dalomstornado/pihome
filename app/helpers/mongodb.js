@@ -5,59 +5,31 @@ const types = require('../common/types');
 const url = 'mongodb://localhost:27017/pihome';
 const date = 'date';
 
-const insertPresenceStatus3 = (presenceStatus) => {
-	mongoClient.connect(url).then((err, db) => {
-		db.collection('presence').then((collection) => {
-			var doc = { date: new Date(), 'presenceStatus': presenceStatus }
-			collection.insert(doc, (err, item) => {
-				if (err) {
-					return Promise.reject(err);
-				}
-				return Promise.resolve(presenceStatus);
-			});
-		});
-	});
-};
-
-const openDB = (collectionName, work) => {	
-	let promise = undefined;
-	mongoClient.connect(url, (err, db) => {
-		assert.equal(null, err); //TODO: Ta hand om
-		db.collection(collectionName, (err, collection) => {
-			assert.equal(null, err);
-			promise = work(collection);	
-		});
-		db.close();
-	});
-	console.log('Promise: ' + promise);
-	return promise;
-};
-
 const insertPresenceStatus = (presenceStatus) => {
 	return new Promise((resolve, reject) => {
-		const insertPresence = (collection) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('presence')
 			var doc = { date: new Date(), 'presenceStatus': presenceStatus }
-			collection.insert(doc, (err, item) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(presenceStatus);
-				}
+			collection.insert(doc).then((result) => {
+				resolve(result);
+			})
+			.catch((err) => {
+				console.log("ERROR", err)
+				reject(err);
 			});
-		};
-		try {
-			console.log('in try');
-			return openDB('presence', insertPresence);	
-		} catch (ex) {
-			console.log('in catch');
-			reject(ex);
-		}
+			db.close();
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
 	});
 };
 
 const findPresenceStatus = () => {
 	return new Promise((resolve, reject) => {
-		const findPresence = (collection) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('presence')
 			collection.find().sort({ date: -1 }).limit(1).toArray((err, items) => {
 				if (err) {
 					reject(err);
@@ -65,12 +37,14 @@ const findPresenceStatus = () => {
 					let presenceStatus = types.PresenceStatus[items[0].presenceStatus];	
 					resolve(presenceStatus);
 				}
+				db.close();
 			});
-		};
-		return openDB('presence', findPresence);
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
 	});
 };
-
-insertPresenceStatus3('HOME');
 
 module.exports = { insertPresenceStatus, findPresenceStatus };

@@ -47,6 +47,4 @@ const getSeverity = (event) => {
 	return Promise.reject();
 };
 
-processEvent({sensorName: 'Test sensor', measureType: 'TEMPERATURE', reading: -20});
-
 module.export = processEvent
