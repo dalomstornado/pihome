@@ -6,7 +6,7 @@ var mongodb = require('./helpers/mongodb');
 const types = require('./common/types');
 const notify = require('./helpers/notify');
 const router = require('./api/routes');
-const processEvent = require('./helpers/processEvent');
+const telldusEventHandler = require('./helpers/telldusEventHandler');
 //var telldus = require('telldus');
 
 app.set('view engine', 'pug');

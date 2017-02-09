@@ -9,7 +9,7 @@ const insertTemperature = (sensorEvent) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			var doc = { date: sensorEvent.date, 'sensorId': sensorEvent.sensorId, temperature: sensorEvent.reading }
+			var doc = { date: sensorEvent.date, 'sensorId': sensorEvent.sensor.id, reading: sensorEvent.measure.reading }
 			collection.insert(doc).then((result) => {
 				resolve(result);
 			})
@@ -30,7 +30,7 @@ const insertHumidity = (sensorEvent) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
-			var doc = { date: sensorEvent.date, 'sensorId': sensorEvent.sensorId, humidity: sensorEvent.reading }
+			var doc = { date: sensorEvent.date, 'sensorId': sensorEvent.sensor.id, reading: sensorEvent.measure.reading }
 			collection.insert(doc).then((result) => {
 				resolve(result);
 			})

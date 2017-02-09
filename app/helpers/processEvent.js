@@ -8,7 +8,7 @@ const processEvent = (event) => { //TODO: Speca event. Och lägg in sensor och M
 		if (severity >= types.Severity.ALARM) {
 			notify(severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.reading}`);
 		}
-		switch (event.measureType) {
+		switch (event.measure.type) {
 			case types.MeasureType.ON_OFF:
 				break;
 			case types.MeasureType.TEMPERATURE:
@@ -18,15 +18,12 @@ const processEvent = (event) => { //TODO: Speca event. Och lägg in sensor och M
 				mongodb.insertHumidity(event);
 				break;
 		}
-	})
-	.catch((err) => {
-		console.log('ERROR', err);
 	});
 };
 
 const getLowerLimit = (event) => {
-	const type = types.MeasureType[event.measureType];
-	const sensorSpecific = limits.LowerLimit[event.sensorId];
+	const type = types.MeasureType[event.measure.type];
+	const sensorSpecific = limits.LowerLimit[event.sensor.id];
 	if (sensorSpecific){
 		return sensorSpecific[type];
 	}
@@ -34,8 +31,8 @@ const getLowerLimit = (event) => {
 };
 
 const getUpperLimit = (event) => {
-	const type = types.MeasureType[event.measureType];
-	const sensorSpecific = limits.UpperLimit[event.sensorId];
+	const type = types.MeasureType[event.measure.type];
+	const sensorSpecific = limits.UpperLimit[event.sensor.id];
 	if (sensorSpecific){
 		return sensorSpecific[type];
 	}
@@ -43,8 +40,8 @@ const getUpperLimit = (event) => {
 };
 
 const getSeverity = (event) => {
-	const type = types.MeasureType[event.measureType];
-	const reading = event.reading;
+	const type = types.MeasureType[event.measure.type];
+	const reading = event.measure.reading;
 	
 	return new Promise((resolve, reject) => {
 		if (type === types.MeasureType.ON_OFF){
@@ -55,7 +52,7 @@ const getSeverity = (event) => {
 				resolve(types.Severity.INFO);
 			})
 			.catch((err) => {
-				console.log('ERROR', err);
+				reject(err);
 			});
 		} else if (type === types.MeasureType.TEMPERATURE || type === types.MeasureType.HUMIDITY) {
 			const upperLimit = getUpperLimit(event);
@@ -73,6 +70,4 @@ const getSeverity = (event) => {
 	});
 };
 
-//processEvent({ date: new Date(), sensorId: 'sensor1', sensorName:'sensor 1', measureType: 'HUMIDITY', reading: 95 });
-
-module.export = processEvent
+module.exports = processEvent;
