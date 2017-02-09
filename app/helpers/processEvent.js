@@ -26,19 +26,18 @@ const processEvent = (event) => { //TODO: Speca event. Och lägg in sensor och M
 
 const getLowerLimit = (event) => {
 	const type = types.MeasureType[event.measureType];
-	// console.log(event.sensorId);
-	// console.log(limits)
-	// console.log(limits[event.sensorId]);
-	if (limits[event.sensorId]){
-		return limits[event.sensorId].LowerLimit[type];
+	const sensorSpecific = limits.LowerLimit[event.sensorId];
+	if (sensorSpecific){
+		return sensorSpecific[type];
 	}
 	return limits.LowerLimit[type];
 };
 
 const getUpperLimit = (event) => {
 	const type = types.MeasureType[event.measureType];
-	if (limits[event.sensorId]){
-		return limits[event.sensorId].UpperLimit[type];
+	const sensorSpecific = limits.UpperLimit[event.sensorId];
+	if (sensorSpecific){
+		return sensorSpecific[type];
 	}
 	return limits.UpperLimit[type];
 };
@@ -74,6 +73,6 @@ const getSeverity = (event) => {
 	});
 };
 
-processEvent({ date: new Date(), sensorId: 'sensor1', sensorName:'sensor 1', measureType: 'HUMIDITY', reading: 95 });
+//processEvent({ date: new Date(), sensorId: 'sensor1', sensorName:'sensor 1', measureType: 'HUMIDITY', reading: 95 });
 
 module.export = processEvent
