@@ -8,6 +8,8 @@ const processEvent = (event) => {
 		if (severity >= types.Severity.ALARM) {
 			notify(severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.reading}`);
 		}
+
+		event.severity = severity;
 		switch (event.measure.type) {
 			case types.MeasureType.ON_OFF:
 				break;
