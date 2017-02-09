@@ -1,7 +1,7 @@
 {
   "sensors": [
     {
-      "id": "sensor1",
+      "id": 135,
       "name": "Sensor 1",
       "type": "TEMP_HUMIDITY",
       "gauges": [

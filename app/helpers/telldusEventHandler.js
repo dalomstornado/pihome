@@ -1,24 +1,31 @@
 const types = require('../common/types');
 const processEvent = require('../helpers/processEvent');
 const telldus = require('telldus');
-var config = require('../models/config.json');
+const config = require('../models/config.json');
+const UNKNOWN = 'UNKNOWN';
 
 const getSensorName = (deviceId) => {
 	const sensor = config.sensors.find((sensor) => {
 		return sensor.id === deviceId; 
 	});
-	return sensor.name;
+	if (sensor) {
+		return sensor.name;	
+	}
+	return UNKNOWN;
 };
 
 const getMeasureType = (type) => {
 	switch (type) {
-		case 'TMP':
+		case 1:
 			return types.MeasureType.TEMPERATURE;
-		case 'HUM':
+		case 2:
 			return types.MeasureType.HUMIDITY;
+		default:
+			return UNKNOWN;
 	}
 };
 
+/*
 const test = (deviceId,protocol,model,type,value,timestamp) => {
 	const event = {
 		date: timestamp,
@@ -28,29 +35,36 @@ const test = (deviceId,protocol,model,type,value,timestamp) => {
 		},
 		measure: {
 			type: getMeasureType(type),
-			reading: value
+			value
 		}
 	};
-	 processEvent(event);
+	console.log(event);
+	 //processEvent(event);
 };
+*/
 
 const init = () => {
 	const listener = telldus.addSensorEventListener((deviceId, protocol, model, type, value, timestamp) => {
   		console.log('New sensor event received: ',deviceId,protocol,model,type,value,timestamp);
   		const event = {
-  			date: timestamp,
+  			date: new Date(),
   			sensor: {
   				id: deviceId,
   				name: getSensorName(deviceId)
   			},
   			measure: {
   				type: getMeasureType(type),
-  				reading: value
+				value: Number.parseFloat(value)
   			}
   		};
-  		processEvent(event);
+  		if (event.sensor.id !== UNKNOWN && event.measure.type !== UNKNOWN) {
+  			processEvent(event);
+			console.log('done processing');	
+  		} else {
+  			console.log('Dropping event ' + event);	
+  		}
 	});
 };
 
-//init();
-test('sensor1', 'proto', 'model', 'TMP', 10, new Date());
+init();
+//test('sensor1', 'proto', 'model', 'TMP', 10, new Date());
