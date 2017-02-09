@@ -3,7 +3,7 @@ const notify = require('../helpers/notify');
 const limits = require('../common/limits');
 const mongodb = require('../helpers/mongodb');
 
-const processEvent = (event) => { //TODO: Speca event. Och lägg in sensor och Measure i egna typer
+const processEvent = (event) => {
 	var severity = getSeverity(event).then((severity) => {
 		if (severity >= types.Severity.ALARM) {
 			notify(severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.reading}`);
@@ -52,7 +52,8 @@ const getSeverity = (event) => {
 				resolve(types.Severity.INFO);
 			})
 			.catch((err) => {
-				reject(err);
+				console.log('Unable to get status of prescence. Returning severity ALARM.');
+				resolve(types.Severity.ALARM);
 			});
 		} else if (type === types.MeasureType.TEMPERATURE || type === types.MeasureType.HUMIDITY) {
 			const upperLimit = getUpperLimit(event);

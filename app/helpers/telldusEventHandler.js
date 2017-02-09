@@ -1,5 +1,6 @@
 const types = require('../common/types');
 const processEvent = require('../helpers/processEvent');
+//var telldus = require('telldus');
 
 const test = () => {
 	const event = { 
