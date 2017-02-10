@@ -36,21 +36,18 @@ const resolveOnOff = (resolve) => {
 	});
 };
 
-const resolveTempHumidity = (event, resolve) => {
-	console.log('in temp/humid')
+const resolveTempHumidity = (resolve, event) => {
 	const upperLimit = getUpperLimit(event);
 	const lowerLimit = getLowerLimit(event);
+	const value = event.value;
 	if((upperLimit.ALARM && value >= upperLimit.ALARM)
 		|| (lowerLimit.ALARM && value <= lowerLimit.ALARM)) {
-			console.log('about to resolve alarm')
 			resolve(types.Severity.ALARM);
 	} else if ((upperLimit.WARNING && value >= upperLimit.WARNING)
 		|| (lowerLimit.WARNING && value <= lowerLimit.WARNING)) {
-			console.log('about to resolve warning');
 			resolve(types.Severity.WARNING);
-	} else {
-		console.log('about to resolve info');
-		resolve(1);
+	} else {		
+		resolve(types.Severity.INFO);
 	}
 };
 
@@ -60,26 +57,22 @@ const getSeverity = (event) => {
 	
 	return new Promise((resolve, reject) => {
 		if (type === types.MeasureType.ON_OFF) {
-			resolveOnOff(undefined);
+			resolveOnOff(resolve);
 		} else if (type === types.MeasureType.TEMPERATURE 
 			|| type === types.MeasureType.HUMIDITY) {
-				return Promise.resolve(1);
-				resolveTempHumidity(resolve);
+				resolveTempHumidity(resolve, event);
 		}
 	});
 };
 
 const processEvent = (event) => {
-	console.log('value: ' + typeof(event.measure.value));
-	console.log('processing event');
-	severity = 1;
-	//getSeverity(event).then((severity) => {
+	getSeverity(event).then((severity) => {
 		console.log('get severity done');
-		if (severity >= types.Severity.ALARM) {
-			notify(severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.value}`);
-		}
-
 		event.severity = severity;
+
+		if (severity >= types.Severity.ALARM) {
+			notify(event.severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.value}`);
+		}
 		switch (event.measure.type) {
 			case types.MeasureType.ON_OFF:
 				break;
@@ -90,7 +83,9 @@ const processEvent = (event) => {
 				mongodb.insertHumidity(event);
 				break;
 		}
-	//});
+	}).catch((err) => {
+		console.log('ERROR', err);
+	});
 };
 
 module.exports = processEvent;
