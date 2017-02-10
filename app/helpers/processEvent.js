@@ -67,7 +67,6 @@ const getSeverity = (event) => {
 
 const processEvent = (event) => {
 	getSeverity(event).then((severity) => {
-		console.log('get severity done');
 		event.severity = severity;
 
 		if (severity >= types.Severity.ALARM) {

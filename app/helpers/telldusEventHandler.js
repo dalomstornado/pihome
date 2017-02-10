@@ -25,7 +25,6 @@ const getMeasureType = (type) => {
 	}
 };
 
-
 const test = (deviceId,protocol,model,type,value,timestamp) => {
 	console.log('New sensor event received: ',deviceId,protocol,model,type,value,timestamp);
 	const event = {
@@ -39,17 +38,16 @@ const test = (deviceId,protocol,model,type,value,timestamp) => {
 			value: Number.parseFloat(value)
 		}
 	};
-	if (event.sensor.id !== UNKNOWN && event.measure.type !== UNKNOWN) {
+	console.log(event);
+	if (event.sensor.name !== UNKNOWN && event.measure.type !== UNKNOWN) {
 		processEvent(event);
-	console.log('done processing');	
 	} else {
-		console.log('Dropping event ' + event);	
+		console.log('Dropping event', event);
 	}
 };
 
 const init = () => {
 	const listener = telldus.addSensorEventListener((deviceId, protocol, model, type, value, timestamp) => {
-  		console.log('New sensor event received: ',deviceId,protocol,model,type,value,timestamp);
   		const event = {
   			date: new Date(),
   			sensor: {
@@ -61,11 +59,10 @@ const init = () => {
 				value: Number.parseFloat(value)
   			}
   		};
-  		if (event.sensor.id !== UNKNOWN && event.measure.type !== UNKNOWN) {
+  		if (event.sensor.name !== UNKNOWN && event.measure.type !== UNKNOWN) {
   			processEvent(event);
-			console.log('done processing');	
   		} else {
-  			console.log('Dropping event ' + event);	
+  			console.log('Dropping event', event);	
   		}
 	});
 };
