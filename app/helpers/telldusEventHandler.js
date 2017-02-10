@@ -2,6 +2,7 @@ const types = require('../common/types');
 const processEvent = require('../helpers/processEvent');
 const telldus = require('telldus');
 const config = require('../models/config.json');
+const moment = require('moment');
 const UNKNOWN = 'UNKNOWN';
 
 const getSensorName = (deviceId) => {
@@ -49,7 +50,7 @@ const test = (deviceId,protocol,model,type,value,timestamp) => {
 const init = () => {
 	const listener = telldus.addSensorEventListener((deviceId, protocol, model, type, value, timestamp) => {
   		const event = {
-  			date: new Date(),
+  			date: new Date(), //Moment
   			sensor: {
   				id: deviceId,
   				name: getSensorName(deviceId)

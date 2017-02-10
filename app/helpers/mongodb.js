@@ -89,4 +89,48 @@ const findPresenceStatus = () => {
 	});
 };
 
-module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature };
+const findHumidity = (top) => {
+	return new Promise((resolve, reject) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('humidity')
+			collection.find().sort({ date: -1 }).limit(top).toArray((err, items) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(items);
+				}
+				db.close();
+			});
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
+	});
+};
+
+const findTemperature = (top) => {
+	return new Promise((resolve, reject) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('temperature')
+			collection.find().sort({ date: -1 }).limit(top).toArray((err, items) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(items);
+				}
+				db.close();
+			});
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
+	});
+};
+
+findTemperature(10).then((items) => {
+	console.log(items);
+});
+
+module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findHumidity, findTemperature };
