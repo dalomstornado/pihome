@@ -109,7 +109,7 @@ const findHumidity = (top) => {
 	});
 };
 
-const findTemperature = (top) => {
+const findTemperature = (top) => { //fromDate, sensorId
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
@@ -128,9 +128,10 @@ const findTemperature = (top) => {
 		});
 	});
 };
-
+/*
 findTemperature(10).then((items) => {
 	console.log(items);
 });
+*/
 
 module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findHumidity, findTemperature };

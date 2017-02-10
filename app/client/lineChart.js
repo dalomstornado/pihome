@@ -1,7 +1,8 @@
 import { MeasureType, SensorType } from '../common/types';
+const moment = require('moment');
 
 const options = {
-  width: 400,
+  width: 1000,
   height: 200,
 };
 
@@ -22,13 +23,20 @@ const draw = () => {
   data.addColumn('date', 'Date');
   data.addColumn('number', 'Temp');
   data.addColumn('number', 'Temp outdoors');
-  data.addRows([
-    [new Date(2017, 1, 1), 20, 10],
-    [new Date(2017, 1, 5), 18, 5],
-    [new Date(2017, 1, 10), 16, 0],
-    [new Date(2017, 1, 15), 22, 12]
-  ]);
-  
+
+  let dataRows = [];
+  for (let i = 0; i < 4*30 ; i++) { //60 * 24 * 30
+    let now = Date();
+    let date = new Date();
+    let data = [moment(now).add(i*3, 'hour').toDate(),
+      7 + Math.round(4 * Math.random()),
+      -10 + Math.round(15 * Math.random())];
+    dataRows.push(data);
+  };
+  console.log(dataRows);
+  data.addRows(dataRows);
+
+
   for(let lineChart of lineCharts){
     var chart = new google.charts.Line(document.getElementById(lineChart.id));
     chart.draw(data, options);
