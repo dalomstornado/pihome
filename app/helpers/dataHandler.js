@@ -1,14 +1,13 @@
 const moment = require('moment');
 const reduceInMinutes = 4 * 60;
 
-const reduceHourMap = {
-    2: { start: 0, stop: 4 },
-    6: { start: 4, stop: 8 },
-    10: { start: 8, stop: 12 },
-    14: { start: 12, stop: 16 },
-    18: { start: 16, stop: 20 },
-    22: { start: 20, stop: 24 }
-};
+const reduceHours = 
+    [{ start: 0, hour: 2, stop: 4 },
+    { start: 4, hour: 6, stop: 8 },
+    { start: 8, hour: 10, stop: 12 },
+    { start: 12, hour: 14, stop: 16 },
+    { start: 16, hour: 18, stop: 20 },
+    { start: 20, hour: 22, stop: 24 }];
 
 const isInside = (momentToAggregateTo, currentMoment) => {
     let diffInMs = currentMoment.diff(momentToAggregateTo);
@@ -20,34 +19,49 @@ const isInside = (momentToAggregateTo, currentMoment) => {
 };
 
 const getMomentToAggregateTo = (currentMoment) => {
-    let hour = currentMoment.hours;
-    for (let i = 0; i < reduceHourMap.length; i++) {
-        console.log(reduceHourMap[i].start);
-        console.log(hour);
-        if (hour >= reduceHourMap[i].start && hour < reduceHourMap[i].stop) {
+    let hour = currentMoment.hours();
+    for (let i = 0; i < reduceHours.length; i++) {
+        if (hour >= reduceHours[i].start && hour < reduceHours[i].stop) {
             let ret = moment(currentMoment);
-            ret.hours(10);
-            console.log(ret.toDate());
+            ret.hours(reduceHours[i].hour);
+            ret.minutes(0);
+            ret.seconds(0);
+            ret.milliseconds(0);
+
             return ret;
         }
     }
 };
 
-const reduce = (dataSerie) => {
+const reduce = (dataSerie, outputMap = new Map(), entryIndex = 0) => {
     let momentToAggregateTo = undefined;
+    let runningValue = undefined;
+    let x = undefined;
+    let entry = undefined;
+
     for(let i = 0; i < dataSerie.length; i++) {
         if (!momentToAggregateTo) {
             momentToAggregateTo = getMomentToAggregateTo(moment(dataSerie[i].date));
+            x = 0;
+            runningValue = 0;
         }
-
         currentMoment = moment(dataSerie[i].date);
         if (isInside(momentToAggregateTo, currentMoment)) {
-            console.log('same agg');
+            x++;
+            runningValue += dataSerie[i].value;
         } else {
-            console.log('new time');
+            entry = outputMap.get(momentToAggregateTo.toString());
+            if (!entry) {
+                entry = [undefined, undefined];
+                outputMap.set(momentToAggregateTo.toString(), entry);
+            }
+            entry[entryIndex] = runningValue / x;
+            momentToAggregateTo = undefined;
+            i--;
         }
-        console.log(momentToAggregateTo.toDate());
     }
+    outputMap.set(momentToAggregateTo.toString(), entry);
+    return outputMap;
 };
 
 
@@ -113,25 +127,46 @@ const convertLineChartFriendlyArray = (dateSerie, dataSerieRef) => {
 
 
 const inDataTemp = [ { 
-    date: '2017-02-10T13:57:36.211Z',
+    date: '2017-02-10T00:57:36.211Z',
     sensorId: 135,
     severity: 0,
     value: 10 },
   {
-    date: '2017-02-10T14:57:28.991Z',
+    date: '2017-02-10T03:57:28.991Z',
     sensorId: 135,
     severity: 0,
     value: 20 },
   {
-    date: '2017-02-10T18:30:02.291Z',
+    date: '2017-02-10T20:30:02.291Z',
     sensorId: 135,
     severity: 0,
     value: 0 },
   { 
-    date: '2017-02-10T19:29:29.010Z',
+    date: '2017-02-10T23:29:29.010Z',
     sensorId: 135,
     severity: 0,
     value: 10 } ];
+
+const inDataTemp2 = [ { 
+    date: '2017-02-10T00:57:36.211Z',
+    sensorId: 135,
+    severity: 0,
+    value: 0 },
+  {
+    date: '2017-02-10T03:57:28.991Z',
+    sensorId: 135,
+    severity: 0,
+    value: 1 },
+  {
+    date: '2017-02-10T20:30:02.291Z',
+    sensorId: 135,
+    severity: 0,
+    value: 20 },
+  { 
+    date: '2017-02-10T23:29:29.010Z',
+    sensorId: 135,
+    severity: 0,
+    value: 20 } ];
 
 
 //date, temp, temp outdoors
@@ -142,4 +177,7 @@ const outData = [
     [new Date(2017, 1, 15), 22, 12]
   ];
 
-console.log('reduced', reduce(inDataTemp));
+var map = reduce(inDataTemp);
+console.log(map);
+map = reduce(inDataTemp2, map, 1);
+console.log(map);
