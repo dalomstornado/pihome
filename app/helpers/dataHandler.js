@@ -52,7 +52,7 @@ const reduce = (dataSerie, outputMap = new Map(), entryIndex = 0) => {
         } else {
             entry = outputMap.get(momentToAggregateTo.toString());
             if (!entry) {
-                entry = [undefined, undefined];
+                entry = new Array(entryIndex + 1); //Not needed to sizw, js apperently works on dynamic arrays
                 outputMap.set(momentToAggregateTo.toString(), entry);
             }
             entry[entryIndex] = runningValue / x;
@@ -60,58 +60,20 @@ const reduce = (dataSerie, outputMap = new Map(), entryIndex = 0) => {
             i--;
         }
     }
+    //Adds the last (that was not added during else)
     outputMap.set(momentToAggregateTo.toString(), entry);
     return outputMap;
 };
 
-
-
-/*
-const reduce = (dataSerie) => {
-    let reduced = [];
-    
-    let startMoment = undefined;
-    let runningValue;
-    let x = 1;
-    for (let i = 0; i < dataSerie.length; i++) {
-        let reading = dataSerie[i];
-        if (!startMoment) {
-            startMoment = moment(reading.date);
-            console.log(startMoment);
-        }
-
-        thisMoment = moment(reading.date);
-        let duration = moment.duration(thisMoment.diff(startMoment));
-        let minutes = duration.asMinutes();
-        console.log('min', minutes);
-        if (minutes < reduceInMinutes) {
-            let readings = {
-                date: startMoment.toDate(),
-                value: Number.parseFloat(runningValue / x)
-            };
-            reduced.push(readings);
-
-            x = 0;
-            startMoment = undefined;
-        } else {
-            runningValue += Number.parseFloat(reading.value);
-        }
-        if(i == dataSerie.length - 1 && x != 0){
-            let readings = {
-                date: startMoment.toDate(),
-                value: Number.parseFloat(runningValue / x)
-            };
-            reduced.push(readings);            
-        }
-
-        console.log('ThisMoment', thisMoment.toDate());
-        console.log('Running value', runningValue);
-        console.log('X', x);
-        x++;
-    }
-    return reduced;
+const convertMapToArray = (map) => {
+    let ret = [];
+    map.forEach((entry) => {
+        console.log('entry', entry);
+        //Hur hitta key från entry
+        //Hur trycka in i array från start
+    });
+    return ret;
 };
-*/
 
 const convertLineChartFriendlyArray = (dateSerie, dataSerieRef) => {
     if (dateSerie.length != dataSerieRef.length) {
@@ -178,6 +140,7 @@ const outData = [
   ];
 
 var map = reduce(inDataTemp);
-console.log(map);
 map = reduce(inDataTemp2, map, 1);
-console.log(map);
+console.log('length', map.length);
+var arr = convertMapToArray(map);
+console.log('arr', arr);
