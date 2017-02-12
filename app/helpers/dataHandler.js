@@ -1,4 +1,5 @@
 const moment = require('moment');
+
 const reduceInMinutes = 4 * 60;
 
 const reduceHours = 
@@ -66,12 +67,18 @@ const reduce = (dataSerie, outputMap = new Map(), entryIndex = 0) => {
 };
 
 const convertMapToArray = (map) => {
-    let ret = [];
-    map.forEach((entry) => {
-        console.log('entry', entry);
-        //Hur hitta key från entry
-        //Hur trycka in i array från start
-    });
+    let keys = Array.from(map.keys());
+    let ret = new Array();
+    for(let i = 0; i < keys.length; i++) {
+        let key = keys[i];
+        let entry = map.get(key);
+        let newEntry = [key];
+        for(let x = 0; x < entry.length; x++){
+            newEntry.push(entry[x]);
+        }
+        ret.push(newEntry);
+    }
+
     return ret;
 };
 
@@ -86,7 +93,6 @@ const convertLineChartFriendlyArray = (dateSerie, dataSerieRef) => {
     }
     return dataRows;
 }
-
 
 const inDataTemp = [ { 
     date: '2017-02-10T00:57:36.211Z',
@@ -130,7 +136,6 @@ const inDataTemp2 = [ {
     severity: 0,
     value: 20 } ];
 
-
 //date, temp, temp outdoors
 const outData = [
     [new Date(2017, 1, 1), 20, 10],
@@ -141,6 +146,6 @@ const outData = [
 
 var map = reduce(inDataTemp);
 map = reduce(inDataTemp2, map, 1);
-console.log('length', map.length);
+console.log('map', map);
 var arr = convertMapToArray(map);
 console.log('arr', arr);
