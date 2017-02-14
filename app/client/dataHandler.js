@@ -136,16 +136,15 @@ const inDataTemp2 = [ {
     severity: 0,
     value: 20 } ];
 
-//date, temp, temp outdoors
-const outData = [
-    [new Date(2017, 1, 1), 20, 10],
-    [new Date(2017, 1, 5), 18, 5],
-    [new Date(2017, 1, 10), 16, 0],
-    [new Date(2017, 1, 15), 22, 12]
-  ];
+const convertRawDataToLineChartFriendly(data, referenceData)
+{
+    //HACK
+    data = inDataTemp;
+    referenceData = inDataTemp2;
 
-var map = reduce(inDataTemp);
-map = reduce(inDataTemp2, map, 1);
-console.log('map', map);
-var arr = convertMapToArray(map);
-console.log('arr', arr);
+    let map = reduce(data);
+    map = reduce(referenceData, map, 1);
+    return convertMapToArray(map);
+}
+
+module.exports { convertRawDataToLineChartFriendly }

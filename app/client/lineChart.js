@@ -1,4 +1,5 @@
 import { MeasureType, SensorType } from '../common/types';
+const dataHandler = require('./dataHandler');
 const moment = require('moment');
 
 const options = {
@@ -24,7 +25,9 @@ const draw = () => {
   data.addColumn('number', 'Temp');
   data.addColumn('number', 'Temp outdoors');
 
-  let dataRows = [];
+  let dataRows = dataHandler.convertRawDataToLineChartFriendly();
+  
+  /*
   for (let i = 0; i < 4*30 ; i++) { //60 * 24 * 30
     let now = Date();
     let date = new Date();
@@ -35,7 +38,7 @@ const draw = () => {
   };
   console.log(dataRows);
   data.addRows(dataRows);
-
+*/
 
   for(let lineChart of lineCharts){
     var chart = new google.charts.Line(document.getElementById(lineChart.id));

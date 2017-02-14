@@ -7,7 +7,6 @@ const types = require('./common/types');
 const notify = require('./helpers/notify');
 const router = require('./api/routes');
 const telldusEventHandler = require('./helpers/telldusEventHandler');
-const dataHandler = require('./helpers/dataHandler');
 
 app.set('view engine', 'pug');
 app.locals.pretty = true;
