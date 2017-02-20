@@ -1,8 +1,8 @@
 const LowerLimit = {
 	TEMPERATURE: { WARNING: 7, ALARM: 4 },
 	HUMIDITY: { WARNING: undefined, ALARM: undefined }, 
-	sensor1: {
-		TEMPERATURE: { WARNING: 0, ALARM: -10 },
+	135: {
+		TEMPERATURE: { WARNING: 0, ALARM: 20 },
 		HUMIDITY: { WARNING: undefined, ALARM: undefined } 
 	}
 };

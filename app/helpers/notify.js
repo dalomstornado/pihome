@@ -23,10 +23,10 @@ const postNotification = (message) => {
 	});
 };
 
-const notify = (severity, message) => {
+const notify = (severity, message, moment) => {
 	sSeverity = Object.keys(types.Severity)[severity];
-	postNotification(`${getPrettyDate()} ${sSeverity}: ${message}`);
-			
+	//postNotification(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
+	console.log(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
 };
 
 module.exports = notify;

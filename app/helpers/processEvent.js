@@ -68,9 +68,9 @@ const getSeverity = (event) => {
 const processEvent = (event) => {
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
-
+		console.log(severity);
 		if (severity >= types.Severity.ALARM) {
-			notify(event.severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.value}`);
+			notify(event.severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.value}`, event.moment);
 		}
 		switch (event.measure.type) {
 			case types.MeasureType.ON_OFF:

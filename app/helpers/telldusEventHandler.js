@@ -29,7 +29,7 @@ const getMeasureType = (type) => {
 const test = (deviceId,protocol,model,type,value,timestamp) => {
 	console.log('New sensor event received: ',deviceId,protocol,model,type,value,timestamp);
 	const event = {
-		date: new Date(),
+		moment: moment(timestamp, 'x'),
 		sensor: {
 			id: deviceId,
 			name: getSensorName(deviceId)
@@ -50,7 +50,7 @@ const test = (deviceId,protocol,model,type,value,timestamp) => {
 const init = () => {
 	const listener = telldus.addSensorEventListener((deviceId, protocol, model, type, value, timestamp) => {
   		const event = {
-  			date: new Date(), //Moment
+  			moment: moment(timestamp, 'x'),
   			sensor: {
   				id: deviceId,
   				name: getSensorName(deviceId)
@@ -69,4 +69,4 @@ const init = () => {
 };
 
 //init();
-//test(135, 'proto', 'model', 1, 10, 123458486);
+test(135, 'proto', 'model', 1, 10, 1234584868767);

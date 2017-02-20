@@ -136,8 +136,7 @@ const inDataTemp2 = [ {
     severity: 0,
     value: 20 } ];
 
-const convertRawDataToLineChartFriendly(data, referenceData)
-{
+const convertRawDataToLineChartFriendly = (data, referenceData) => {
     //HACK
     data = inDataTemp;
     referenceData = inDataTemp2;
@@ -145,6 +144,6 @@ const convertRawDataToLineChartFriendly(data, referenceData)
     let map = reduce(data);
     map = reduce(referenceData, map, 1);
     return convertMapToArray(map);
-}
+};
 
-module.exports { convertRawDataToLineChartFriendly }
+module.exports = { convertRawDataToLineChartFriendly }
