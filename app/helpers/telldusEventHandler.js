@@ -68,5 +68,5 @@ const init = () => {
 	});
 };
 
-//init();
-test(135, 'proto', 'model', 1, 10, 1234584868767);
+init();
+//test(135, 'proto', 'model', 1, 10, 1234584868767);

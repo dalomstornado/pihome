@@ -26,6 +26,7 @@ const draw = () => {
   data.addColumn('number', 'Temp outdoors');
 
   let dataRows = dataHandler.convertRawDataToLineChartFriendly();
+  console.log('dateRows', dataRows);
   
   /*
   for (let i = 0; i < 4*30 ; i++) { //60 * 24 * 30
