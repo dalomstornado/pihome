@@ -46,7 +46,8 @@ const reduce = (dataSerie, outputMap = new Map(), entryIndex = 0) => {
             x = 0;
             runningValue = 0;
         }
-        currentMoment = moment(dataSerie[i].date);
+        
+        let currentMoment = moment(dataSerie[i].date);
         if (isInside(momentToAggregateTo, currentMoment)) {
             x++;
             runningValue += dataSerie[i].value;
