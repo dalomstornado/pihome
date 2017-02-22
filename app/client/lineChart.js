@@ -25,21 +25,20 @@ const draw = () => {
   data.addColumn('number', 'Temp');
   data.addColumn('number', 'Temp outdoors');
 
-  let dataRows = dataHandler.convertRawDataToLineChartFriendly();
-  console.log('dateRows', dataRows);
+  let dataRows = dataHandler.convertRawDataToLineChartFriendly();  
+/*
+  dataRows = [];  
   
-  /*
   for (let i = 0; i < 4*30 ; i++) { //60 * 24 * 30
     let now = Date();
     let date = new Date();
     let data = [moment(now).add(i*3, 'hour').toDate(),
-      7 + Math.round(4 * Math.random()),
-      -10 + Math.round(15 * Math.random())];
+      7.5 + Math.round(4 * Math.random()),
+      -10.5 + Math.round(15 * Math.random())];
     dataRows.push(data);
   };
-  console.log(dataRows);
+*/  
   data.addRows(dataRows);
-*/
 
   for(let lineChart of lineCharts){
     var chart = new google.charts.Line(document.getElementById(lineChart.id));

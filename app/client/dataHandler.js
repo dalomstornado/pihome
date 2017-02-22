@@ -73,13 +73,12 @@ const convertMapToArray = (map) => {
     for(let i = 0; i < keys.length; i++) {
         let key = keys[i];
         let entry = map.get(key);
-        let newEntry = [key];
+        let newEntry = [new Date(key)];
         for(let x = 0; x < entry.length; x++){
             newEntry.push(entry[x]);
         }
         ret.push(newEntry);
     }
-
     return ret;
 };
 
