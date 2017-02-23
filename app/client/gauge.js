@@ -62,4 +62,4 @@ const init = (sensors) => {
   };
 };
 
-export { drawGauge, init };
+export { init, drawGauge };
