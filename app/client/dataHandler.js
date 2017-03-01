@@ -94,53 +94,7 @@ const convertLineChartFriendlyArray = (dateSerie, dataSerieRef) => {
     return dataRows;
 }
 
-const inDataTemp = [ { 
-    date: '2017-02-10T00:57:36.211Z',
-    sensorId: 135,
-    severity: 0,
-    value: 10 },
-  {
-    date: '2017-02-10T03:57:28.991Z',
-    sensorId: 135,
-    severity: 0,
-    value: 20 },
-  {
-    date: '2017-02-10T20:30:02.291Z',
-    sensorId: 135,
-    severity: 0,
-    value: 0 },
-  { 
-    date: '2017-02-10T23:29:29.010Z',
-    sensorId: 135,
-    severity: 0,
-    value: 10 } ];
-
-const inDataTemp2 = [ { 
-    date: '2017-02-10T00:57:36.211Z',
-    sensorId: 135,
-    severity: 0,
-    value: 0 },
-  {
-    date: '2017-02-10T03:57:28.991Z',
-    sensorId: 135,
-    severity: 0,
-    value: 1 },
-  {
-    date: '2017-02-10T20:30:02.291Z',
-    sensorId: 135,
-    severity: 0,
-    value: 20 },
-  { 
-    date: '2017-02-10T23:29:29.010Z',
-    sensorId: 135,
-    severity: 0,
-    value: 20 } ];
-
 const convertRawDataToLineChartFriendly = (data, referenceData) => {
-    //HACK
-    data = inDataTemp;
-    referenceData = inDataTemp2;
-
     let map = reduce(data);
     map = reduce(referenceData, map, 1);
     return convertMapToArray(map);

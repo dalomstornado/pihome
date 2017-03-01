@@ -1,8 +1,53 @@
-import { drawGauge } from './gauge'; //es6 -> require och export.module
+import { drawGauge } from './gauge';
 import { MeasureType, SensorType } from '../common/types';
+import { drawLineChart } from './lineChart';
+import { convertRawDataToLineChartFriendly } from './dataHandler';
 
 const updateLineChart = (lineChart) => {
+	const inDataTemp = [ { 
+    date: '2017-02-10T00:57:36.211Z',
+    sensorId: 135,
+    severity: 0,
+    value: 5 + Math.round(10 * Math.random()) },
+  {
+    date: '2017-02-10T03:57:28.991Z',
+    sensorId: 135,
+    severity: 0,
+    value: 15 + Math.round(10 * Math.random()) },
+  {
+    date: '2017-02-10T20:30:02.291Z',
+    sensorId: 135,
+    severity: 0,
+    value: -5 + Math.round(15 * Math.random()) },
+  { 
+    date: '2017-02-10T23:29:29.010Z',
+    sensorId: 135,
+    severity: 0,
+    value: 15 + Math.round(10 * Math.random()) } ];
 
+const inDataTemp2 = [ { 
+    date: '2017-02-10T00:57:36.211Z',
+    sensorId: 135,
+    severity: 0,
+    value: -5 + Math.round(15 * Math.random()) },
+  {
+    date: '2017-02-10T03:57:28.991Z',
+    sensorId: 135,
+    severity: 0,
+    value: 0 + Math.round(15 * Math.random()) },
+  {
+    date: '2017-02-10T20:30:02.291Z',
+    sensorId: 135,
+    severity: 0,
+    value: 10 + Math.round(15 * Math.random()) },
+  { 
+    date: '2017-02-10T23:29:29.010Z',
+    sensorId: 135,
+    severity: 0,
+    value: 15 + Math.round(10 * Math.random()) } ];
+
+	const values = convertRawDataToLineChartFriendly(inDataTemp, inDataTemp2);
+	drawLineChart(lineChart, values)
 };
 
 const updateGauge = (gauge) => {
@@ -20,6 +65,11 @@ const init = (sensors) => {
 		for(let gauge of sensor.gauges) {
 			setInterval(() => {
 				updateGauge(gauge);
+			}, 3000 + Math.round(10000 * Math.random()));
+		};
+		for(let lineChart of sensor.lineCharts) {
+			setInterval(() => {
+				updateLineChart(lineChart);
 			}, 3000 + Math.round(10000 * Math.random()));
 		};
 	};

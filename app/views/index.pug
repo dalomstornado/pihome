@@ -18,8 +18,8 @@ block content
 		google.charts.load('current', {'packages':['gauge', 'line', 'corechart']});
 		let sensors = !{JSON.stringify(sensors)};
 		window.app.gauge.init(sensors);
+		window.app.lineChart.init(sensors);
 		window.app.page.init(sensors);
-		window.app.lineChart.init();
 
 	each sensor in sensors
 		if sensor.type == 'TEMP_HUMIDITY'

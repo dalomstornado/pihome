@@ -49,7 +49,7 @@ const drawGauge = (gauge, value) => {
 
 const init = (sensors) => {
   chartsData = new Map();
-  
+   
   for (let sensor of sensors){
     for (let gauge of sensor.gauges){
       let chartData = [['Label', 'Value'], [gauge.name, 0]];
