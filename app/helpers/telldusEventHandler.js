@@ -26,29 +26,10 @@ const getMeasureType = (type) => {
 	}
 };
 
-const test = (deviceId,protocol,model,type,value,timestamp) => {
-	console.log('New sensor event received: ',deviceId,protocol,model,type,value,timestamp);
-	const event = {
-		moment: moment(timestamp, 'x'),
-		sensor: {
-			id: deviceId,
-			name: getSensorName(deviceId)
-		},
-		measure: {
-			type: getMeasureType(type),
-			value: Number.parseFloat(value)
-		}
-	};
-	console.log(event);
-	if (event.sensor.name !== UNKNOWN && event.measure.type !== UNKNOWN) {
-		processEvent(event);
-	} else {
-		console.log('Dropping event', event);
-	}
-};
-
-const init = () => {
+const addSensorEventListener = () => {
 	const listener = telldus.addSensorEventListener((deviceId, protocol, model, type, value, timestamp) => {
+		console.log('New sensor event received: ',deviceId,protocol,model,type,value,timestamp);
+
   		const event = {
   			moment: moment(timestamp, 'x'),
   			sensor: {
@@ -66,7 +47,20 @@ const init = () => {
   			console.log('Dropping event', event);	
   		}
 	});
+	return listener;
+};
+
+const addDeviceEventListener = () => {
+	const istener = telldus.addDeviceEventListener(function(deviceId, status) {
+		console.log('status', status);
+  		console.log('Device ' + deviceId + ' is now ' + status.name);
+	});
+	return listener;
+};
+
+const init = () => {
+	const sensorListener = addDeviceEventListener();
+	const deviceListener = addDeviceEventListener();
 };
 
 init();
-//test(135, 'proto', 'model', 1, 10, 1234584868767);
