@@ -51,7 +51,7 @@ const addSensorEventListener = () => {
 };
 
 const addDeviceEventListener = () => {
-	const istener = telldus.addDeviceEventListener(function(deviceId, status) {
+	const listener = telldus.addDeviceEventListener(function(deviceId, status) {
 		console.log('status', status);
   		console.log('Device ' + deviceId + ' is now ' + status.name);
 	});
@@ -59,7 +59,7 @@ const addDeviceEventListener = () => {
 };
 
 const init = () => {
-	const sensorListener = addDeviceEventListener();
+	const sensorListener = addSensorEventListener();
 	const deviceListener = addDeviceEventListener();
 };
 
