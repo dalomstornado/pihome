@@ -2,6 +2,7 @@ const types = require('../common/types');
 const notify = require('../helpers/notify');
 const limits = require('../common/limits');
 const mongodb = require('../helpers/mongodb');
+const triggerDevices = require('../helpers/telldusDeviceHandler');
 
 const getLowerLimit = (event) => {
 	const type = types.MeasureType[event.measure.type];
@@ -68,12 +69,14 @@ const getSeverity = (event) => {
 const processEvent = (event) => {
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
-		console.log(severity);
+		
 		if (severity >= types.Severity.ALARM) {
-			notify(event.severity, `Sensor ${event.sensorName} has a ${event.measureType} of ${event.value}`, event.moment);
+			triggerDevices(event.sensor.triggers, event.measure.value);
+			notify(event.severity, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.value}`, event.moment);
 		}
 		switch (event.measure.type) {
 			case types.MeasureType.ON_OFF:
+				mongodb.insertDeviceAction(event)
 				break;
 			case types.MeasureType.TEMPERATURE:
 				mongodb.insertTemperature(event);

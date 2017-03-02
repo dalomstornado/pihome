@@ -1,9 +1,7 @@
-{
-	"devices": [
-		{
-			"id": 10,
-			"name": "Källardörr",
-			"trigger": [20, 21, 22]
-		}
-	]
-}
+[
+	{
+		"id": 10,
+		"name": "CellarDoor",
+		"triggers": [20, 21, 22]
+	}
+]

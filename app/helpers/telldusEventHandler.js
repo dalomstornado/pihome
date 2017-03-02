@@ -2,6 +2,7 @@ const types = require('../common/types');
 const processEvent = require('../helpers/processEvent');
 const telldus = require('telldus');
 const config = require('../models/config.json');
+const devices = require('../models/devices.json');
 const moment = require('moment');
 const UNKNOWN = 'UNKNOWN';
 
@@ -11,6 +12,16 @@ const getSensorName = (deviceId) => {
 	});
 	if (sensor) {
 		return sensor.name;	
+	}
+	return UNKNOWN;
+};
+
+const getDevice = (deviceId) => {
+	const device = devices.find((device) => {
+		return device.id === deviceId; 
+	});
+	if (device) {
+		return device;	
 	}
 	return UNKNOWN;
 };
@@ -44,16 +55,34 @@ const addSensorEventListener = () => {
   		if (event.sensor.name !== UNKNOWN && event.measure.type !== UNKNOWN) {
   			processEvent(event);
   		} else {
-  			console.log('Dropping event', event);	
-  		}
+			console.log('Dropping sensor event. deviceId ', deviceId);	  		}
 	});
 	return listener;
 };
 
 const addDeviceEventListener = () => {
 	const listener = telldus.addDeviceEventListener(function(deviceId, status) {
-		console.log('status', status);
-  		console.log('Device ' + deviceId + ' is now ' + status.name);
+		console.log('New device event recieved: ' + deviceId + ' is now ' + status.name);
+
+		const device = getDevice(deviceId);
+		if (device == UNKNOWN) {
+			console.log('Dropping device event. deviceId ', deviceId);	
+			return;
+		}
+
+		const event = {
+			moment: moment(),
+			sensor: {
+				id: deviceId,
+				name: device.name,
+				triggers: device.triggers
+			},
+			measure: {
+				type: types.MeasureType.ON_OFF,
+				value: status.name
+			},
+		};
+		processEvent(event);
 	});
 	return listener;
 };

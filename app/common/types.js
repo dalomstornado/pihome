@@ -21,4 +21,9 @@ const Severity = {
 	ALARM: 2
 };
 
+const Status = {
+	ON: 'ON',
+	OFF: 'OFF'
+}
+
 module.exports = { MeasureType, SensorType, PresenceStatus, Severity };
