@@ -10,7 +10,7 @@ const triggerDevices = (deviceIds, status) => {
 				});
 				break;
 			case types.Status.OFF:
-				telldus.turnOFF(deviceIds[i], (err) => {
+				telldus.turnOff(deviceIds[i], (err) => {
 					console.log('Device ' + deviceIds[i] + ' is now OFF')
 				});
 				break;

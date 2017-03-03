@@ -87,9 +87,34 @@ const addDeviceEventListener = () => {
 	return listener;
 };
 
+const testDeviceEventListener = (deviceId, status) => {
+	console.log('New device event recieved: ' + deviceId + ' is now ' + status.name);
+	const device = getDevice(deviceId);
+	if (device == UNKNOWN) {
+		console.log('Dropping device event. deviceId ', deviceId);	
+		return;
+	}
+
+	const event = {
+		moment: moment(),
+		sensor: {
+			id: deviceId,
+			name: device.name,
+			triggers: device.triggers
+		},
+		measure: {
+			type: types.MeasureType.ON_OFF,
+			value: status.name
+		},
+	};
+	processEvent(event);
+};
+
 const init = () => {
 	const sensorListener = addSensorEventListener();
 	const deviceListener = addDeviceEventListener();
+	testDeviceEventListener(11, {name: types.Status.ON})
+	testDeviceEventListener(11, {name: types.Status.OFF})
 };
 
 init();

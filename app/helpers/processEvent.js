@@ -23,7 +23,6 @@ const getUpperLimit = (event) => {
 };
 
 const resolveOnOff = (resolve) => {
-	console.log('in on off');
 	mongodb.findPresenceStatus().then((prescence) => {
 		if (prescence === types.PresenceStatus.AWAY) {
 			resolve(types.Severity.ALARM);
@@ -55,7 +54,7 @@ const resolveTempHumidity = (resolve, event) => {
 const getSeverity = (event) => {
 	const type = types.MeasureType[event.measure.type];
 	const value = event.measure.value;
-	
+
 	return new Promise((resolve, reject) => {
 		if (type === types.MeasureType.ON_OFF) {
 			resolveOnOff(resolve);
@@ -70,6 +69,8 @@ const processEvent = (event) => {
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
 		
+		console.log('severity', severity);
+		console.log('event', event);
 		if (severity >= types.Severity.ALARM) {
 			triggerDevices(event.sensor.triggers, event.measure.value);
 			notify(event.severity, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.value}`, event.moment);

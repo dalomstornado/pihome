@@ -149,10 +149,5 @@ const findTemperature = (top) => { //fromDate, sensorId
 		});
 	});
 };
-/*
-findTemperature(10).then((items) => {
-	console.log(items);
-});
-*/
 
-module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findHumidity, findTemperature };
+module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findHumidity, findTemperature, insertDeviceAction };
