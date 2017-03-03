@@ -11,7 +11,7 @@ const getMeasureType = (type) => {
 		case 2:
 			return types.MeasureType.HUMIDITY;
 		default:
-			return types.MeasureType.UNKNOWN;
+			return types.UNKNOWN;
 	}
 };
 
@@ -31,7 +31,7 @@ const addSensorEventListener = () => {
 				value: Number.parseFloat(value)
   			}
   		};
-  		if (event.sensor.name !== UNKNOWN && event.measure.type !== UNKNOWN) {
+  		if (event.sensor.name !== types.UNKNOWN && event.measure.type !== types.UNKNOWN) {
   			processEvent(event);
   		} else {
 			console.log('Dropping sensor event. deviceId ', deviceId);	  		}
@@ -44,7 +44,7 @@ const addDeviceEventListener = () => {
 		console.log('New device event recieved: ' + deviceId + ' is now ' + status.name);
 
 		const device = sensorHandler.getDevice(deviceId);
-		if (device == types.SensorTypes.UNKNOWN) {
+		if (device == types.UNKNOWN) {
 			console.log('Dropping device event. deviceId ', deviceId);	
 			return;
 		}
@@ -70,7 +70,7 @@ const testDeviceEventListener = (deviceId, status) => {
 	console.log('New device event recieved: ' + deviceId + ' is now ' + status.name);
 	
 	const device = sensorHandler.getDevice(deviceId);
-	if (device == types.SensorType.UNKNOWN) {
+	if (device == types.UNKNOWN) {
 		console.log('Dropping device event. deviceId ', deviceId);	
 		return;
 	}

@@ -28,4 +28,6 @@ const Status = {
 	OFF: 'OFF'
 }
 
-module.exports = { MeasureType, SensorType, PresenceStatus, Severity, Status };
+const UNKNOWN = 'UNKNOWN';
+
+module.exports = { MeasureType, SensorType, PresenceStatus, Severity, Status, UNKNOWN };
