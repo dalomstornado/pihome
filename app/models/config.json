@@ -4,6 +4,7 @@
       "id": 135,
       "name": "Sensor 1",
       "type": "TEMP_HUMIDITY",
+      "triggers": null,
       "gauges": [
         {
           "id": "gauge11",

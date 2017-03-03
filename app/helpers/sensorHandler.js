@@ -22,4 +22,21 @@ const getSensor = (id) => {
 	return types.UNKNOWN;
 }
 
-module.exports = { getDevice, getSensor };
+const createEvent (id) => {
+	//todo: can be both device or sensor event.
+
+	return {
+		moment: moment(),
+			sensor: {
+				id: device.id,
+				name: device.name,
+				triggers: device.triggers
+			},
+			measure: {
+				type: types.MeasureType.ON_OFF,
+				value: status.name
+			},
+	};	
+}
+
+module.exports = { getDevice, getSensor, createEvent };
