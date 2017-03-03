@@ -1,30 +1,8 @@
 const types = require('../common/types');
 const processEvent = require('../helpers/processEvent');
 const telldus = require('telldus');
-const config = require('../models/config.json');
-const devices = require('../models/devices.json');
 const moment = require('moment');
-const UNKNOWN = 'UNKNOWN';
-
-const getSensorName = (deviceId) => {
-	const sensor = config.sensors.find((sensor) => {
-		return sensor.id === deviceId; 
-	});
-	if (sensor) {
-		return sensor.name;	
-	}
-	return UNKNOWN;
-};
-
-const getDevice = (deviceId) => {
-	const device = devices.find((device) => {
-		return device.id === deviceId; 
-	});
-	if (device) {
-		return device;	
-	}
-	return UNKNOWN;
-};
+const sensorHandler = require('../helpers/sensorHandler');
 
 const getMeasureType = (type) => {
 	switch (type) {
@@ -33,7 +11,7 @@ const getMeasureType = (type) => {
 		case 2:
 			return types.MeasureType.HUMIDITY;
 		default:
-			return UNKNOWN;
+			return types.MeasureType.UNKNOWN;
 	}
 };
 
@@ -41,11 +19,12 @@ const addSensorEventListener = () => {
 	const listener = telldus.addSensorEventListener((deviceId, protocol, model, type, value, timestamp) => {
 		console.log('New sensor event received: ',deviceId,protocol,model,type,value,timestamp);
 
+		const sensor = sensorHandler.getSensor(deviceId);
   		const event = {
   			moment: moment(timestamp, 'x'),
   			sensor: {
-  				id: deviceId,
-  				name: getSensorName(deviceId)
+  				id: sensor.id,
+  				name: sensor.name
   			},
   			measure: {
   				type: getMeasureType(type),
@@ -64,8 +43,8 @@ const addDeviceEventListener = () => {
 	const listener = telldus.addDeviceEventListener(function(deviceId, status) {
 		console.log('New device event recieved: ' + deviceId + ' is now ' + status.name);
 
-		const device = getDevice(deviceId);
-		if (device == UNKNOWN) {
+		const device = sensorHandler.getDevice(deviceId);
+		if (device == types.SensorTypes.UNKNOWN) {
 			console.log('Dropping device event. deviceId ', deviceId);	
 			return;
 		}
@@ -73,7 +52,7 @@ const addDeviceEventListener = () => {
 		const event = {
 			moment: moment(),
 			sensor: {
-				id: deviceId,
+				id: device.id,
 				name: device.name,
 				triggers: device.triggers
 			},
@@ -89,8 +68,9 @@ const addDeviceEventListener = () => {
 
 const testDeviceEventListener = (deviceId, status) => {
 	console.log('New device event recieved: ' + deviceId + ' is now ' + status.name);
-	const device = getDevice(deviceId);
-	if (device == UNKNOWN) {
+	
+	const device = sensorHandler.getDevice(deviceId);
+	if (device == types.SensorType.UNKNOWN) {
 		console.log('Dropping device event. deviceId ', deviceId);	
 		return;
 	}
@@ -98,7 +78,7 @@ const testDeviceEventListener = (deviceId, status) => {
 	const event = {
 		moment: moment(),
 		sensor: {
-			id: deviceId,
+			id: device.id,
 			name: device.name,
 			triggers: device.triggers
 		},
