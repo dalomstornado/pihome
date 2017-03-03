@@ -9,7 +9,7 @@ const getDevice = (id) => {
 	if (device) {
 		return device;	
 	}
-	return types.SensorTypes.UNKNOWN;
+	return types.UNKNOWN;
 }
 
 const getSensor = (id) => {
@@ -19,7 +19,7 @@ const getSensor = (id) => {
 	if (sensor) {
 		return sensor;	
 	}
-	return types.SensorTypes.UNKNOWN;
+	return types.UNKNOWN;
 }
 
 module.exports = { getDevice, getSensor };
