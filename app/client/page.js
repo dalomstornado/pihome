@@ -5,43 +5,43 @@ import { convertRawDataToLineChartFriendly } from './dataHandler';
 
 const updateLineChart = (lineChart) => {
 	const inDataTemp = [ { 
-    date: '2017-02-10T00:57:36.211Z',
+    date: '2016-01-10T00:57:36.211Z',
     sensorId: 135,
     severity: 0,
     value: 5 + Math.round(10 * Math.random()) },
   {
-    date: '2017-02-10T03:57:28.991Z',
+    date: '2016-02-10T03:57:28.991Z',
     sensorId: 135,
     severity: 0,
     value: 15 + Math.round(10 * Math.random()) },
   {
-    date: '2017-02-10T20:30:02.291Z',
+    date: '2016-03-10T20:30:02.291Z',
     sensorId: 135,
     severity: 0,
     value: -5 + Math.round(15 * Math.random()) },
   { 
-    date: '2017-02-10T23:29:29.010Z',
+    date: '2016-04-10T23:29:29.010Z',
     sensorId: 135,
     severity: 0,
     value: 15 + Math.round(10 * Math.random()) } ];
 
 const inDataTemp2 = [ { 
-    date: '2017-02-10T00:57:36.211Z',
+    date: '2016-01-10T00:57:36.211Z',
     sensorId: 135,
     severity: 0,
     value: -5 + Math.round(15 * Math.random()) },
   {
-    date: '2017-02-10T03:57:28.991Z',
+    date: '2016-02-10T03:57:28.991Z',
     sensorId: 135,
     severity: 0,
     value: 0 + Math.round(15 * Math.random()) },
   {
-    date: '2017-02-10T20:30:02.291Z',
+    date: '2016-03-10T20:30:02.291Z',
     sensorId: 135,
     severity: 0,
     value: 10 + Math.round(15 * Math.random()) },
   { 
-    date: '2017-02-10T23:29:29.010Z',
+    date: '2016-04-10T23:29:29.010Z',
     sensorId: 135,
     severity: 0,
     value: 15 + Math.round(10 * Math.random()) } ];

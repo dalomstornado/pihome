@@ -1,6 +1,9 @@
 .sensor {
 	outline: grey dotted;
-	h3 {
-		text-align: center;	
+	.gauge {
+		display: inline-block;
+	}
+	.lineChart {
+		display: inline-block;
 	}
 }

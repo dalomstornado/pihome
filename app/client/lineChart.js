@@ -3,7 +3,7 @@ const dataHandler = require('./dataHandler');
 const moment = require('moment');
 
 const options = {
-  width: 1000,
+  width: 600,
   height: 200,
 };
 
@@ -13,7 +13,7 @@ const charts = new Map();
 const drawLineChart = (lineChart, values) => {
   //var data = chartsData.get(lineChart.id);
   let chartData = new google.visualization.DataTable();
-  chartData.addColumn('date', 'Date');
+  chartData.addColumn('date');
   chartData.addColumn('number', 'Temp');
   chartData.addColumn('number', 'Temp outdoors');
 

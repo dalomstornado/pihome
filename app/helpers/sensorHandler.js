@@ -22,7 +22,7 @@ const getSensor = (id) => {
 	return types.UNKNOWN;
 }
 
-const createEvent (id) => {
+const createEvent = (id) => {
 	//todo: can be both device or sensor event.
 
 	return {
