@@ -1,7 +1,6 @@
 const moment = require('moment');
 
 const reduceInMinutes = 4 * 60;
-
 const reduceHours = 
     [{ start: 0, hour: 2, stop: 4 },
     { start: 4, hour: 6, stop: 8 },
@@ -12,12 +11,62 @@ const reduceHours =
 
 const isInside = (momentToAggregateTo, currentMoment) => {
     let diffInMs = currentMoment.diff(momentToAggregateTo);
-    var diffInMinutes =  moment.duration(diffInMs).asMinutes();
+    let diffInMinutes =  moment.duration(diffInMs).asMinutes();
     if (diffInMinutes < reduceInMinutes) {
         return true;
     }
     return false;
 };
+
+const getReducedMoment = (date) => {
+    const m = moment(date);
+    for (let i = 0; i < reduceHours.length; i++) {        
+        if (m.hours() >= reduceHours[i].start && m.hours() < reduceHours[i].stop) {
+            m.hours(reduceHours[i].hour);
+            m.minutes(0);
+            m.seconds(0);
+            m.milliseconds(0);
+
+            return m;
+        }
+    } 
+}
+
+const createTimeArray = (from, to = new Date()) => {
+    const start = getReducedMoment(from);
+    const stop = getReducedMoment(to);
+    console.log('stop', stop.toDate());
+
+    let ret = new Array();
+    let currentMoment = start;
+    while (currentMoment <= stop)
+    {
+        ret.push([currentMoment.toDate()])
+        currentMoment = currentMoment.add(reduceInMinutes, 'm');
+    }
+
+    return ret;
+};
+
+const addTo = (timeArray, dataSerie) => {
+    let numberOfValues = 1;
+    let runningValue;
+    for(let i=0; i < dataSerie.length; i++)
+    {
+        let m = getReducedMoment(dataSerie[i].date);
+        for (let x = 0; x < timeArray.length; x++){
+            let m2 = moment(timeArray[x][0]);
+            if (m.isSame(m2)){
+                timeArray[x][banan] += dataSerie[i].value / 2;
+            }
+            if (!m2.isSame(m)){
+                timeArray .add()
+                numberOfValues = 1;
+            }
+        }
+        numberOfValues++;
+    }
+}
 
 const getMomentToAggregateTo = (currentMoment) => {
     let hour = currentMoment.hours();
@@ -99,5 +148,7 @@ const convertRawDataToLineChartFriendly = (data, referenceData) => {
     map = reduce(referenceData, map, 1);
     return convertMapToArray(map);
 };
+
+console.log('timeArray', createTimeArray(moment('2017-03-01')));
 
 module.exports = { convertRawDataToLineChartFriendly }
