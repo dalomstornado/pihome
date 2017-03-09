@@ -89,7 +89,7 @@ const inDataTemp4 = [ {
     value: 15 + Math.round(10 * Math.random()) } ];
 
 	const values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3, inDataTemp4]);
-	drawLineChart(lineChart, values, ['ett', 'tva', 'tre', 'fyra']);
+	drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3', 'Sensor 4']);
     //TODO: Add api for getting historicaldata per sensor and type (then we have the name as well)
 };
 

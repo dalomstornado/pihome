@@ -1,14 +1,12 @@
 extends ./layout
 
-mixin tempHumiditySensor(sensor) 
-	.sensor(id=sensor.id)
+mixin gauge-pair(sensor) 
+	.gauge-pair(id=sensor.id)
 		h3= sensor.name 
 			.temperature
 				.gauge(id=sensor.gauges[0].id)
-				.lineChart(id=sensor.lineCharts[0].id)
 			.humidity
 				.gauge(id=sensor.gauges[1].id)
-				.lineChart(id=sensor.lineCharts[1].id)
 
 block title  
 	Title
@@ -23,4 +21,13 @@ block content
 
 	each sensor in sensors
 		if sensor.type == 'TEMP_HUMIDITY'
-			+tempHumiditySensor(sensor)
+			.gauges
+				+gauge-pair(sensor)
+	.lineChart
+		.temperature
+			h3 Temp
+			.lineChart(id='lineChart11')
+	.lineChart
+		.humidty
+			h3 Humidity
+			.lineChart(id='lineChart12')

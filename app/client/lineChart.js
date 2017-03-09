@@ -1,7 +1,7 @@
 import { MeasureType, SensorType } from '../common/types';
 
 const options = {
-  width: 600,
+  width: 700,
   height: 200,
 };
 

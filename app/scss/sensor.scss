@@ -1,9 +1,11 @@
-.sensor {
-	outline: grey dotted;
-	.gauge {
-		display: inline-block;
-	}
-	.lineChart {
-		display: inline-block;
-	}
+.gauges, .gauge-pair {
+	display: inline-block;
+}
+.gauges {
+	margin-left: 20px;
+}
+
+.gauge-pair {
+	outline: grey dotted 1px;
+	text-align: center;
 }

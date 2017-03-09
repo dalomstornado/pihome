@@ -7,6 +7,7 @@
       "triggers": null,
       "gauges": [
         {
+          "TODO": "REMOVE GAUGES AND LINECHARTS FROM CONFIG",
           "id": "gauge11",
           "name": "Temp",
           "type": "TEMPERATURE"
@@ -25,6 +26,99 @@
         },
         {
           "id": "lineChart12",
+          "name": "Humidity",
+          "type": "HUMIDITY"
+        }
+      ]
+    },
+    {
+      "id": 136,
+      "name": "Sensor 2",
+      "type": "TEMP_HUMIDITY",
+      "triggers": null,
+      "gauges": [
+        {
+          "TODO": "REMOVE GAUGES AND LINECHARTS FROM CONFIG",
+          "id": "gauge21",
+          "name": "Temp",
+          "type": "TEMPERATURE"
+        },
+        {
+          "id": "gauge22",
+          "name": "Humidity",
+          "type": "HUMIDITY"
+        }
+      ],
+      "lineCharts": [
+        {
+          "id": "lineChart21",
+          "name": "Temp",
+          "type": "TEMPERATURE"
+        },
+        {
+          "id": "lineChart22",
+          "name": "Humidity",
+          "type": "HUMIDITY"
+        }
+      ]
+    },
+    {
+      "id": 137,
+      "name": "Sensor 3",
+      "type": "TEMP_HUMIDITY",
+      "triggers": null,
+      "gauges": [
+        {
+          "TODO": "REMOVE GAUGES AND LINECHARTS FROM CONFIG",
+          "id": "gauge31",
+          "name": "Temp",
+          "type": "TEMPERATURE"
+        },
+        {
+          "id": "gauge32",
+          "name": "Humidity",
+          "type": "HUMIDITY"
+        }
+      ],
+      "lineCharts": [
+        {
+          "id": "lineChart31",
+          "name": "Temp",
+          "type": "TEMPERATURE"
+        },
+        {
+          "id": "lineChart32",
+          "name": "Humidity",
+          "type": "HUMIDITY"
+        }
+      ]
+    },
+    {
+      "id": 138,
+      "name": "Sensor 4",
+      "type": "TEMP_HUMIDITY",
+      "triggers": null,
+      "gauges": [
+        {
+          "TODO": "REMOVE GAUGES AND LINECHARTS FROM CONFIG",
+          "id": "gauge41",
+          "name": "Temp",
+          "type": "TEMPERATURE"
+        },
+        {
+          "id": "gauge42",
+          "name": "Humidity",
+          "type": "HUMIDITY"
+        }
+      ],
+      "lineCharts": [
+        {
+          "id": "lineChart41",
+          "name": "Temp",
+          "type": "TEMPERATURE"
+        },
+        {
+          "id": "lineChart42",
           "name": "Humidity",
           "type": "HUMIDITY"
         }
