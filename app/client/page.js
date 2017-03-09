@@ -46,7 +46,7 @@ const inDataTemp2 = [ {
     severity: 0,
     value: 15 + Math.round(10 * Math.random()) } ];
 
-	const values = lineChartData(new Date('2016-01-10'), inDataTemp, inDataTemp2);
+	const values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2]);
 	drawLineChart(lineChart, values, ['inDataTemp', 'inDataTemp2']);
 };
 

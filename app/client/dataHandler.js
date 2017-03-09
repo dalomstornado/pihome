@@ -55,7 +55,6 @@ Array.prototype.add = function(dataSerie, index) {
     for(let i = 0; i < dataSerie.length; i++) {
         const thisMoment = getReducedMoment(dataSerie[i].date);
         const thisTime = findTime(thisMoment, this);
-        
         if (thisTime) {
             if (thisTime[index]){
                 thisTime[index] = (thisTime[index] + dataSerie[i].value) / 2;    
@@ -102,7 +101,7 @@ const createTestDataSeries = (from, to = new Date()) => {
         currentMoment.add(400, 'm');
     }
     return ret;
-}
+};
 
 const test = () => {
     const from = new Date('2017-03-08');
@@ -113,7 +112,7 @@ const test = () => {
 
     let ret = lineChartData(from, [testData, testData2], ['test1', 'test2'])
     console.log('ret', ret); 
-}
-test();
+};
+//test();
 
 module.exports = { lineChartData }

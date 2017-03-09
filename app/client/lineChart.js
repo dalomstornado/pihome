@@ -7,7 +7,7 @@ const options = {
 
 const charts = new Map();
 
-const drawLineChart = (lineChart, values, names) => {  
+const drawLineChart = (lineChart, values, names) => {
   let chartData = new google.visualization.DataTable();
   chartData.addColumn('date');
   for(let i = 0; i < names.length; i++) {
