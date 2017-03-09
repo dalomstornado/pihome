@@ -108,12 +108,12 @@ const init = (sensors) => {
 		for(let gauge of sensor.gauges) {
 			setInterval(() => {
 				updateGauge(gauge);
-			}, 3000 + Math.round(10000 * Math.random()));
+			}, 10000 + Math.round(10000 * Math.random()));
 		};
 		for(let lineChart of sensor.lineCharts) {
 			setInterval(() => {
 				updateLineChart(lineChart);
-			}, 3000 + Math.round(10000 * Math.random()));
+			}, 10000 + Math.round(10000 * Math.random()));
 		};
 	};
 };

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 135,
+    "name": "Sensor 1",
+    "type": "TEMP_HUMIDITY",
+    "triggers": null,
+  },
+  {
+    "id": 136,
+    "name": "Sensor 2",
+    "type": "TEMP_HUMIDITY",
+    "triggers": null,
+  },
+  {
+    "id": 137,
+    "name": "Sensor 3",
+    "type": "TEMP_HUMIDITY",
+    "triggers": null,
+  },
+  {
+    "id": 138,
+    "name": "Sensor 4",
+    "type": "TEMP_HUMIDITY",
+    "triggers": null,
+  }
+]
