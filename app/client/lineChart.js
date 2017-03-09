@@ -29,7 +29,7 @@ const init = (sensors) => {
   for (let sensor of sensors){    
     for (let lineChart of sensor.lineCharts){
       google.charts.setOnLoadCallback(function(){
-        drawLineChart(lineChart, [[new Date(), 0, 0]], ['serie1', 'serie2']); //TODO get sensor names
+        drawLineChart(lineChart, [[new Date(), 0]], ['serie1']); 
       });
     };
   };
