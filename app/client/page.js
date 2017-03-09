@@ -2,6 +2,22 @@ import { drawGauge } from './gauge';
 import { MeasureType, SensorType } from '../common/types';
 import { drawLineChart } from './lineChart';
 import { lineChartData } from './dataHandler';
+const moment = require(moment);
+
+const generateTestData = (from, to = new Date()) => {
+    const start = moment(from);
+    const stop = moment(to);
+
+    let currentMoment = start;
+    let ret = new Array();
+    while (currentMoment <= to)
+    {
+        currentMoment.add(400, 'm');
+        ret.push({date: currentMoment.toDate(), value: -10 + Math.round(30 * Math.random()) });
+        console.log('currentMoment', currentMoment);
+    }
+    return ret;
+}
 
 const updateLineChart = (lineChart) => {
 	const inDataTemp = [ { 
@@ -89,6 +105,13 @@ const inDataTemp4 = [ {
     value: 15 + Math.round(10 * Math.random()) } ];
 
 	const values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3, inDataTemp4]);
+    /*
+    const values = lineChartData(new Date('2016-01-10'), 
+     [generateTestData(new Date('2017-02-20')),
+      generateTestData(new Date('2017-02-20')),
+       generateTestData(new Date('2017-02-20')),
+        generateTestData(new Date('2017-02-20'))]);
+        */
 	drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3', 'Sensor 4']);
     //TODO: Add api for getting historicaldata per sensor and type (then we have the name as well)
 };
