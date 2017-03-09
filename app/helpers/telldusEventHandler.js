@@ -93,8 +93,8 @@ const testDeviceEventListener = (deviceId, status) => {
 const init = () => {
 	const sensorListener = addSensorEventListener();
 	const deviceListener = addDeviceEventListener();
-	testDeviceEventListener(11, {name: types.Status.ON})
-	testDeviceEventListener(11, {name: types.Status.OFF})
+	//testDeviceEventListener(11, {name: types.Status.ON})
+	//testDeviceEventListener(11, {name: types.Status.OFF})
 };
 
 init();

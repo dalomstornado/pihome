@@ -1,6 +1,5 @@
 const moment = require('moment');
 
-const reduceInMinutes = 4 * 60;
 const reduceHours = 
     [{ start: 0, hour: 2, stop: 4 },
     { start: 4, hour: 6, stop: 8 },
@@ -9,13 +8,8 @@ const reduceHours =
     { start: 16, hour: 18, stop: 20 },
     { start: 20, hour: 22, stop: 24 }];
 
-const isInside = (momentToAggregateTo, currentMoment) => {
-    let diffInMs = currentMoment.diff(momentToAggregateTo);
-    let diffInMinutes =  moment.duration(diffInMs).asMinutes();
-    if (diffInMinutes < reduceInMinutes) {
-        return true;
-    }
-    return false;
+const reduceInMinutes = () => {
+    return (reduceHours[0].stop - reduceHours[0].start) * 60;
 };
 
 const getReducedMoment = (date) => {
@@ -30,125 +24,96 @@ const getReducedMoment = (date) => {
             return m;
         }
     } 
-}
+};
 
 const createTimeArray = (from, to = new Date()) => {
     const start = getReducedMoment(from);
     const stop = getReducedMoment(to);
-    console.log('stop', stop.toDate());
 
     let ret = new Array();
     let currentMoment = start;
     while (currentMoment <= stop)
     {
         ret.push([currentMoment.toDate()])
-        currentMoment = currentMoment.add(reduceInMinutes, 'm');
+        currentMoment = currentMoment.add(reduceInMinutes(), 'm');
     }
 
     return ret;
 };
 
-const addTo = (timeArray, dataSerie) => {
-    let numberOfValues = 1;
-    let runningValue;
-    for(let i=0; i < dataSerie.length; i++)
-    {
-        let m = getReducedMoment(dataSerie[i].date);
-        for (let x = 0; x < timeArray.length; x++){
-            let m2 = moment(timeArray[x][0]);
-            if (m.isSame(m2)){
-                timeArray[x][banan] += dataSerie[i].value / 2;
-            }
-            if (!m2.isSame(m)){
-                timeArray .add()
-                numberOfValues = 1;
-            }
+const findTime = (m, timeArray) => {
+    for (let i = 0; i < timeArray.length; i++) {
+        let m2 = moment(timeArray[i][0]);
+        if (m2.isSame(m)) {
+            return timeArray[i];
         }
-        numberOfValues++;
     }
-}
+    return undefined;
+};
 
-const getMomentToAggregateTo = (currentMoment) => {
-    let hour = currentMoment.hours();
-    for (let i = 0; i < reduceHours.length; i++) {
-        if (hour >= reduceHours[i].start && hour < reduceHours[i].stop) {
-            let ret = moment(currentMoment);
-            ret.hours(reduceHours[i].hour);
-            ret.minutes(0);
-            ret.seconds(0);
-            ret.milliseconds(0);
-
-            return ret;
+Array.prototype.add = function(dataSerie, index) {
+    for(let i = 0; i < dataSerie.length; i++) {
+        const thisMoment = getReducedMoment(dataSerie[i].date);
+        const thisTime = findTime(thisMoment, this);
+        
+        if (thisTime) {
+            if (thisTime[index]){
+                thisTime[index] = (thisTime[index] + dataSerie[i].value) / 2;    
+            } else {
+                thisTime[index] = dataSerie[i].value;
+            }    
         }
     }
 };
 
-const reduce = (dataSerie, outputMap = new Map(), entryIndex = 0) => {
-    let momentToAggregateTo = undefined;
-    let runningValue = undefined;
-    let x = undefined;
-    let entry = undefined;
-
-    for(let i = 0; i < dataSerie.length; i++) {
-        if (!momentToAggregateTo) {
-            momentToAggregateTo = getMomentToAggregateTo(moment(dataSerie[i].date));
-            x = 0;
-            runningValue = 0;
-        }
-        
-        let currentMoment = moment(dataSerie[i].date);
-        if (isInside(momentToAggregateTo, currentMoment)) {
-            x++;
-            runningValue += dataSerie[i].value;
-        } else {
-            entry = outputMap.get(momentToAggregateTo.toString());
-            if (!entry) {
-                entry = new Array(entryIndex + 1); //Not needed to sizw, js apperently works on dynamic arrays
-                outputMap.set(momentToAggregateTo.toString(), entry);
-            }
-            entry[entryIndex] = runningValue / x;
-            momentToAggregateTo = undefined;
+Array.prototype.clean = function() {
+    for (let i = 0; i < this.length; i++) {
+        if (this[i].length <= 1) {
+            this.splice(i, 1);
             i--;
         }
     }
-    //Adds the last (that was not added during else)
-    outputMap.set(momentToAggregateTo.toString(), entry);
-    return outputMap;
 };
 
-const convertMapToArray = (map) => {
-    let keys = Array.from(map.keys());
-    let ret = new Array();
-    for(let i = 0; i < keys.length; i++) {
-        let key = keys[i];
-        let entry = map.get(key);
-        let newEntry = [new Date(key)];
-        for(let x = 0; x < entry.length; x++){
-            newEntry.push(entry[x]);
-        }
-        ret.push(newEntry);
+const lineChartData = (from, dataSeries) => {
+    const timeArray = createTimeArray(from);
+    for(let i = 0; i < dataSeries.length; i++)
+    {
+        timeArray.add(dataSeries[i], i + 1);
+    }
+    timeArray.clean();
+    return timeArray;
+};
+
+const createTestDataSeries = (from, to = new Date()) => {
+    const start = moment(from);
+    start.hours = 0 + Math.round(23 * Math.random());
+    start.minutes = 0;
+    const stop = moment(to);
+    stop.hours = 0;
+    stop.minutes = 0;
+
+    const ret = new Array()
+    let currentMoment = start;
+    while (currentMoment <= stop)
+    {
+        const value = {'date': currentMoment.toDate(), 'value': Math.round(99 * Math.random()) };
+        ret.push(value)
+        currentMoment.add(400, 'm');
     }
     return ret;
-};
-
-const convertLineChartFriendlyArray = (dateSerie, dataSerieRef) => {
-    if (dateSerie.length != dataSerieRef.length) {
-        conole.log('Different length on series!');
-    }
-    let dataRows = [];
-    for(let i = 0; i < dataSerie.length; i++){
-        let row = [ dataSerie[i].date, dataSerie[i].value, dataSerieRef[i].value ];
-        dataRows.push(row);
-    }
-    return dataRows;
 }
 
-const convertRawDataToLineChartFriendly = (data, referenceData) => {
-    let map = reduce(data);
-    map = reduce(referenceData, map, 1);
-    return convertMapToArray(map);
-};
+const test = () => {
+    const from = new Date('2017-03-08');
+    let testData = createTestDataSeries(from);
+    console.log('testData', testData);
+    let testData2 = createTestDataSeries(from);
+    console.log('testData2', testData2);
 
-console.log('timeArray', createTimeArray(moment('2017-03-01')));
+    let ret = lineChartData(from, [testData, testData2], ['test1', 'test2'])
+    console.log('ret', ret); 
+}
+test();
 
-module.exports = { convertRawDataToLineChartFriendly }
+module.exports = { lineChartData }

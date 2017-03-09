@@ -1,7 +1,7 @@
 import { drawGauge } from './gauge';
 import { MeasureType, SensorType } from '../common/types';
 import { drawLineChart } from './lineChart';
-import { convertRawDataToLineChartFriendly } from './dataHandler';
+import { lineChartData } from './dataHandler';
 
 const updateLineChart = (lineChart) => {
 	const inDataTemp = [ { 
@@ -46,8 +46,8 @@ const inDataTemp2 = [ {
     severity: 0,
     value: 15 + Math.round(10 * Math.random()) } ];
 
-	const values = convertRawDataToLineChartFriendly(inDataTemp, inDataTemp2);
-	drawLineChart(lineChart, values)
+	const values = lineChartData(new Date('2016-01-10'), inDataTemp, inDataTemp2);
+	drawLineChart(lineChart, values, ['inDataTemp', 'inDataTemp2']);
 };
 
 const updateGauge = (gauge) => {

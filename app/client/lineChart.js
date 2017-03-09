@@ -1,6 +1,4 @@
 import { MeasureType, SensorType } from '../common/types';
-const dataHandler = require('./dataHandler');
-const moment = require('moment');
 
 const options = {
   width: 600,
@@ -8,14 +6,13 @@ const options = {
 };
 
 const charts = new Map();
-// let chartsData = undefined;
 
-const drawLineChart = (lineChart, values) => {
-  //var data = chartsData.get(lineChart.id);
+const drawLineChart = (lineChart, values, names) => {  
   let chartData = new google.visualization.DataTable();
   chartData.addColumn('date');
-  chartData.addColumn('number', 'Temp');
-  chartData.addColumn('number', 'Temp outdoors');
+  for(let i = 0; i < names.length; i++) {
+    chartData.addColumn('number', names[i]);    
+  }
 
   chartData.removeRows(0, chartData.getNumberOfRows());
   chartData.addRows(values);
@@ -29,20 +26,10 @@ const drawLineChart = (lineChart, values) => {
 };
 
 const init = (sensors) => {
-  //chartsData = new Map();
-
   for (let sensor of sensors){    
     for (let lineChart of sensor.lineCharts){
-      /*
-      const chartData = new google.visualization.DataTable();
-      chartData.addColumn('date', 'Date');
-      chartData.addColumn('number', 'Temp');
-      chartData.addColumn('number', 'Temp outdoors');
-      chartsData.set(lineChart.id, chartData);
-      */
-
       google.charts.setOnLoadCallback(function(){
-        drawLineChart(lineChart, [[new Date(), 0, 0]]);
+        drawLineChart(lineChart, [[new Date(), 0, 0]], ['serie1', 'serie2']); //TODO get sensor names
       });
     };
   };
