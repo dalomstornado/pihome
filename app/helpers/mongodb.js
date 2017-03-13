@@ -5,6 +5,17 @@ const types = require('../common/types');
 const url = 'mongodb://localhost:27017/pihome';
 const date = 'date';
 
+/*
+const createCollections = () => {
+	mongoClient.connect(url).then((db) => {
+		db.createCollection('temperature', { 'capped': true, 'size': 209715200 });
+		db.createCollection('humidity', { 'capped': true, 'size': 209715200 });
+		db.createCollection('device', { 'capped': true, 'size': 209715200 });
+		db.createCollection('presence', { 'capped': true, 'size': 209715200 });		                                                          		
+	});
+};
+*/
+
 const insertTemperature = (event) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
