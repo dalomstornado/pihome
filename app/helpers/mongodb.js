@@ -121,31 +121,11 @@ const findPresenceStatus = () => {
 	});
 };
 
-const findHumidity = (top) => {
-	return new Promise((resolve, reject) => {
-		mongoClient.connect(url).then((db) => {
-			let collection = db.collection('humidity')
-			collection.find().sort({ date: -1 }).limit(top).toArray((err, items) => {
-				if (err) {
-					reject(err);
-				} else {
-					resolve(items);
-				}
-				db.close();
-			});
-		})		
-		.catch((err) => {
-			console.log("ERROR", err)
-			reject(err);
-		});
-	});
-};
-
-const findTemperature = (top) => { //fromDate, sensorId
+const findTemperature = (sensorId) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			collection.find().sort({ date: -1 }).limit(top).toArray((err, items) => {
+			collection.find({ sensorId }, { date: 1, reading: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
@@ -161,4 +141,64 @@ const findTemperature = (top) => { //fromDate, sensorId
 	});
 };
 
-module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findHumidity, findTemperature, insertDeviceAction };
+const findTemperatures = (sensorId, from) => {
+	return new Promise((resolve, reject) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('temperature')
+			collection.find({ sensorId, date: { $gt: from }}, { date: 1, reading: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(items);
+				}
+				db.close();
+			});
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
+	});
+};
+
+const findHumidity = (sensorId) => {
+	return new Promise((resolve, reject) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('humidity')
+			collection.find({sensorId}, { date: 1, reading: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(items);
+				}
+				db.close();
+			});
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
+	});
+};
+
+const findHumidities = (sensorId, from) => {
+	return new Promise((resolve, reject) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('humidity')
+			collection.find({ sensorId, date: { $gt: from }}, { date: 1, reading: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
+				if (err) {
+					reject(err);
+				} else {
+					resolve(items);
+				}
+				db.close();
+			});
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
+	});
+};
+
+module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findTemperature, findTemperatures, findHumidity, findHumidities, insertDeviceAction };
