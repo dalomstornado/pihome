@@ -51,18 +51,18 @@ gulp.task('clientJs', function() {
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
         // Add transformation tasks to the pipeline here.
-        //.pipe(uglify())
+        .pipe(uglify())
         .on('error', gutil.log)
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./app/static/js/'));
 });
 
 //DIST
-gulp.task('del-dist', function(){
+gulp.task('dist-del', function(){
 	return del.sync('./dist/**/*', { force: true });
 });
 
-gulp.task('app-dist', function() {
+gulp.task('dist-app', function() {
 	gulp.src(['./app/app.js'])
 		.pipe(gulp.dest('./dist/'));
 	gulp.src(['./app/common/**/*'])
@@ -71,22 +71,22 @@ gulp.task('app-dist', function() {
 		.pipe(gulp.dest('./dist/helpers/'));
 });
 
-gulp.task('node-dist', function(){
+gulp.task('dist-npm', function(){
 	gulp.src(['./package.json'])
 		.pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('models-dist', function(){
+gulp.task('dist-models', function(){
 	gulp.src(['./app/models/**/*'])
 		.pipe(gulp.dest('./dist/models/'));
 });
 
-gulp.task('views-dist', function() {
+gulp.task('dist-views', function() {
 	gulp.src(['./app/views/**/*'])
 		.pipe(gulp.dest('./dist/views/'));
 });
 
-gulp.task('dist', ['sass', 'clientJs', 'del-dist', 'app-dist', 'node-dist', 'models-dist', 'views-dist']);
+gulp.task('dist', ['sass', 'clientJs', 'dist-del', 'dist-app', 'dist-npm', 'dist-models', 'dist-views']);
 
 gulp.task('dist-pi', ['dist'], function(){
 	gulp.src(['./dist/**/*'])
