@@ -8,4 +8,15 @@ const test = () => {
 
 	}
 };
+
+const getMunicipalities = (countyId) => {
+  return $.ajax({
+    url: `${aktivPropertySearchApiUrl}/municipalities`,
+    dataType: 'json',
+    data: {
+      countyId,
+    },
+  });
+};
+
 */
