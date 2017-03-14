@@ -65,8 +65,8 @@ gulp.task('del-dist', function(){
 gulp.task('app-dist', function() {
 	gulp.src(['./app/app.js'])
 		.pipe(gulp.dest('./dist/'));
-	gulp.src(['./app/config.json'])
-		.pipe(gulp.dest('./dist/'));
+	gulp.src(['./app/common/**/*'])
+		.pipe(gulp.dest('./dist/common/'));
 	gulp.src(['./app/helpers/**/*'])
 		.pipe(gulp.dest('./dist/helpers/'));
 });
@@ -76,9 +76,9 @@ gulp.task('node-dist', function(){
 		.pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('static-dist', function() {
-	gulp.src(['./app/static/**/*'])
-		.pipe(gulp.dest('./dist/static/'));
+gulp.task('models-dist', function(){
+	gulp.src(['./app/models/**/*'])
+		.pipe(gulp.dest('./dist/models/'));
 });
 
 gulp.task('views-dist', function() {
@@ -86,7 +86,7 @@ gulp.task('views-dist', function() {
 		.pipe(gulp.dest('./dist/views/'));
 });
 
-gulp.task('dist', ['del-dist', 'app-dist', 'node-dist', 'static-dist', 'views-dist']);
+gulp.task('dist', ['sass', 'clientJs', 'del-dist', 'app-dist', 'node-dist', 'models-dist', 'views-dist']);
 
 gulp.task('dist-pi', ['dist'], function(){
 	gulp.src(['./dist/**/*'])
