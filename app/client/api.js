@@ -9,12 +9,14 @@ const test = () => {
 	}
 };
 
-const getMunicipalities = (countyId) => {
+
+const getMunicipalities = (sensorId, from) => {
   return $.ajax({
-    url: `${aktivPropertySearchApiUrl}/municipalities`,
+    url: `${baseUrl}/temperatures`,
     dataType: 'json',
     data: {
-      countyId,
+      sensorId,
+      from
     },
   });
 };
