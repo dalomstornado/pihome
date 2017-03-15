@@ -79,9 +79,9 @@ gulp.task('dist-npm', function(){
 		.pipe(gulp.dest('./dist/'));
 });
 
-gulp.task('dist-models', function(){
-	gulp.src(['./app/models/**/*'])
-		.pipe(gulp.dest('./dist/models/'));
+gulp.task('dist-static', function() {
+	gulp.src(['./app/static/**/*'])
+		.pipe(gulp.dest('./dist/static/'));
 });
 
 gulp.task('dist-views', function() {
@@ -89,12 +89,7 @@ gulp.task('dist-views', function() {
 		.pipe(gulp.dest('./dist/views/'));
 });
 
-gulp.task('dist-static', function() {
-	gulp.src(['./app/static/**/*'])
-		.pipe(gulp.dest('./dist/static/'));
-});
-
-gulp.task('dist', ['sass', 'clientJs', 'dist-del', 'dist-app', 'dist-npm', 'dist-models', 'dist-views', 'dist-static']);
+gulp.task('dist', ['sass', 'clientJs', 'dist-del', 'dist-app', 'dist-npm', 'dist-static', 'dist-views']);
 
 gulp.task('dist-pi', ['dist'], function(){
 	gulp.src(['./dist/**/*'])
