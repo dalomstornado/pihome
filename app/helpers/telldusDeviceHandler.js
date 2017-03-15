@@ -1,13 +1,13 @@
 const telldus = require('telldus');
 const types = require('../common/types');
 const mongodb = require('../helpers/mongodb');
-const sensorHandler = require('../helpers/sensorHandler');
+const deviceHandler = require('../common/deviceHandler');
 const moment = require('moment');
 
 const triggerDevices = (deviceIds, status) => {
 	for(let i = 0; i < deviceIds.length; i++) {
 
-		const device = sensorHandler.getDevice(deviceIds[i]);
+		const device = deviceHandler.getDevice(deviceIds[i]);
 		const event = {
 			moment: moment(),
 			sensor: {

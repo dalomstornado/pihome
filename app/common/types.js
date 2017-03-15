@@ -5,7 +5,7 @@ const MeasureType = {
 	UNKNOWN: 'UNKNOWN'
 };
 
-const SensorType = {
+const DeviceType = {
 	TEMP_HUMIDITY: 'TEMP_HUMIDITY',
 	ON_OFF: 'ON_OFF',
 	TEMP_HUMIDITY_REFERENCE: 'TEMP_HUMIDITY_REFERENCE',
@@ -30,4 +30,4 @@ const Status = {
 
 const UNKNOWN = 'UNKNOWN';
 
-module.exports = { MeasureType, SensorType, PresenceStatus, Severity, Status, UNKNOWN };
+module.exports = { MeasureType, DeviceType, PresenceStatus, Severity, Status, UNKNOWN };

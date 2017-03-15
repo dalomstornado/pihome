@@ -1,12 +1,9 @@
 var express = require('express');
 var app = express();
 var path = require('path');
-var config = require('./models/config.json');
-var mongodb = require('./helpers/mongodb');
-const types = require('./common/types');
-const notify = require('./helpers/notify');
 const router = require('./api/routes');
-const telldusEventHandler = require('./helpers/telldusEventHandler');
+const deviceHandler = require('./common/deviceHandler');
+
 
 app.set('view engine', 'pug');
 app.locals.pretty = true;
@@ -25,7 +22,7 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
-	res.render('index', config);
+	res.render('index', deviceHandler.getSensors());
 });
 
 app.get('/list', function(req, res){
