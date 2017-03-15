@@ -22,7 +22,8 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 });
 
 app.get('/', function(req, res){
-	res.render('index', deviceHandler.getSensors());
+	console.log('sensors', deviceHandler.getSensors());
+	res.render('index', { sensors: deviceHandler.getSensors() });
 });
 
 app.get('/list', function(req, res){

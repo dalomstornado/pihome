@@ -1,10 +1,11 @@
 const gauge = require('./gauge');
 const page = require('./page');
 const lineChart = require('./lineChart');
-const types = require('../common/types');
+const deviceHandler = require('../common/deviceHandler');
 
 window.app = {
 	gauge,
 	page,
-	lineChart
+	lineChart,
+	deviceHandler
 };

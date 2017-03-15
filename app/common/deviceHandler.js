@@ -10,32 +10,52 @@ const getDevice = (id) => {
 		return device;	
 	}
 	return types.UNKNOWN;
-}
+};
 
 const getSensor = (id) => {
-	const sensor = devices.find((sensor) => {
-		return sensor.id === id
+	const sensor = devices.find((device) => {
+		return device.id === id
 			&& device.type === types.DeviceType.TEMP_HUMIDITY; 
 	});
 	if (sensor) {
 		return sensor;	
 	}
 	return types.UNKNOWN;
-}
+};
+
+const getGaugeIdTemp = (device) => {
+	return sensor.id + types.MeasureType.TEMPERATURE;
+};
+
+const getGaugeIdHumidity = (device) => {
+	return device.id + types.MeasureType.HUMIDITY;
+};
+
+const getLineChartIdTemp = () => {
+	return 'lineChart_' + types.MeasureType.TEMPERATURE;
+};
+
+const getLineChartIdHumidity = () => {
+	return 'lineChart_' + types.MeasureType.HUMIDITY;
+};
 
 const getDevices = () => {
 	const devices = devices.find((device) => {
 		return device.type === types.DeviceType.ON_OFF; 
 	});
 	return devices;
-}
+};
 
-const getSensors = (id) => {
-	const sensors = devices.find((sensor) => {
+const getSensors = () => {
+	const sensors = devices.find((device) => {
 		return device.type === types.DeviceType.TEMP_HUMIDITY; 
 	});
 	return sensors
-}
+};
+
+const getAll = () => {
+	return devices;
+};
 
 const createEvent = (id) => {
 	//todo: can be both device or sensor event.
@@ -52,6 +72,6 @@ const createEvent = (id) => {
 				value: status.name
 			},
 	};	
-}
+};
 
-module.exports = { getDevice, getSensor, getDevices, getSensors, createEvent };
+module.exports = { getDevice, getSensor, getGaugeIdTemp, getGaugeIdHumidity, getLineChartIdTemp, getLineChartIdHumidity, getDevices, getSensors, getAll, createEvent };
