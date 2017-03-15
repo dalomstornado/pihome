@@ -5,6 +5,16 @@ const types = require('../common/types');
 const url = 'mongodb://localhost:27017/pihome';
 const date = 'date';
 
+const init = () => {
+	mongoClient.connect(url).then((db) => {
+		db.createCollection('temperature', { 'capped': true, 'size': 209715200 });
+		db.createCollection('humidity', { 'capped': true, 'size': 209715200 });
+		db.createCollection('device', { 'capped': true, 'size': 209715200 });
+		db.createCollection('presence', { 'capped': true, 'size': 209715200 });		                                                          		
+	});
+};
+init();
+
 const insertTemperature = (event) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
@@ -189,17 +199,5 @@ const findHumidities = (sensorId, from) => {
 		});
 	});
 };
-
-/*
-const createCollections = () => {
-	mongoClient.connect(url).then((db) => {
-		db.createCollection('temperature', { 'capped': true, 'size': 209715200 });
-		db.createCollection('humidity', { 'capped': true, 'size': 209715200 });
-		db.createCollection('device', { 'capped': true, 'size': 209715200 });
-		db.createCollection('presence', { 'capped': true, 'size': 209715200 });		                                                          		
-	});
-};
-createCollections();
-*/
 
 module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findTemperature, findTemperatures, findHumidity, findHumidities, insertDeviceAction };

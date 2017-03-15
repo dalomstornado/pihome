@@ -8,9 +8,6 @@ const notify = require('./helpers/notify');
 const router = require('./api/routes');
 const telldusEventHandler = require('./helpers/telldusEventHandler');
 
-const tmp = require('./client/dataHandler');
-
-
 app.set('view engine', 'pug');
 app.locals.pretty = true;
 app.set('views', path.join(__dirname, '/views'));

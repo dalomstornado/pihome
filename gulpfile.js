@@ -65,6 +65,8 @@ gulp.task('dist-del', function(){
 gulp.task('dist-app', function() {
 	gulp.src(['./app/app.js'])
 		.pipe(gulp.dest('./dist/'));
+	gulp.src(['./app/api/**/*'])
+		.pipe(gulp.dest('./dist/api/'));
 	gulp.src(['./app/common/**/*'])
 		.pipe(gulp.dest('./dist/common/'));
 	gulp.src(['./app/helpers/**/*'])
