@@ -3,9 +3,15 @@
 }
 .gauges {
 	margin-left: 21px;
-}
-
-.gauge-pair {
-	outline: grey dotted 1px;
-	text-align: center;
+	.gauge-pair {
+		outline: grey dotted 1px;
+		text-align: center;
+		.gauge { 
+			&.active { //500 ms
+				circle:first-of-type {
+					//fill: darkgrey; 
+				}
+			}
+		}
+	}
 }

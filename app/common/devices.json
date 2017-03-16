@@ -1,25 +1,25 @@
 [
 	{
 	    "id": 135,
-	    "name": "Sensor 1",
+	    "name": "Källare",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
 	},
 	{
 	    "id": 136,
-	    "name": "Sensor 2",
+	    "name": "Övervåning",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
   	},
   	{
 	    "id": 137,
-	    "name": "Sensor 3",
+	    "name": "Vind",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
   	},
   	{
 	    "id": 138,
-	    "name": "Sensor 4",
+	    "name": "Ute",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
   	},
