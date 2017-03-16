@@ -2,6 +2,7 @@ import { drawGauge } from './gauge';
 import { MeasureType, SensorType } from '../common/types';
 import { drawLineChart } from './lineChart';
 import { lineChartData } from './dataHandler';
+import { getGauges } from '../common/deviceHandler';
 
 const updateLineChart = (lineChart) => {
 	const inDataTemp = [ { 
@@ -96,7 +97,8 @@ const inDataTemp4 = [ {
 const updateGauge = (gauge) => {
 	const valueHumidity = 35 + Math.round(65 * Math.random());
 	const valueTemp = - 10 + Math.round(40 * Math.random());
-	switch(gauge.type) {
+	
+    switch(gauge.type) {
 		case MeasureType.TEMPERATURE:
 			drawGauge(gauge, valueTemp);
 		case MeasureType.HUMIDITY:
@@ -104,17 +106,18 @@ const updateGauge = (gauge) => {
 };
 
 const init = (sensors) => {
-	for(let sensor of sensors){
-		for(let gauge of sensor.gauges) {
+	for(let sensor of sensors) {
+        const gauges = getGauges(sensor);
+		for(let gauge of gauges) {
 			setInterval(() => {
 				updateGauge(gauge);
 			}, 10000 + Math.round(10000 * Math.random()));
 		};
-		for(let lineChart of sensor.lineCharts) {
+		/*for(let lineChart of sensor.lineCharts) {
 			setInterval(() => {
 				updateLineChart(lineChart);
 			}, 10000 + Math.round(10000 * Math.random()));
-		};
+		};*/
 	};
 };
 

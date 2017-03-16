@@ -1,5 +1,6 @@
 import { MeasureType, SensorType } from '../common/types';
 import { LowerLimit, UpperLimit } from '../common/limits';
+import { getGauges } from '../common/deviceHandler';
 
 const optionsHumidity = {
   width: 400, height: 120,
@@ -28,7 +29,6 @@ const getOptions = (type) => {
   };
 };
 
-
 let chartsData = undefined;
 const charts = new Map();
 
@@ -51,7 +51,8 @@ const init = (sensors) => {
   chartsData = new Map();
    
   for (let sensor of sensors){
-    for (let gauge of sensor.gauges){
+    const gauges = getGauges(sensor);
+    for (let gauge of gauges){
       let chartData = [['Label', 'Value'], [gauge.name, 0]];
       chartsData.set(gauge.id, chartData);
 

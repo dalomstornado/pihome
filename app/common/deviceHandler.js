@@ -1,6 +1,11 @@
 const devices = require('./devices.json');
 const types = require('./types.js');
 
+const getGauges = (sensor) => {
+	return [ { id: 'gauge-temp-' + sensor.id, type: types.MeasureType.TEMPERATURE, name: 'Temp' },
+ 		{ id: 'gauge-humidity-' + sensor.id, type: types.MeasureType.HUMIDITY, name: 'Humidity' } ];
+};
+
 const getDevice = (id) => {
 	const device = devices.find((device) => {
 		return device.id === id 
@@ -10,6 +15,13 @@ const getDevice = (id) => {
 		return device;	
 	}
 	return types.UNKNOWN;
+};
+
+const getDevices = () => {
+	const devices = devices.filter((device) => {
+		return device.type === types.DeviceType.ON_OFF; 
+	});
+	return devices;
 };
 
 const getSensor = (id) => {
@@ -23,38 +35,11 @@ const getSensor = (id) => {
 	return types.UNKNOWN;
 };
 
-const getGaugeIdTemp = (sensor) => {
-	return sensor.id + types.MeasureType.TEMPERATURE;
-};
-
-const getGaugeIdHumidity = (sensor) => {
-	return sensor.id + types.MeasureType.HUMIDITY;
-};
-
-const getLineChartIdTemp = () => {
-	return 'lineChart_' + types.MeasureType.TEMPERATURE;
-};
-
-const getLineChartIdHumidity = () => {
-	return 'lineChart_' + types.MeasureType.HUMIDITY;
-};
-
-const getDevices = () => {
-	const devices = devices.filter((device) => {
-		return device.type === types.DeviceType.ON_OFF; 
-	});
-	return devices;
-};
-
 const getSensors = () => {
 	const sensors = devices.filter((device) => {
 		return device.type === types.DeviceType.TEMP_HUMIDITY; 
 	});
 	return sensors
-};
-
-const getAll = () => {
-	return devices;
 };
 
 const createEvent = (id) => {
@@ -74,4 +59,4 @@ const createEvent = (id) => {
 	};	
 };
 
-module.exports = { getDevice, getSensor, getGaugeIdTemp, getGaugeIdHumidity, getLineChartIdTemp, getLineChartIdHumidity, getDevices, getSensors, getAll, createEvent };
+module.exports = { getGauges, getDevice, getDevices, getSensor, getSensors, createEvent };

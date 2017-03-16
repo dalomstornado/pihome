@@ -27,11 +27,12 @@ const drawLineChart = (lineChart, values, names) => {
 
 const init = (sensors) => {
   for (let sensor of sensors){    
-    for (let lineChart of sensor.lineCharts){
+    /*for (let lineChart of sensor.lineCharts){
       google.charts.setOnLoadCallback(function(){
         drawLineChart(lineChart, [[new Date(), 0]], ['serie1']); 
       });
     };
+    */
   };
 };
 

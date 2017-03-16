@@ -4,9 +4,9 @@ mixin gauge-pair(sensor, gaugeId)
 	.gauge-pair(id=sensor.id)
 		h3= sensor.name 
 			.temperature
-				.gauge(id=)
+				.gauge(id='gauge-temp-' + sensor.id)
 			.humidity
-				.gauge(id=)
+				.gauge(id='gauge-humidity-' + sensor.id)
 
 block title  
 	Title
@@ -26,11 +26,11 @@ block content
 	.lineChart
 		.temperature
 			h3 Temp
-			.lineChart(id=)
+			.lineChart(id='linechart-temp')
 	.lineChart
 		.humidty
 			h3 Humidity
-			.lineChart(id=)
+			.lineChart(id='linechart-humidity')
 
 	.status
 		h3 Status
