@@ -1,12 +1,12 @@
 extends ./layout
 
-mixin gauge-pair(sensor) 
+mixin gauge-pair(sensor, gaugeId) 
 	.gauge-pair(id=sensor.id)
 		h3= sensor.name 
 			.temperature
-				.gauge(id=window.app.deviceHandler.getGaugeIdTemp(sensor))
+				.gauge(id=)
 			.humidity
-				.gauge(id=window.app.deviceHandler.getGaugeIdHumidity(sensor))
+				.gauge(id=)
 
 block title  
 	Title
@@ -26,11 +26,11 @@ block content
 	.lineChart
 		.temperature
 			h3 Temp
-			.lineChart(id=window.app.deviceHandler.getLineChartIdTemp())
+			.lineChart(id=)
 	.lineChart
 		.humidty
 			h3 Humidity
-			.lineChart(id=window.app.deviceHandler.getLineChartIdHumidity())
+			.lineChart(id=)
 
 	.status
 		h3 Status

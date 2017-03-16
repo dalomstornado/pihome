@@ -23,12 +23,12 @@ const getSensor = (id) => {
 	return types.UNKNOWN;
 };
 
-const getGaugeIdTemp = (device) => {
+const getGaugeIdTemp = (sensor) => {
 	return sensor.id + types.MeasureType.TEMPERATURE;
 };
 
-const getGaugeIdHumidity = (device) => {
-	return device.id + types.MeasureType.HUMIDITY;
+const getGaugeIdHumidity = (sensor) => {
+	return sensor.id + types.MeasureType.HUMIDITY;
 };
 
 const getLineChartIdTemp = () => {
@@ -40,14 +40,14 @@ const getLineChartIdHumidity = () => {
 };
 
 const getDevices = () => {
-	const devices = devices.find((device) => {
+	const devices = devices.filter((device) => {
 		return device.type === types.DeviceType.ON_OFF; 
 	});
 	return devices;
 };
 
 const getSensors = () => {
-	const sensors = devices.find((device) => {
+	const sensors = devices.filter((device) => {
 		return device.type === types.DeviceType.TEMP_HUMIDITY; 
 	});
 	return sensors
