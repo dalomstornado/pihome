@@ -35,7 +35,6 @@ const afterDraw = (gauge) => {
   const cssClass = 'updated'
   $gauge.addClass(cssClass);
   
-  clearInterval();
   setTimeout(() => {
     $gauge.removeClass(cssClass)
   }, 1000);
