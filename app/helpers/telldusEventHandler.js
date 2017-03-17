@@ -17,7 +17,7 @@ const getMeasureType = (type) => {
 
 const addSensorEventListener = () => {
 	const listener = telldus.addSensorEventListener((deviceId, protocol, model, type, value, timestamp) => {
-		console.log('New sensor event received: ',deviceId,protocol,model,type,value,timestamp);
+		console.log('New sensor event received: ',deviceId, protocol, model, type, value, timestamp);
 		const sensor = sensorHandler.getSensor(deviceId);
   		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment(timestamp, 'x'));
   		if (event !== types.UNKNOWN) {
@@ -55,7 +55,7 @@ const testDeviceEventListener = (deviceId, status) => {
 const init = () => {
 	const sensorListener = addSensorEventListener();
 	const deviceListener = addDeviceEventListener();
-	testDeviceEventListener(11, {name: types.Status.ON})
+	//testDeviceEventListener(11, {name: types.Status.ON})
 	//testDeviceEventListener(11, {name: types.Status.OFF})
 };
 
