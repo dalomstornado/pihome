@@ -29,7 +29,9 @@ gulp.task('nodemon', ['sass', 'clientJs'], function() {
 	});
 });
 
-gulp.task('sass', function(){
+gulp.task('sass', function() {
+	del.sync('./app/static/css/**/*', { force: true })
+	
 	return gulp.src('./app/scss/**/*')
 		.pipe(sass().on('error', sass.logError))
 		.pipe(gulp.dest('./app/static/css/'));
@@ -58,7 +60,7 @@ gulp.task('clientJs', function() {
 });
 
 //DIST
-gulp.task('dist-del', function(){
+gulp.task('dist-del', function() {
 	return del.sync('./dist/**/*', { force: true });
 });
 

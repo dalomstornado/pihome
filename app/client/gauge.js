@@ -1,6 +1,7 @@
 import { MeasureType, SensorType } from '../common/types';
 import { LowerLimit, UpperLimit } from '../common/limits';
 import { getGauges } from '../common/deviceHandler';
+const $ = require('jquery');
 
 const optionsHumidity = {
   width: 400, height: 120,
@@ -29,6 +30,16 @@ const getOptions = (type) => {
   };
 };
 
+const afterDraw = (gauge) => {
+  const $gauge = $('#' + gauge.id);
+  const cssClass = 'updated'
+  $gauge.addClass(cssClass);
+  
+  setInterval(() => {
+    $gauge.removeClass(cssClass);
+  }, 1500);
+};
+
 let chartsData = undefined;
 const charts = new Map();
 
@@ -45,6 +56,7 @@ const drawGauge = (gauge, value) => {
   }
   
   chart.draw(data, getOptions(gauge.type));
+  afterDraw(gauge);
 };
 
 const init = (sensors) => {

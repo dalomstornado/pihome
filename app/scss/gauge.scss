@@ -7,9 +7,9 @@
 		outline: grey dotted 1px;
 		text-align: center;
 		.gauge { 
-			&.active { //500 ms
+			&.updated {
 				circle:first-of-type {
-					//fill: darkgrey; 
+					fill: darkgrey; 
 				}
 			}
 		}
