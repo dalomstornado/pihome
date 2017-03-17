@@ -35,9 +35,10 @@ const afterDraw = (gauge) => {
   const cssClass = 'updated'
   $gauge.addClass(cssClass);
   
-  setInterval(() => {
-    $gauge.removeClass(cssClass);
-  }, 1500);
+  clearInterval();
+  setTimeout(() => {
+    $gauge.removeClass(cssClass)
+  }, 1000);
 };
 
 let chartsData = undefined;
