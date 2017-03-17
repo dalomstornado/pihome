@@ -51,11 +51,26 @@ const testDeviceEventListener = (deviceId, status) => {
 	}
 };
 
+const testSensorEventListener = (deviceId, protocol, model, type, value, timestamp) => {
+	console.log('New sensor event received: ', deviceId, protocol, model, type, value, timestamp);
+  		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment(timestamp, 'x'));
+  		if (event !== types.UNKNOWN) {
+  			processEvent(event);
+  		} else {
+			console.log('Dropping sensor event. deviceId ', deviceId);	 
+ 		}
+};
+
 const init = () => {
 	const sensorListener = addSensorEventListener();
 	const deviceListener = addDeviceEventListener();
 	//testDeviceEventListener(11, {name: types.Status.ON})
 	//testDeviceEventListener(11, {name: types.Status.OFF})
+
+	setInterval(() => {
+		let value = 1 + Math.round(2 * Math.random());
+		testSensorEventListener(135, '', '', value, '10', '1234567');
+	}, 0 + Math.round(15000 * Math.random()));
 };
 
 module.exports = { init };
