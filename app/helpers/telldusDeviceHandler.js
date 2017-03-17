@@ -8,17 +8,7 @@ const triggerDevices = (deviceIds, status) => {
 	for(let i = 0; i < deviceIds.length; i++) {
 
 		const device = deviceHandler.getDevice(deviceIds[i]);
-		const event = {
-			moment: moment(),
-			sensor: {
-				id: device.id,
-				name: device.name,
-			},
-			measure: {
-				type: types.MeasureType.ON_OFF,
-				value: status.name
-			},
-		};
+		const event = deviceHandler.createEvent(deviceIds[i], types.MeasureType.ON_OFF, status.name);
 
 		switch (status) {
 			case types.Status.ON:

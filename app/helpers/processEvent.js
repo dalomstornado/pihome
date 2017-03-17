@@ -66,6 +66,7 @@ const getSeverity = (event) => {
 };
 
 const processEvent = (event) => {
+	console.log('event', event);
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
 		

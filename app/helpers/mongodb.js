@@ -10,7 +10,7 @@ const init = () => {
 		db.createCollection('temperature', { 'capped': true, 'size': 209715200 });
 		db.createCollection('humidity', { 'capped': true, 'size': 209715200 });
 		db.createCollection('device', { 'capped': true, 'size': 209715200 });
-		db.createCollection('presence', { 'capped': true, 'size': 209715200 });		                                                          		
+		db.createCollection('presence', { 'capped': true, 'size': 209715200 });
 	});
 };
 init();

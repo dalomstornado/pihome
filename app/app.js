@@ -3,6 +3,7 @@ var app = express();
 var path = require('path');
 const router = require('./api/routes');
 const deviceHandler = require('./common/deviceHandler');
+const telldusEventHandler = require('./helpers/telldusEventHandler');
 
 
 app.set('view engine', 'pug');
@@ -11,6 +12,8 @@ app.set('views', path.join(__dirname, '/views'));
 
 app.use(express.static(path.join(__dirname, './static')));
 app.use('/api', router);
+
+telldusEventHandler.init();
 
 app.all('*', function (req, res, next) {
   console.log(req.url);

@@ -1,5 +1,6 @@
 const devices = require('./devices.json');
 const types = require('./types.js');
+const moment = require('moment');
 
 const getGauges = (sensor) => {
 	return [ { id: 'gauge-temp-' + sensor.id, type: types.MeasureType.TEMPERATURE, name: 'Temp' },
@@ -42,21 +43,30 @@ const getSensors = () => {
 	return sensors
 };
 
-const createEvent = (id) => {
-	//todo: can be both device or sensor event.
+const getSensorOrDevice = (id) => {
+	const sensorOrDevice = devices.find((device) => {
+		return device.id === id; 
+	});
+	return sensorOrDevice;
+};
 
-	return {
-		moment: moment(),
-			sensor: {
-				id: device.id,
-				name: device.name,
-				triggers: device.triggers
-			},
-			measure: {
-				type: types.MeasureType.ON_OFF,
-				value: status.name
-			},
-	};	
+const createEvent = (id, measureType, value, eventMoment = moment()) => {
+	const sensorOrDevice = getSensorOrDevice(id);
+	if (sensorOrDevice && measureType !== types.UNKNOWN) {
+		return {
+			moment: eventMoment,
+				sensor: {
+					id: sensorOrDevice.id,
+					name: sensorOrDevice.name,
+					triggers: sensorOrDevice.triggers
+				},
+				measure: {
+					type: measureType,
+					value
+				},
+		};
+	}
+	return types.UNKNOWN;
 };
 
 module.exports = { getGauges, getDevice, getDevices, getSensor, getSensors, createEvent };
