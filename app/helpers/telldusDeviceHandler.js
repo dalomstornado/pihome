@@ -4,25 +4,28 @@ const mongodb = require('../helpers/mongodb');
 const deviceHandler = require('../common/deviceHandler');
 const moment = require('moment');
 
-const triggerDevices = (deviceIds, status) => {
-	for(let i = 0; i < deviceIds.length; i++) {
+const triggerDevices = (sensor, status) => {
+	if (!sensor.triggers) {
+		return;
+	}
+	
+	for(let i = 0; i < sensor.triggers.length; i++) {
+	const device = deviceHandler.getSensorOrDevice(sensor.triggers[i]);
+	const event = deviceHandler.createEvent(device.id, types.MeasureType.ON_OFF, status.name);
 
-		const device = deviceHandler.getDevice(deviceIds[i]);
-		const event = deviceHandler.createEvent(deviceIds[i], types.MeasureType.ON_OFF, status.name);
-
-		switch (status) {
-			case types.Status.ON:
-				telldus.turnOn(deviceIds[i], (err) => {
-					mongodb.insertDeviceAction(event);
-					console.log('Device ' + deviceIds[i] + ' is now ON')
-				});
-				break;
-			case types.Status.OFF:
-				telldus.turnOff(deviceIds[i], (err) => {
-					mongodb.insertDeviceAction(event);
-					console.log('Device ' + deviceIds[i] + ' is now OFF')
-				});
-				break;
+	switch (status) {
+		case types.Status.ON:
+			telldus.turnOn(device.id, (err) => {
+				mongodb.insertDeviceAction(event);
+				console.log(sensor.name + ' triggers ' + device.name + ' ON') //TODO: Kolla rolling log om vi får en tid. Annars wrappa console.log
+			});
+			break;
+		case types.Status.OFF:
+			telldus.turnOff(deviceIds[i], (err) => {
+				mongodb.insertDeviceAction(event);
+				console.log(sensor.name + ' triggers ' + device.name + ' OFF')
+			});
+			break;
 		}
 	}
 };

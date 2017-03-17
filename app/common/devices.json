@@ -27,6 +27,18 @@
 		"id": 11,
 		"name": "CellarDoor",
 		"type": "ON_OFF",
-		"triggers": [20, 21, 22]
+		"triggers": [12, 13]
+	},
+	{
+		"id": 12,
+		"name": "Alarm1",
+		"type": "ON_OFF",
+		"triggers": null
+	},
+	{
+		"id": 13,
+		"name": "Alarm2",
+		"type": "ON_OFF",
+		"triggers": null
 	}
 ]

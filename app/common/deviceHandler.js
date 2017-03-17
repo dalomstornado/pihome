@@ -40,4 +40,4 @@ const createEvent = (id, measureType, value, eventMoment = moment()) => {
 	return types.UNKNOWN;
 };
 
-module.exports = { getGauges, getSensors, createEvent };
+module.exports = { getGauges, getSensors, getSensorOrDevice, createEvent };
