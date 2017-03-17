@@ -66,12 +66,9 @@ const getSeverity = (event) => {
 };
 
 const processEvent = (event) => {
-	console.log('event', event);
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
 		
-		console.log('severity', severity);
-		console.log('event', event);
 		if (severity >= types.Severity.ALARM) {
 			triggerDevices(event.sensor.triggers, event.measure.value);
 			notify(event.severity, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.value}`, event.moment);
