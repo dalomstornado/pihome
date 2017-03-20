@@ -5,8 +5,8 @@ const io = require('socket.io')(http);
 const path = require('path');
 const router = require('./api/routes');
 const deviceHandler = require('./common/deviceHandler');
-const telldusEventHandler = require('./server/telldusEventHandler');
-const websocket = require('./server/webSocket');
+const websocket = require('./server/webSocket')(io);
+const telldusEventHandler = require('./server/telldusEventHandler')(websocket);
 
 app.set('view engine', 'pug');
 app.locals.pretty = true;
@@ -15,7 +15,6 @@ app.set('views', path.join(__dirname, '/views'));
 app.use(express.static(path.join(__dirname, './static')));
 app.use('/api', router);
 
-websocket.init(io);
 telldusEventHandler.init();
 
 app.all('*', function (req, res, next) {

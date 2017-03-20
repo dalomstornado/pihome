@@ -66,19 +66,20 @@ const getSeverity = (event) => {
 	});
 };
 
-const processEvent = (event) => {
+const processEvent = (event, websocket) => {
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
-		//Trigger and notify
+		
+		//1. Trigger and notify
 		if (event.severity >= types.Severity.ALARM) {
 			triggerDevices(event.sensor, event.measure.value);
 			notify(event.severity, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.measure.value}`, event.moment);
 		}
 
-		//Update client
+		//2. Update client
 		websocket.updateClients(event);
 
-		//Store in Mongo
+		//3. Store in Mongo
 		switch (event.measure.type) {
 			case types.MeasureType.ON_OFF:
 				mongodb.insertDeviceAction(event)

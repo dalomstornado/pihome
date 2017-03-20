@@ -1,15 +1,10 @@
-let io = null;
+module.exports = (io) => {
+	const module = {}; 
 
-const updateClients = (event) => {
-	console.log('io', io);
-	if (io) {
+	module.updateClients = (sensorEventType, event) => {
 		console.log('updates clients');
-	}
-}
+			io.emit(sensorEventType, event);
+	};
 
-const init = (ioIn) => {
-	io = ioIn;
-}
-
-
-module.exports = { updateClients, init }
+	return module;
+};

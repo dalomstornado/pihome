@@ -25,6 +25,10 @@ const Status = {
 	OFF: 'OFF'
 }
 
+const WebsocketEventType = {
+	SENSOR: 'SENSOR'
+};
+
 const UNKNOWN = 'UNKNOWN';
 const NORESULT = 'NORESULT';
 
