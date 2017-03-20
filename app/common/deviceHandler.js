@@ -7,18 +7,22 @@ const getGauges = (sensor) => {
  		{ id: 'gauge-humidity-' + sensor.id, type: types.MeasureType.HUMIDITY, name: 'Humidity' } ];
 };
 
+const getGauge = (sensor, measureType) => {
+	return getGauges(sensor).find((gauge) => {
+		return gauge.type === measureType;
+	});
+};
+
 const getSensors = () => {
-	const sensors = devices.filter((device) => {
+	return devices.filter((device) => {
 		return device.type === types.DeviceType.TEMP_HUMIDITY; 
 	});
-	return sensors
 };
 
 const getSensorOrDevice = (id) => {
-	const sensorOrDevice = devices.find((device) => {
+	return devices.find((device) => {
 		return device.id === id; 
 	});
-	return sensorOrDevice;
 };
 
 const createEvent = (id, measureType, value, eventMoment = moment()) => {
@@ -40,4 +44,4 @@ const createEvent = (id, measureType, value, eventMoment = moment()) => {
 	return types.UNKNOWN;
 };
 
-module.exports = { getGauges, getSensors, getSensorOrDevice, createEvent };
+module.exports = { getGauges, getGauge, getSensors, getSensorOrDevice, createEvent };

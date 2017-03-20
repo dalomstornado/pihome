@@ -61,7 +61,7 @@ module.exports = (websocket) => {
 		setInterval(() => {
 			let value = 1 + Math.round(2 * Math.random());
 			doSensorEventListener(135, '', '', value, '10', '1234567');
-		}, 0 + Math.round(15000 * Math.random()));
+		}, 5000);
 	};
 
 	return module;

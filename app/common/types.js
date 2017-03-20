@@ -25,11 +25,7 @@ const Status = {
 	OFF: 'OFF'
 }
 
-const WebsocketEventType = {
-	SENSOR: 'SENSOR'
-};
-
 const UNKNOWN = 'UNKNOWN';
 const NORESULT = 'NORESULT';
 
-module.exports = { MeasureType, DeviceType, PresenceStatus, Severity, Status, UNKNOWN };
+module.exports = { MeasureType, DeviceType, PresenceStatus, Severity, Status, UNKNOWN, NORESULT };
