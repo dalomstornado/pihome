@@ -1,6 +1,6 @@
 const telldus = require('telldus');
 const types = require('../common/types');
-const mongodb = require('../helpers/mongodb');
+const mongodb = require('../server/mongodb');
 const deviceHandler = require('../common/deviceHandler');
 const moment = require('moment');
 

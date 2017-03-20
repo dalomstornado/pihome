@@ -72,8 +72,8 @@ gulp.task('dist-app', function() {
 		.pipe(gulp.dest('./dist/api/'));
 	gulp.src(['./app/common/**/*'])
 		.pipe(gulp.dest('./dist/common/'));
-	gulp.src(['./app/helpers/**/*'])
-		.pipe(gulp.dest('./dist/helpers/'));
+	gulp.src(['./app/server/**/*'])
+		.pipe(gulp.dest('./dist/server/'));
 });
 
 gulp.task('dist-npm', function(){

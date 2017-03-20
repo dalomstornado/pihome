@@ -1,6 +1,6 @@
 const types = require('../common/types');
 const deviceHandler = require('../common/deviceHandler');
-const processEvent = require('../helpers/processEvent');
+const processEvent = require('../server/processEvent');
 const telldus = require('telldus');
 const moment = require('moment');
 

@@ -1,4 +1,4 @@
-const mongodb = require('../helpers/mongodb');
+const mongodb = require('../server/mongodb');
 const types = require('../common/types');
 
 const returnData = (req, res, promiseFunction) => {

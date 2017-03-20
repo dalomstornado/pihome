@@ -1,12 +1,14 @@
-var express = require('express');
-var app = express();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
-var path = require('path');
+const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+const path = require('path');
 const router = require('./api/routes');
 const deviceHandler = require('./common/deviceHandler');
-const telldusEventHandler = require('./helpers/telldusEventHandler');
+const telldusEventHandler = require('./server/telldusEventHandler');
+const websocket = require('./server/webSocket');
 
+websocket.init(io);
 
 app.set('view engine', 'pug');
 app.locals.pretty = true;

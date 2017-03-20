@@ -1,8 +1,9 @@
 const types = require('../common/types');
-const notify = require('../helpers/notify');
+const notify = require('../server/notify');
 const limits = require('../common/limits');
-const mongodb = require('../helpers/mongodb');
-const triggerDevices = require('../helpers/telldusDeviceHandler');
+const mongodb = require('../server/mongodb');
+const triggerDevices = require('../server/telldusDeviceHandler');
+const websocket = require('../server/websocket');
 
 const getLowerLimit = (event) => {
 	const type = types.MeasureType[event.measure.type];
@@ -74,7 +75,8 @@ const processEvent = (event) => {
 			notify(event.severity, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.measure.value}`, event.moment);
 		}
 
-		//Update client		
+		//Update client
+		websocket.updateClients(event);
 
 		//Store in Mongo
 		switch (event.measure.type) {
