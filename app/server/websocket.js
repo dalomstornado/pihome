@@ -18,8 +18,6 @@ module.exports = (io) => {
 		}
 
 		if (deviceType) {
-			console.log('event', event);
-			console.log('deviceType', deviceType);	
 			io.emit(deviceType, event);
 			console.log('Updated client');	
 		} else {

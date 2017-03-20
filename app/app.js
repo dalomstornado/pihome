@@ -23,7 +23,7 @@ app.all('*', function (req, res, next) {
 })
 
 io.on('connection', function(socket) {
-	console.log('A user connected');
+	console.log('Socket connected!');
 });
 
 app.get('/temperature/:sensorId', function(req, res){ //websockets

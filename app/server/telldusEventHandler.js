@@ -54,14 +54,42 @@ module.exports = (websocket) => {
 		return listener;
 	};
 
+	//TEST START
+	const getHumidityValue = () => {
+		return 35 + Math.floor(Math.random() * 60)
+	};
+
+	const getTempValue = () => {
+		return -35 + Math.floor(Math.random() * 70)
+	};
+
+	const getLatency = () => {
+		return Math.floor(Math.random() * 1000);
+	}
+
+	const getUpdateInterval = () => {
+		return 5000 + Math.round(15000 * Math.random());
+	};
+
+	const test = () => {
+		const sensors = [135, 136, 137, 138];
+
+		for(let i = 0; i < 4; i++){	
+			setInterval(() => {
+				doSensorEventListener(sensors[i], '', '', 1, getTempValue(), '1234567');
+			  	setTimeout(() => {
+					doSensorEventListener(sensors[i], '', '', 2, getHumidityValue(), '1234567');
+				}, getLatency());
+			}, getUpdateInterval());	
+		}
+	};
+	//TEST END
+
 	module.init = () => {
 		const sensorListener = addSensorEventListener();
 		const deviceListener = addDeviceEventListener();
 
-		setInterval(() => {
-			let value = 1 + Math.round(2 * Math.random());
-			doSensorEventListener(135, '', '', value, '10', '1234567');
-		}, 5000);
+		test();
 	};
 
 	return module;

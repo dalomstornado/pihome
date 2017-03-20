@@ -5,8 +5,7 @@ const gauge = require('./gauge');
 const socket = io.connect();
 
 socket.on('connect', () => {
-	console.log('Connected');
-	console.log('gauge', gauge);
+	console.log('Socket connected!');
 });
 
 socket.on(types.DeviceType.TEMP_HUMIDITY, (event) => {
