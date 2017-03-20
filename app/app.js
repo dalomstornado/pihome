@@ -23,7 +23,7 @@ app.all('*', function (req, res, next) {
 })
 
 io.on('connection', function(socket) {
-	console.log('a user connected');
+	console.log('A user connected');
 });
 
 app.get('/temperature/:sensorId', function(req, res){ //websockets
@@ -47,6 +47,6 @@ app.get('/list', function(req, res){
 });
 
 const PORT = 8082;
-var server = app.listen(PORT, function () {
+var server = http.listen(PORT, function () {
   console.log('Server listening on port %s', PORT);
 });
