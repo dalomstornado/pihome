@@ -1,5 +1,7 @@
 var express = require('express');
 var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 var path = require('path');
 const router = require('./api/routes');
 const deviceHandler = require('./common/deviceHandler');
@@ -19,6 +21,10 @@ app.all('*', function (req, res, next) {
   console.log(req.url);
   next(); // pass control to the next handler
 })
+
+io.on('connection', function(socket) {
+	console.log('a user connected');
+});
 
 app.get('/temperature/:sensorId', function(req, res){ //websockets
 	res.json({temperature: + req.params.sensorId });

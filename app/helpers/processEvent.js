@@ -68,11 +68,15 @@ const getSeverity = (event) => {
 const processEvent = (event) => {
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
-		
+		//Trigger and notify
 		if (event.severity >= types.Severity.ALARM) {
 			triggerDevices(event.sensor, event.measure.value);
 			notify(event.severity, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.measure.value}`, event.moment);
 		}
+
+		//Update client		
+
+		//Store in Mongo
 		switch (event.measure.type) {
 			case types.MeasureType.ON_OFF:
 				mongodb.insertDeviceAction(event)
