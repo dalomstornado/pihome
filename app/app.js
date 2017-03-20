@@ -5,7 +5,7 @@ const io = require('socket.io')(http);
 const path = require('path');
 const router = require('./api/routes');
 const deviceHandler = require('./common/deviceHandler');
-const websocket = require('./server/webSocket')(io);
+const websocket = require('./server/websocket')(io);
 const telldusEventHandler = require('./server/telldusEventHandler')(websocket);
 
 app.set('view engine', 'pug');

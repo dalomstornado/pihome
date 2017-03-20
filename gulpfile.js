@@ -12,6 +12,7 @@ var source = require('vinyl-source-stream');
 var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
+var runSequence = require('run-sequence');
 
 gulp.task('default', ['nodemon']);
 
@@ -91,7 +92,9 @@ gulp.task('dist-views', function() {
 		.pipe(gulp.dest('./dist/views/'));
 });
 
-gulp.task('dist', ['sass', 'clientJs', 'dist-del', 'dist-app', 'dist-npm', 'dist-static', 'dist-views']);
+gulp.task('dist', function() {
+	runSequence('clientJs', 'sass', 'dist-del', ['dist-app', 'dist-npm', 'dist-static', 'dist-views'])
+});
 
 gulp.task('dist-pi', ['dist'], function(){
 	gulp.src(['./dist/**/*'])
