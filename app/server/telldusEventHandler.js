@@ -18,34 +18,27 @@ module.exports = (websocket) => {
 		}
 	};
 
+	const doSensorEventListener = (deviceId, protocol, model, type, value, timestamp) => {
+		console.log('New sensor event received: ', deviceId, protocol, model, type, value, timestamp);
+  		
+  		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment(timestamp, 'x'));
+  		if (event !== types.UNKNOWN) {
+  			processEvent(event, websocket);
+  		} else {
+			console.log('Dropping sensor event. deviceId ', deviceId);	 
+ 		}
+	}; 
+
 	const addSensorEventListener = () => {
 		const listener = telldus.addSensorEventListener((deviceId, protocol, model, type, value, timestamp) => {
-			console.log('New sensor event received: ', deviceId, protocol, model, type, value, timestamp);
-	  		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment(timestamp, 'x'));
-	  		if (event !== types.UNKNOWN) {
-	  			processEvent(event, websocket);
-	  		} else {
-				console.log('Dropping sensor event. deviceId ', deviceId);	 
-	 		}
+			doSensorEventListener(deviceId, protocol, model, type, value, timestamp);	
 		});
 		return listener;
 	};
 
-	const addDeviceEventListener = () => {
-		const listener = telldus.addDeviceEventListener((deviceId, status) => {
-			console.log('New device event recieved: ' + deviceId + ' is now ' + status.name);
-			const event = deviceHandler.createEvent(deviceId, types.MeasureType.ON_OFF, status.name)
-			if (event !== types.UNKNOWN) {
-				processEvent(event, websocket);
-			} else {
-				console.log('Dropping device event. deviceId ', deviceId);
-			}
-		});
-		return listener;
-	};
-
-	const testDeviceEventListener = (deviceId, status) => {
+	const doDeviceEventListener = (deviceId, status) => {
 		console.log('New device event recieved: ' + deviceId + ' is now ' + status.name);
+		
 		const event = deviceHandler.createEvent(deviceId, types.MeasureType.ON_OFF, status.name)
 		if (event !== types.UNKNOWN) {
 			processEvent(event, websocket);
@@ -54,25 +47,20 @@ module.exports = (websocket) => {
 		}
 	};
 
-	const testSensorEventListener = (deviceId, protocol, model, type, value, timestamp) => {
-		console.log('New sensor event received: ', deviceId, protocol, model, type, value, timestamp);
-	  		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment(timestamp, 'x'));
-	  		if (event !== types.UNKNOWN) {
-	  			processEvent(event, websocket);
-	  		} else {
-				console.log('Dropping sensor event. deviceId ', deviceId);	 
-	 		}
+	const addDeviceEventListener = () => {
+		const listener = telldus.addDeviceEventListener((deviceId, status) => {
+			doDeviceEventListener(deviceId, status)
+		});
+		return listener;
 	};
 
 	module.init = () => {
 		const sensorListener = addSensorEventListener();
 		const deviceListener = addDeviceEventListener();
-		//testDeviceEventListener(11, {name: types.Status.ON}, websocket)
-		//testDeviceEventListener(11, {name: types.Status.OFF}, websocket)
 
 		setInterval(() => {
 			let value = 1 + Math.round(2 * Math.random());
-			testSensorEventListener(135, '', '', value, '10', '1234567');
+			doSensorEventListener(135, '', '', value, '10', '1234567');
 		}, 0 + Math.round(15000 * Math.random()));
 	};
 
