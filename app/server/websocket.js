@@ -19,7 +19,7 @@ module.exports = (io) => {
 
 		if (deviceType) {
 			io.emit(deviceType, event);
-			console.log('Updated client');	
+			console.log('Updated clients');	
 		} else {
 			console.log('Unhandled device type. No emit');	
 		}		

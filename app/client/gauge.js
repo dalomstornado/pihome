@@ -37,7 +37,7 @@ const afterDraw = (gauge) => {
   
   setTimeout(() => {
     $gauge.removeClass(cssClass)
-  }, 1000);
+  }, 2000);
 };
 
 let chartsData = undefined;

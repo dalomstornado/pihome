@@ -11,4 +11,5 @@ socket.on('connect', () => {
 socket.on(types.DeviceType.TEMP_HUMIDITY, (event) => {
 	const gaugeDevice = deviceHandler.getGauge(event.sensor, event.measure.type);
 	gauge.drawGauge(gaugeDevice, event.measure.value);
+	console.log('Gauge updated');
 });
