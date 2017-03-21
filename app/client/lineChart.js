@@ -15,6 +15,7 @@ const drawLineChart = (lineChart, values, names) => {
     chartData.addColumn('number', names[i]);    
   }
 
+  //TODO: Make this smarter not removing all lines
   chartData.removeRows(0, chartData.getNumberOfRows());
   chartData.addRows(values);
 

@@ -17,7 +17,7 @@ block content
 		let sensors = !{JSON.stringify(sensors)};
 		window.app.gauge.init(sensors);
 		window.app.lineChart.init();
-		//window.app.page.init(sensors);
+		window.app.page.init(sensors);
 
 	each sensor in sensors
 		if sensor.type == 'TEMP_HUMIDITY'

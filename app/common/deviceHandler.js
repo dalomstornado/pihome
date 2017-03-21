@@ -14,6 +14,12 @@ const getLineCharts = () => {
 	} ];
 };
 
+const getLineChart = (measureType) => {
+	return getLineCharts().find((lineChart) => {
+		return lineChart.type === measureType;
+	});
+};
+
 const getGauges = (sensor) => {
 	return [ { 
 		id: 'gauge-temp-' + sensor.id,
@@ -63,4 +69,4 @@ const createEvent = (id, measureType, value, eventMoment = moment()) => {
 	return types.UNKNOWN;
 };
 
-module.exports = { getLineCharts, getGauges, getGauge, getSensors, getSensorOrDevice, createEvent };
+module.exports = { getLineCharts, getLineChart, getGauges, getGauge, getSensors, getSensorOrDevice, createEvent };
