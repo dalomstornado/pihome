@@ -127,31 +127,31 @@ const inDataTemp4 = [ {
     severity: 0,
     value: 15 + Math.round(10 * Math.random()) } ];
 
-    let values = lineChartData(new Date('2016-01-10'), [inDataTemp]);
+    let values = dataHandler.lineChartData(new Date('2016-01-10'), [inDataTemp]);
     lineChartModule.drawLineChart(lineChart, values, ['Sensor 1']);
     
     setTimeout(() => {
-        values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2]);
+        values = dataHandler.lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2]);
         lineChartModule.drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2']);
     }, 1000);
     
     setTimeout(() => {
-        values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3]);
+        values = dataHandler.lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3]);
         lineChartModule.drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3']);
     }, 2000);
     
     setTimeout(() => {
-        values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3, inDataTemp4]);
+        values = dataHandler.lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3, inDataTemp4]);
         lineChartModule.drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3', 'Sensor4']);
     }, 3000);
 };
 
 const test = () => {
-	const lineCharts = getLineCharts();    
-    for (let lineChart of lineCharts){
+	const lineCharts = deviceHandler.getLineCharts();    
+    for (let myLineChart of lineCharts){
         //updateLineChart(lineChart);
     	setInterval(() => {
-    		updateLineChart2(lineChart);
+    		updateLineChart2(myLineChart);
     	}, 15000);
 	}
 };

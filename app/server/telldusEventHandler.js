@@ -74,9 +74,9 @@ module.exports = (websocket) => {
 
 		for(let i = 0; i < 4; i++){	
 			setInterval(() => {
-				doSensorEventListener(sensors[i], '', '', 1, getTempValue(), '1234567');
+				doSensorEventListener(sensors[i], '', '', 1, getTempValue(), '1490114549');
 			  	setTimeout(() => {
-					doSensorEventListener(sensors[i], '', '', 2, getHumidityValue(), '1234567');
+					doSensorEventListener(sensors[i], '', '', 2, getHumidityValue(), '1490114549');
 				}, getLatency());
 			}, getUpdateInterval());	
 		}

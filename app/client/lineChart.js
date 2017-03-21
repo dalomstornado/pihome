@@ -9,7 +9,9 @@ const options = {
 const charts = new Map();
 
 const drawLineChart = (lineChart, values, names) => {
+  console.log('drawing');
   let chartData = new google.visualization.DataTable();
+  console.log('created datatable');
   chartData.addColumn('date');
   for(let i = 0; i < names.length; i++) {
     chartData.addColumn('number', names[i]);    
