@@ -1,4 +1,5 @@
 import { MeasureType, SensorType } from '../common/types';
+import { getLineCharts } from '../common/deviceHandler';
 
 const options = {
   width: 700,
@@ -25,15 +26,14 @@ const drawLineChart = (lineChart, values, names) => {
   chart.draw(chartData, options);
 };
 
-const init = (sensors) => {
-  for (let sensor of sensors){    
-    /*for (let lineChart of sensor.lineCharts){
-      google.charts.setOnLoadCallback(function(){
-        drawLineChart(lineChart, [[new Date(), 0]], ['serie1']); 
-      });
-    };
-    */
-  };
+const init = () => {
+  const lineCharts = getLineCharts();    
+  for (let lineChart of lineCharts){
+    google.charts.setOnLoadCallback(function(){
+      drawLineChart(lineChart, [[new Date(), 0]], ['serie1']); 
+    });
+  }
 };
+
 
 export { init, drawLineChart };

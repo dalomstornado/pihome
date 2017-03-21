@@ -2,7 +2,7 @@ import { drawGauge } from './gauge';
 import { MeasureType, SensorType } from '../common/types';
 import { drawLineChart } from './lineChart';
 import { lineChartData } from './dataHandler';
-import { getGauges } from '../common/deviceHandler';
+import { getGauges, getLineCharts } from '../common/deviceHandler';
 
 const updateLineChart = (lineChart) => {
 	const inDataTemp = [ { 
@@ -91,34 +91,16 @@ const inDataTemp4 = [ {
 
 	const values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3, inDataTemp4]);
 	drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3', 'Sensor 4']);
-    //TODO: Add api for getting historicaldata per sensor and type (then we have the name as well)
-};
-
-const updateGauge = (gauge) => {
-	const valueHumidity = 35 + Math.round(65 * Math.random());
-	const valueTemp = - 10 + Math.round(40 * Math.random());
-	
-    switch(gauge.type) {
-		case MeasureType.TEMPERATURE:
-			drawGauge(gauge, valueTemp);
-		case MeasureType.HUMIDITY:
-	}		drawGauge(gauge, valueHumidity);
 };
 
 const init = (sensors) => {
 	for(let sensor of sensors) {
-        const gauges = getGauges(sensor);
-		for(let gauge of gauges) {
-			setInterval(() => {
-				updateGauge(gauge);
-			}, 10000 + Math.round(10000 * Math.random()));
-		};
-		/*for(let lineChart of sensor.lineCharts) {
+		for(let lineChart of sensor.lineCharts) {
 			setInterval(() => {
 				updateLineChart(lineChart);
 			}, 10000 + Math.round(10000 * Math.random()));
-		};*/
-	};
+		}
+	}
 };
 
 export { init };

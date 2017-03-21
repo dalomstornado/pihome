@@ -2,9 +2,28 @@ const devices = require('./devices.json');
 const types = require('./types.js');
 const moment = require('moment');
 
+const getLineCharts = () => {
+	return [ {
+		id: 'linechart-temp',
+		type: types.MeasureType.TEMPERATURE,
+		name: 'Temp'
+	}, {
+		id: 'linechart-humidity',
+		type: types.MeasureType.HUMIDITY,
+		name: 'Humidity'
+	} ];
+};
+
 const getGauges = (sensor) => {
-	return [ { id: 'gauge-temp-' + sensor.id, type: types.MeasureType.TEMPERATURE, name: 'Temp' },
- 		{ id: 'gauge-humidity-' + sensor.id, type: types.MeasureType.HUMIDITY, name: 'Humidity' } ];
+	return [ { 
+		id: 'gauge-temp-' + sensor.id,
+		type: types.MeasureType.TEMPERATURE, 
+		name: 'Temp' 
+	}, { 
+		id: 'gauge-humidity-' + sensor.id, 
+		type: types.MeasureType.HUMIDITY, 
+		name: 'Humidity' 
+	} ];
 };
 
 const getGauge = (sensor, measureType) => {
@@ -44,4 +63,4 @@ const createEvent = (id, measureType, value, eventMoment = moment()) => {
 	return types.UNKNOWN;
 };
 
-module.exports = { getGauges, getGauge, getSensors, getSensorOrDevice, createEvent };
+module.exports = { getLineCharts, getGauges, getGauge, getSensors, getSensorOrDevice, createEvent };
