@@ -1,5 +1,6 @@
 const mongodb = require('../server/mongodb');
 const types = require('../common/types');
+const moment = require('moment');
 
 const returnData = (req, res, promiseFunction) => {
 	promiseFunction.then((data) => {
@@ -12,11 +13,15 @@ const returnData = (req, res, promiseFunction) => {
 };
 
 const temperature = (req, res) => {
+	console.log('hit temperature');
 	returnData(req, res, mongodb.findTemperature(req.params.sensorId));
 };
 
 const temperatures = (req, res) => {
-	returnData(req, res, mongodb.findTemperatures(req.params.sensorId, new Date(req.params.from)));
+	console.log('hit temperatures');
+	const from = moment(req.params.from, 'x')
+	console.log('from', from);
+	returnData(req, res, mongodb.findTemperatures(req.params.sensorId, from.toDate()));
 };
 
 const humidity = (req, res) => {
@@ -24,7 +29,8 @@ const humidity = (req, res) => {
 };
 
 const humidities = (req, res) => {
-	returnData(req, res, mongodb.findHumidities(req.params.sensorId, new Date(req.params.from)));
+	const from = moment(req.params.from, 'x')
+	returnData(req, res, mongodb.findHumidities(req.params.sensorId, from.toDate()));
 };
 
 module.exports = { temperature, temperatures, humidity, humidities };

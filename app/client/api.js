@@ -1,24 +1,21 @@
 const $ = require('jquery');
 
-const baseUrl = 'http://localhost:8082';
+const baseUrl = 'http://localhost:8082/api';
 
-/*
-const test = () => {
-	$.getJSON(baseUrl+'/temperatures/sensor1/2017-01-01'), (data) => {
-
-	}
-};
-
-
-const getMunicipalities = (sensorId, from) => {
+const getTemperatures = (sensorId, from) => {
   return $.ajax({
-    url: `${baseUrl}/temperatures`,
-    dataType: 'json',
-    data: {
-      sensorId,
-      from
-    },
+    method: 'GET',
+    url: `${baseUrl}/temperature/${sensorId}/${from.unix()}`,
+    dataType: 'json'
   });
 };
 
-*/
+const getHumidities = (sensorId, from) => {
+  return $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/humidity/${sensorId}/${from.unix()}`,
+    dataType: 'json'
+  });
+};
+
+module.exports = { getTemperatures, getHumidities }

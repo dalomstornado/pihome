@@ -1,36 +1,36 @@
-import { drawGauge } from './gauge';
-import { MeasureType, SensorType } from '../common/types';
-import { drawLineChart } from './lineChart';
-import { lineChartData } from './dataHandler';
-import { getGauges, getLineCharts } from '../common/deviceHandler';
+const lineChartModule = require('./lineChart');
+const dataHandler = require('./dataHandler');
+const deviceHandler = require('../common/deviceHandler');
 const api = require('./api');
 const moment = require('moment');
-const dataHandler = require('./dataHandler');
+const types = require('../common/types');
 
-const getFromDate = () => {
+const getFromMoment = () => {
     const fromDays = 30;
     const from = moment().subtract(fromDays, 'd');
-    return from.toDate();
+    return from;
 };
 
 const temperatureDatas = new Map();
 const humidityDatas = new Map();
 
 const updateLineChart = (from, datas, measureType) => {
-    const values = dataHandler.lineChartData(from, datas);
+    const values = dataHandler.lineChartData(from.toDate(), datas); //TODO: Moment øverallt (utom mongo?)
     const lineChart = deviceHandler.getLineChart(measureType);
-    drawLineChart(lineChart, values, datas.keys());
+    lineChartModule.drawLineChart(lineChart, values, datas.keys());
 };
 
 const callHistoricalData = (sensors) => {
-    const from = getFromDate();
+    const from = getFromMoment();
     console.log('sensors', sensors);
     for (let sensor of sensors) {
         api.getTemperatures(sensor.id, from).then((data) => {
+            console.log('temperatures', data);
             temperatureDatas[sensor.name] = data;
             updateLineChart(from, temperatureDatas, types.MeasureType.TEMPERATURE);
         });
         api.getHumidities(sensor.id, from).then((data) => {
+            console.log('humidities', data);
             humidityDatas[sensor.name] = data;
             updateLineChart(from, humidityDatas, types.MeasureType.HUMIDITY);
         });
@@ -128,21 +128,21 @@ const inDataTemp4 = [ {
     value: 15 + Math.round(10 * Math.random()) } ];
 
     let values = lineChartData(new Date('2016-01-10'), [inDataTemp]);
-    drawLineChart(lineChart, values, ['Sensor 1']);
+    lineChartModule.drawLineChart(lineChart, values, ['Sensor 1']);
     
     setTimeout(() => {
         values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2]);
-        drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2']);
+        lineChartModule.drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2']);
     }, 1000);
     
     setTimeout(() => {
         values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3]);
-        drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3']);
+        lineChartModule.drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3']);
     }, 2000);
     
     setTimeout(() => {
         values = lineChartData(new Date('2016-01-10'), [inDataTemp, inDataTemp2, inDataTemp3, inDataTemp4]);
-        drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3', 'Sensor4']);
+        lineChartModule.drawLineChart(lineChart, values, ['Sensor 1', 'Sensor 2', 'Sensor 3', 'Sensor4']);
     }, 3000);
 };
 
