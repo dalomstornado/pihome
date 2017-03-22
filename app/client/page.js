@@ -16,6 +16,8 @@ const humidityDatas = new Map();
 
 const updateLineChart = (from, datas, measureType) => {
     const values = dataHandler.lineChartData(from.toDate(), datas); //TODO: Moment øverallt (utom mongo?)
+    console.log('beforeDataHandler', datas);
+    console.log('afterDataHandler', values);
     const lineChart = deviceHandler.getLineChart(measureType);
     lineChartModule.drawLineChart(lineChart, values, datas.keys());
 };
@@ -25,12 +27,12 @@ const callHistoricalData = (sensors) => {
     console.log('sensors', sensors);
     for (let sensor of sensors) {
         api.getTemperatures(sensor.id, from).then((data) => {
-            console.log('temperatures', data);
+            console.log('data-from-api', data);
             temperatureDatas[sensor.name] = data;
+            console.log('aggregated-data-from-api', temperatureDatas);
             updateLineChart(from, temperatureDatas, types.MeasureType.TEMPERATURE);
         });
         api.getHumidities(sensor.id, from).then((data) => {
-            console.log('humidities', data);
             humidityDatas[sensor.name] = data;
             updateLineChart(from, humidityDatas, types.MeasureType.HUMIDITY);
         });

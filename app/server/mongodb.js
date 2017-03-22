@@ -142,7 +142,10 @@ const findTemperatures = (sensorId, from) => {
 				if (err) {
 					reject(err);
 				} else {
-					resolve(items);
+					let test = [{ date: new Date(), reading: 10 }, { date: new Date(), reading: 15 }];
+					//console.log('mongo', test);
+					resolve(test);
+					//resolve(items);
 				}
 				db.close();
 			});

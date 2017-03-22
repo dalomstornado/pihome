@@ -76,8 +76,7 @@ Array.prototype.clean = function() {
 
 const lineChartData = (from, dataSeries) => {
     const timeArray = createTimeArray(from);
-    for(let i = 0; i < dataSeries.length; i++)
-    {
+    for(let i = 0; i < dataSeries.length; i++) {
         timeArray.add(dataSeries[i], i + 1);
     }
     timeArray.clean();
