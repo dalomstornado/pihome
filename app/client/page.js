@@ -11,36 +11,48 @@ const getFromMoment = () => {
     return from;
 };
 
-const temperatureDatas = new Map();
-const humidityDatas = new Map();
-
-const updateLineChart = (from, datas, measureType) => {
-    const values = dataHandler.lineChartData(from.toDate(), datas); //TODO: Moment øverallt (utom mongo?)
-    console.log('beforeDataHandler', datas);
-    console.log('afterDataHandler', values);
+const updateLineChart = (from, datas, measureType, namesLoaded) => {
+    const lineChartData = dataHandler.lineChartData(from.toDate(), datas); //TODO: Moment øverallt (utom mongo?)
+    console.log('lineChartData', lineChartData)
+    console.log('namesLoaded', namesLoaded)
     const lineChart = deviceHandler.getLineChart(measureType);
-    lineChartModule.drawLineChart(lineChart, values, datas.keys());
+    lineChartModule.drawLineChart(lineChart, lineChartData, namesLoaded);
 };
 
+const addIfNotExisting = (array, item) => {
+    if (!array.includes(item)) {
+        array.push(item);
+    }
+}
+
 const callHistoricalData = (sensors) => {
+    const temperatureDatas = new Array();
+    const humidityDatas = new Array();
+    const namesLoaded = new Array();
     const from = getFromMoment();
-    console.log('sensors', sensors);
-    for (let sensor of sensors) {
+    
+    for (let i = 0; i < sensors.length; i++) {
+        const sensor = sensors[i];
         api.getTemperatures(sensor.id, from).then((data) => {
-            console.log('data-from-api', data);
-            temperatureDatas[sensor.name] = data;
-            console.log('aggregated-data-from-api', temperatureDatas);
-            updateLineChart(from, temperatureDatas, types.MeasureType.TEMPERATURE);
+            console.log('data', data);
+            temperatureDatas.push(data); //data should be one array with date, value
+            console.log('temperatureDatas', temperatureDatas);
+            addIfNotExisting(namesLoaded, sensor.name);
+            updateLineChart(from, temperatureDatas, types.MeasureType.TEMPERATURE, namesLoaded);
         });
-        api.getHumidities(sensor.id, from).then((data) => {
-            humidityDatas[sensor.name] = data;
-            updateLineChart(from, humidityDatas, types.MeasureType.HUMIDITY);
-        });
+        /*api.getHumidities(sensor.id, from).then((data) => {
+            humidityDatas.push(data);
+            addIfNotExisting(namesLoaded, sensor.name);
+            updateLineChart(from, humidityDatas, types.MeasureType.HUMIDITY, namesLoaded);
+        });*/
     }
 };
 
 const init = (sensors) => {
-    callHistoricalData(sensors);
+    //callHistoricalData(sensors);
+    let data = dataHandler.test();
+    const lineChart = deviceHandler.getLineChart(types.MeasureType.TEMPERATURE);
+    lineChartModule.drawLineChart(lineChart, data, ['test1', 'test2', 'test3']);  
 }
 
 //TEST START

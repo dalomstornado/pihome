@@ -118,7 +118,7 @@ const findTemperature = (sensorId) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			collection.find({ sensorId }, { date: 1, reading: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
+			collection.find({ sensorId }, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
@@ -138,11 +138,11 @@ const findTemperatures = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			collection.find({ sensorId, date: { $gt: from }}, { date: 1, reading: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
+			collection.find({ sensorId, date: { $gt: from }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
-					let test = [{ date: new Date(), reading: 10 }, { date: new Date(), reading: 15 }];
+					let test = [{ date: new Date('2017-03-20'), value: 10 }, { date: new Date(), value: 15 }];
 					//console.log('mongo', test);
 					resolve(test);
 					//resolve(items);

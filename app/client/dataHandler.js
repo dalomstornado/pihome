@@ -104,14 +104,14 @@ const createTestDataSeries = (from, to = new Date()) => {
 
 const test = () => {
     const from = new Date('2017-03-08');
-    let testData = createTestDataSeries(from);
-    console.log('testData', testData);
-    let testData2 = createTestDataSeries(from);
-    console.log('testData2', testData2);
 
-    let ret = lineChartData(from, [testData, testData2], ['test1', 'test2'])
-    console.log('ret', ret); 
+    let testData = createTestDataSeries(from);
+    let testData2 = createTestDataSeries(from);
+    let testData3 = createTestDataSeries(from);
+
+    let ret = lineChartData(from, [testData, testData2, testData3])
+    return ret;
 };
 //test();
 
-module.exports = { lineChartData }
+module.exports = { lineChartData, test }
