@@ -15,7 +15,6 @@ block content
 	script.
 		google.charts.load('current', {'packages':['gauge', 'line', 'corechart']});
 		let sensors = !{JSON.stringify(sensors)};
-		window.app.gauge.init(sensors);
 		window.app.page.init(sensors);
 
 	each sensor in sensors

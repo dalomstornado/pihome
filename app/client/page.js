@@ -4,6 +4,7 @@ const deviceHandler = require('../common/deviceHandler');
 const api = require('./api');
 const moment = require('moment');
 const types = require('../common/types');
+const gauge = require('./gauge');
 
 const getFromMoment = () => {
     const fromDays = 30;
@@ -48,12 +49,16 @@ const callHistoricalData = (sensors) => {
     }
 };
 
-const init = (sensors) => {
-    //callHistoricalData(sensors);
-    
+const test = () => {
     let data = dataHandler.test();
     const lineChart = deviceHandler.getLineChart(types.MeasureType.TEMPERATURE);
     lineChartModule.drawLineChart(lineChart, data, ['test1', 'test2', 'test3']);
-}
+};
+
+const init = (sensors) => {
+    gauge.init(sensors);
+    //callHistoricalData(sensors);
+    test();
+};
 
 export { init };
