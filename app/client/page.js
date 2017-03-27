@@ -37,6 +37,8 @@ const callHistoricalData = (sensors) => {
         api.getTemperatures(sensor.id, from).then((data) => {
             temperatureDatas.push(data); //data should be one array with date, value
             addIfNotExisting(namesLoaded, sensor.name);
+            console.log('got ' + sensor.name);
+            console.log('namesLoaded', namesLoaded);
             updateLineChart(from, temperatureDatas, types.MeasureType.TEMPERATURE, namesLoaded);
         });
         /*api.getHumidities(sensor.id, from).then((data) => {
@@ -55,8 +57,8 @@ const test = () => {
 
 const init = (sensors) => {
     gauge.init(sensors);
-    //callHistoricalData(sensors);
-    test();
+    callHistoricalData(sensors);
+    //test();
 };
 
 export { init };
