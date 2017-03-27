@@ -185,7 +185,9 @@ const findHumidities = (sensorId, from) => {
 				if (err) {
 					reject(err);
 				} else {
-					resolve(items);
+					let test = [{ date: new Date('2017-03-20'), value: 10 }, { date: new Date(), value: 15 }];
+					//resolve(items);
+					resolve(test);
 				}
 				db.close();
 			});

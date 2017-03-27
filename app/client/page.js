@@ -35,17 +35,15 @@ const callHistoricalData = (sensors) => {
     for (let i = 0; i < sensors.length; i++) {
         const sensor = sensors[i];
         api.getTemperatures(sensor.id, from).then((data) => {
-            console.log('data', data);
             temperatureDatas.push(data); //data should be one array with date, value
-            console.log('temperatureDatas', temperatureDatas);
             addIfNotExisting(namesLoaded, sensor.name);
             updateLineChart(from, temperatureDatas, types.MeasureType.TEMPERATURE, namesLoaded);
         });
-        api.getHumidities(sensor.id, from).then((data) => {
+        /*api.getHumidities(sensor.id, from).then((data) => {
             humidityDatas.push(data);
             addIfNotExisting(namesLoaded, sensor.name);
             updateLineChart(from, humidityDatas, types.MeasureType.HUMIDITY, namesLoaded);
-        });
+        });*/
     }
 };
 

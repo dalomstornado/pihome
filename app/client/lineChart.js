@@ -1,6 +1,3 @@
-import { MeasureType, SensorType } from '../common/types';
-import { getLineCharts } from '../common/deviceHandler';
-
 const options = {
   width: 700,
   height: 200,
