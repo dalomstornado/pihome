@@ -7,7 +7,6 @@ const websocket = require('./websocket');
 window.app = {
 	gauge,
 	page,
-	lineChart,
 	deviceHandler,
 	websocket
 };
