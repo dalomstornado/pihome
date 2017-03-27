@@ -50,7 +50,7 @@ const getSensorOrDevice = (id) => {
 	});
 };
 
-const createEvent = (id, measureType, value, eventMoment = moment()) => {
+const createEvent = (id, measureType, value, eventMoment = moment.utc()) => {
 	const sensorOrDevice = getSensorOrDevice(id);
 	if (sensorOrDevice && measureType !== types.UNKNOWN) {
 		return {

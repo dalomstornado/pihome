@@ -17,7 +17,7 @@ const temperature = (req, res) => {
 };
 
 const temperatures = (req, res) => {
-	const from = moment(req.params.from, 'X')
+	const from = moment.utc(req.params.from, 'X')
 	returnData(req, res, mongodb.findTemperatures(req.params.sensorId, from.toDate()));
 };
 
@@ -26,7 +26,7 @@ const humidity = (req, res) => {
 };
 
 const humidities = (req, res) => {
-	const from = moment(req.params.from, 'X')
+	const from = moment.utc(req.params.from, 'X')
 	returnData(req, res, mongodb.findHumidities(req.params.sensorId, from.toDate()));
 };
 

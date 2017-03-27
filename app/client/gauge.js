@@ -11,6 +11,7 @@ const optionsHumidity = {
   max: 95  
 };
 
+//TODO: Fix so this regards the id and checks in limits. -> LimitHandler
 const optionsTemp = {
   width: 400, height: 120,
   redFrom: -30, redTo: LowerLimit.TEMPERATURE.ALARM,

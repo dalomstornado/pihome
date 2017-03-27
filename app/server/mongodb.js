@@ -154,7 +154,7 @@ const findTemperatures = (sensorId, from) => {
 				if (err) {
 					reject(err);
 				} else {
-					console.log('temp ' + sensorId + items);
+					//console.log('temp ' + sensorId + items);
 					resolve(items);
 				}
 				db.close();
@@ -197,7 +197,7 @@ const findHumidities = (sensorId, from) => {
 				if (err) {
 					reject(err);
 				} else {
-					console.log('hum ' + sensorId + items);
+					//console.log('hum ' + sensorId + items);
 					resolve(items);
 				}
 				db.close();

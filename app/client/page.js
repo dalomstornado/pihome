@@ -7,8 +7,8 @@ const types = require('../common/types');
 //const gauge = require('./gauge');
 
 const getFromMoment = () => {
-    const fromDays = 2;
-    const from = moment().subtract(fromDays, 'd');
+    const fromDays = 30;
+    const from = moment.utc().subtract(fromDays, 'd');
     return from;
 };
 
