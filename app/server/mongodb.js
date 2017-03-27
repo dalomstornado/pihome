@@ -134,6 +134,16 @@ const findTemperature = (sensorId) => {
 	});
 };
 
+//TEST START
+const testTemp = () => {
+	return [{ date: new Date('2017-03-20'), value: -10 + Math.round(30 * Math.random()) }, { date: new Date('2017-03-25'), value: 15 }];
+};
+
+const testHumidity = () => {
+	return [{ date: new Date('2017-03-20'), value: 10 + Math.round(85 * Math.random()) }, { date: new Date('2017-03-25'), value: 15 }];
+};
+//TEST END
+
 const findTemperatures = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
@@ -142,9 +152,7 @@ const findTemperatures = (sensorId, from) => {
 				if (err) {
 					reject(err);
 				} else {
-					let test = [{ date: new Date('2017-03-20'), value: 10 }, { date: new Date(), value: 15 }];
-					//console.log('mongo', test);
-					resolve(test);
+					resolve(testTemp());
 					//resolve(items);
 				}
 				db.close();
@@ -185,9 +193,8 @@ const findHumidities = (sensorId, from) => {
 				if (err) {
 					reject(err);
 				} else {
-					let test = [{ date: new Date('2017-03-20'), value: 10 }, { date: new Date(), value: 15 }];
 					//resolve(items);
-					resolve(test);
+					resolve(testHumidity());
 				}
 				db.close();
 			});

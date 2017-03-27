@@ -44,19 +44,20 @@ let chartsData = undefined;
 const charts = new Map();
 
 const drawGauge = (gauge, value) => {
-  const data = google.visualization.arrayToDataTable(chartsData.get(gauge.id));
-  
-  let chart = charts.get(gauge.id);
-  if (!chart) {
-    chart = new google.visualization.Gauge(document.getElementById(gauge.id));
-    charts.set(gauge.id, chart);
-  }
-  if (value) {
-    data.setValue(0, 1, value);
-  }
-  
-  chart.draw(data, getOptions(gauge.type));
-  afterDraw(gauge);
+  google.charts.setOnLoadCallback(() => {
+    const data = google.visualization.arrayToDataTable(chartsData.get(gauge.id));
+    let chart = charts.get(gauge.id);
+    if (!chart) {
+      chart = new google.visualization.Gauge(document.getElementById(gauge.id));
+      charts.set(gauge.id, chart);
+    }
+    if (value) {
+      data.setValue(0, 1, value);
+    }
+    
+    chart.draw(data, getOptions(gauge.type));
+    afterDraw(gauge);
+  });
 };
 
 const init = (sensors) => {

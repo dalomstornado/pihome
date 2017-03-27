@@ -62,6 +62,7 @@ module.exports = (websocket) => {
 	};
 
 	const getLatency = () => {
+		return 25000;
 		return Math.floor(Math.random() * 1000);
 	}
 
