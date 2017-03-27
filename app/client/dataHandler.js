@@ -114,6 +114,6 @@ const test = () => {
     //console.log('linechartdata', ret);
     return ret;
 };
-test();
+//test();
 
 module.exports = { lineChartData, test }

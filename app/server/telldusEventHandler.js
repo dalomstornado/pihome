@@ -70,14 +70,19 @@ module.exports = (websocket) => {
 		return 5000 + Math.round(15000 * Math.random());
 	};
 
+	const testTimeStamp = () => {
+		return 1490600000000 + Math.round(509357 * Math.random());
+	};
+
+
 	const test = () => {
 		const sensors = [135, 136, 137, 138];
 
 		for(let i = 0; i < 4; i++){	
 			setInterval(() => {
-				doSensorEventListener(sensors[i], '', '', 1, getTempValue(), '1490114549');
+				doSensorEventListener(sensors[i], '', '', 1, getTempValue(), testTimeStamp());
 			  	setTimeout(() => {
-					doSensorEventListener(sensors[i], '', '', 2, getHumidityValue(), '1490114549');
+					doSensorEventListener(sensors[i], '', '', 2, getHumidityValue(), testTimeStamp());
 				}, getLatency());
 			}, getUpdateInterval());	
 		}
@@ -88,7 +93,7 @@ module.exports = (websocket) => {
 		const sensorListener = addSensorEventListener();
 		const deviceListener = addDeviceEventListener();
 
-		test();
+		//test();
 	};
 
 	return module;

@@ -9,7 +9,7 @@ const insertTemperature = (event) => { //TODO: Remove name from storing... (devi
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			var doc = { date: event.moment.toDate(), sensorId: event.sensor.id, sensorName: event.sensor.name, severity: event.severity, value: event.measure.value }
+			var doc = { date: event.moment.toDate(), sensorId: event.sensor.id, severity: event.severity, value: event.measure.value }
 			collection.insert(doc).then((result) => {
 				resolve(result);
 			})
@@ -30,7 +30,7 @@ const insertHumidity = (event) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
-			var doc = { date: event.moment.toDate(), sensorId: event.sensor.id, sensorName: event.sensor.name, severity: event.severity, value: event.measure.value }
+			var doc = { date: event.moment.toDate(), sensorId: event.sensor.id, severity: event.severity, value: event.measure.value }
 			collection.insert(doc).then((result) => {
 				resolve(result);
 			})
@@ -51,7 +51,7 @@ const insertDeviceAction = (event) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('device')
-			var doc = { date: event.moment.toDate(), sensorId: event.sensor.id, sensorName: event.sensor.name, severity: event.severity, value: event.measure.value }
+			var doc = { date: event.moment.toDate(), sensorId: event.sensor.id, severity: event.severity, value: event.measure.value }
 			collection.insert(doc).then((result) => {
 				resolve(result);
 			})
@@ -118,6 +118,7 @@ const findTemperature = (sensorId) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
+			sensorId = parseInt(sensorId);
 			collection.find({ sensorId }, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
 				if (err) {
 					reject(err);
@@ -148,12 +149,13 @@ const findTemperatures = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
+			sensorId = parseInt(sensorId);
 			collection.find({ sensorId, date: { $gt: from }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
-					resolve(testTemp());
-					//resolve(items);
+					console.log('temp ' + sensorId + items);
+					resolve(items);
 				}
 				db.close();
 			});
@@ -169,7 +171,8 @@ const findHumidity = (sensorId) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
-			collection.find({sensorId}, { date: 1, reading: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
+			sensorId = parseInt(sensorId);
+			collection.find({sensorId}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
@@ -189,12 +192,13 @@ const findHumidities = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
-			collection.find({ sensorId, date: { $gt: from }}, { date: 1, reading: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
+			sensorId = parseInt(sensorId);
+			collection.find({ sensorId, date: { $gt: from }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
-					//resolve(items);
-					resolve(testHumidity());
+					console.log('hum ' + sensorId + items);
+					resolve(items);
 				}
 				db.close();
 			});
@@ -216,7 +220,7 @@ const init = () => {
 		db.createCollection('presence', { 'capped': true, 'size': cappedSize });
 		findPresenceStatus().catch((err) => {
 			if (err === types.NORESULT) {
-				insertPresenceStatus(types.PresenceStatus.Home);
+				insertPresenceStatus(types.PresenceStatus.HOME);
 				console.log('Inserted status HOME since findPresenceStatus returns NORESULT.');
 			} else {
 				console.log('error', err);
