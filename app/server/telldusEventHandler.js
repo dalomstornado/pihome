@@ -93,7 +93,7 @@ module.exports = (websocket) => {
 		const sensorListener = addSensorEventListener();
 		const deviceListener = addDeviceEventListener();
 
-		//test();
+		test();
 	};
 
 	return module;

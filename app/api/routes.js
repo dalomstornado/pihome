@@ -5,8 +5,8 @@ const sensorController = require('./sensorController');
 const router = express.Router();
 
 //PRESENCE
-router.route('/presence/home').post(presenceController.home);
-router.route('/presence/away').post(presenceController.away);
+router.route('/presence/home').get(presenceController.home);
+router.route('/presence/away').get(presenceController.away);
 
 //SENSORS
 router.route('/temperature/:sensorId').get(sensorController.temperature);
