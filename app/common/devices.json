@@ -7,13 +7,13 @@
 	},
 	{
 	    "id": 136,
-	    "name": "Övervåning",
+	    "name": "Vind",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
   	},
   	{
 	    "id": 137,
-	    "name": "Vind",
+	    "name": "Övervåning",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
   	},
