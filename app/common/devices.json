@@ -1,11 +1,5 @@
 [
 	{
-	    "id": 135,
-	    "name": "Ute",
-	    "type": "TEMP_HUMIDITY",
-	    "triggers": null
-	},
-	{
 	    "id": 136,
 	    "name": "Vind",
 	    "type": "TEMP_HUMIDITY",
@@ -19,10 +13,16 @@
   	},
   	{
 	    "id": 138,
-	    "name": "Oslo",
+	    "name": "Källare",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
   	},
+  	{
+	    "id": 135,
+	    "name": "Ute",
+	    "type": "TEMP_HUMIDITY",
+	    "triggers": null
+	},
 	{
 		"id": 11,
 		"name": "CellarDoor",
