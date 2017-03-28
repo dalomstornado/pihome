@@ -4,7 +4,6 @@ var notify = require('gulp-notify');
 var livereload = require('gulp-livereload');
 var sass = require('gulp-sass');
 var del = require('del');
-var fs = require('fs');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var sourcemaps = require('gulp-sourcemaps');
@@ -54,7 +53,7 @@ gulp.task('clientJs', function() {
     .pipe(buffer())
     .pipe(sourcemaps.init({loadMaps: true}))
         // Add transformation tasks to the pipeline here.
-        //.pipe(uglify())
+        .pipe(uglify())
         .on('error', gutil.log)
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./app/static/js/'));

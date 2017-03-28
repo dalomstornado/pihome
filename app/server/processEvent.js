@@ -30,7 +30,7 @@ const resolveOnOff = (resolve) => {
 const resolveTempHumidity = (resolve, event) => {
 	const upperLimit = getUpperLimit(event);
 	const lowerLimit = getLowerLimit(event);
-	const value = event.value;
+	const value = event.measure.value;
 	if((upperLimit.ALARM && value >= upperLimit.ALARM)
 		|| (lowerLimit.ALARM && value <= lowerLimit.ALARM)) {
 			resolve(types.Severity.ALARM);
@@ -59,7 +59,6 @@ const getSeverity = (event) => {
 const processEvent = (event, websocket) => {
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
-		
 		//1. Trigger and notify
 		if (event.severity >= types.Severity.ALARM) {
 			triggerDevices(event.sensor, event.measure.value);

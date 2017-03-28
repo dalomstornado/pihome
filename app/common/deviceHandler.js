@@ -10,7 +10,7 @@ const getLineCharts = () => {
 	}, {
 		id: 'linechart-humidity',
 		type: types.MeasureType.HUMIDITY,
-		name: 'Humidity'
+		name: 'Fukt'
 	} ];
 };
 
@@ -31,7 +31,7 @@ const getGauges = (sensor) => {
 	}, { 
 		id: 'gauge-humidity-' + sensor.id, 
 		type: types.MeasureType.HUMIDITY, 
-		name: 'Humidity',
+		name: 'Fukt',
 		sensor: {
 			id: sensor.id
 		}

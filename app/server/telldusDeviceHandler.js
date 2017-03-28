@@ -17,13 +17,13 @@ const triggerDevices = (sensor, status) => {
 		case types.Status.ON:
 			telldus.turnOn(device.id, (err) => {
 				mongodb.insertDeviceAction(event);
-				console.log(sensor.name + ' triggers ' + device.name + ' ON') //TODO: Kolla rolling log om vi får en tid. Annars wrappa console.log
+				console.log(sensor.name + ' triggers ' + device.name + ' ON'); //Rolling tid. Vs wrappa console.log
 			});
 			break;
 		case types.Status.OFF:
 			telldus.turnOff(deviceIds[i], (err) => {
 				mongodb.insertDeviceAction(event);
-				console.log(sensor.name + ' triggers ' + device.name + ' OFF')
+				console.log(sensor.name + ' triggers ' + device.name + ' OFF');
 			});
 			break;
 		}

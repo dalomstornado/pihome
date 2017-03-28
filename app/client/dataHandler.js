@@ -132,9 +132,8 @@ const test = () => {
     let testData2 = createTestDataSeries(from);
     let testData3 = createTestDataSeries(from);
 
-    //console.log('testdata', testData);
     let ret = lineChartData(from, [testData, testData2, testData3]);
-    //console.log('linechartdata', ret);
+    
     return ret;
 };
 //test();

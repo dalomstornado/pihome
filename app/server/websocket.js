@@ -20,7 +20,7 @@ module.exports = (io) => {
 		if (deviceType) {
 			io.emit(deviceType, event);
 		} else {
-			console.log('Unhandled device type. No emit');	
+			console.log('Unhandled device type. Dropping to emit on websocket.');	
 		}		
 	};
 
