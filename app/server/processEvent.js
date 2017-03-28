@@ -6,21 +6,11 @@ const triggerDevices = require('../server/telldusDeviceHandler');
 const websocket = require('../server/websocket');
 
 const getLowerLimit = (event) => {
-	const type = types.MeasureType[event.measure.type];
-	const sensorSpecific = limits.LowerLimit[event.sensor.id];
-	if (sensorSpecific){
-		return sensorSpecific[type];
-	}
-	return limits.LowerLimit[type];
+	return limits.getLowerLimit(event.measure.type, event.sensor.id);
 };
 
 const getUpperLimit = (event) => {
-	const type = types.MeasureType[event.measure.type];
-	const sensorSpecific = limits.UpperLimit[event.sensor.id];
-	if (sensorSpecific){
-		return sensorSpecific[type];
-	}
-	return limits.UpperLimit[type];
+	return limits.getUpperLimit(event.measure.type, event.sensor.id);
 };
 
 const resolveOnOff = (resolve) => {

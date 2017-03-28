@@ -1,31 +1,38 @@
 import { MeasureType, SensorType } from '../common/types';
-import { LowerLimit, UpperLimit } from '../common/limits';
+import { getLowerLimit, getUpperLimit } from '../common/limits';
 import { getGauges } from '../common/deviceHandler';
 const $ = require('jquery');
 
-const optionsHumidity = {
-  width: 400, height: 120,
-  redFrom: UpperLimit.HUMIDITY.ALARM, redTo: 95,
-  yellowFrom:UpperLimit.HUMIDITY.WARNING, yellowTo: UpperLimit.HUMIDITY.ALARM,
-  minorTicks: 5, min: 30,
-  max: 95  
+const optionsHumidity = (sensorId) => {
+  const upperLimit = getUpperLimit(MeasureType.HUMIDITY, sensorId);
+
+  return {
+    width: 400, height: 120,
+    redFrom: upperLimit.ALARM, redTo: 95,
+    yellowFrom: upperLimit.WARNING, yellowTo: upperLimit.ALARM,
+    minorTicks: 5, min: 30,
+    max: 95 
+  } 
 };
 
-//TODO: Fix so this regards the id and checks in limits. -> LimitHandler
-const optionsTemp = {
-  width: 400, height: 120,
-  redFrom: -30, redTo: LowerLimit.TEMPERATURE.ALARM,
-  yellowFrom: LowerLimit.TEMPERATURE.ALARM, yellowTo: LowerLimit.TEMPERATURE.WARNING,
-  minorTicks: 5, min: -30,
-  max: 50
+const optionsTemp = (sensorId) => {
+  const lowerLimit = getLowerLimit(MeasureType.TEMPERATURE, sensorId);
+
+  return {
+    width: 400, height: 120,
+    redFrom: -30, redTo: lowerLimit.ALARM,
+    yellowFrom: lowerLimit.ALARM, yellowTo: lowerLimit.WARNING,
+    minorTicks: 5, min: -30,
+    max: 50
+  }
 };
 
-const getOptions = (type) => {
+const getOptions = (type, sensorId) => {
   switch (type) {
     case MeasureType.TEMPERATURE:
-      return optionsTemp;
+      return optionsTemp(sensorId);
     case MeasureType.HUMIDITY:
-      return optionsHumidity;
+      return optionsHumidity(sensorId);
     default:
       return undefined;
   };
@@ -56,7 +63,7 @@ const drawGauge = (gauge, value) => {
       data.setValue(0, 1, value);
     }
     
-    chart.draw(data, getOptions(gauge.type));
+    chart.draw(data, getOptions(gauge.type, gauge.sensor.id));
     afterDraw(gauge);
   });
 };

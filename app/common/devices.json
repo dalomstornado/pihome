@@ -1,7 +1,7 @@
 [
 	{
 	    "id": 135,
-	    "name": "Oslo",
+	    "name": "Ute",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
 	},
@@ -19,7 +19,7 @@
   	},
   	{
 	    "id": 138,
-	    "name": "Ute",
+	    "name": "Oslo",
 	    "type": "TEMP_HUMIDITY",
 	    "triggers": null
   	},

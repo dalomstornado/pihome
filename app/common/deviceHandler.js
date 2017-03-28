@@ -24,11 +24,17 @@ const getGauges = (sensor) => {
 	return [ { 
 		id: 'gauge-temp-' + sensor.id,
 		type: types.MeasureType.TEMPERATURE, 
-		name: 'Temp' 
+		name: 'Temp',
+		sensor: {
+			id: sensor.id
+		} 
 	}, { 
 		id: 'gauge-humidity-' + sensor.id, 
 		type: types.MeasureType.HUMIDITY, 
-		name: 'Humidity' 
+		name: 'Humidity',
+		sensor: {
+			id: sensor.id
+		}
 	} ];
 };
 
