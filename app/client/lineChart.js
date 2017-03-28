@@ -7,7 +7,6 @@ const charts = new Map();
 
 const drawLineChart = (lineChart, values, names) => {
   google.charts.setOnLoadCallback(() => {
-
     let chartData = new google.visualization.DataTable();
     chartData.addColumn('date');
     for(let i = 0; i < names.length; i++) {

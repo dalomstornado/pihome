@@ -74,12 +74,35 @@ Array.prototype.clean = function() {
     }
 };
 
+const maxLength = (array) => {
+    let maxLength = 0;
+    for (let i = 0; i < array.length; i++) {
+        if (array[i].length > maxLength) {
+            maxLength = array[i].length;
+        }
+    }
+    return maxLength;
+};
+
+Array.prototype.pad = function(maxLength) {
+    for (let i = 0; i < this.length; i++) {
+        let numberOfValuesToPad = maxLength - this[i].length;
+        for(let x = 0; x < numberOfValuesToPad; x++) {
+            let indexToUse = this[i].length - 1;
+            let valueToPadWith = this[i][indexToUse];
+            this[i][++indexToUse] = valueToPadWith;
+        }
+    }
+};
+
 const lineChartData = (from, dataSeries) => {
     const timeArray = createTimeArray(from);
     for(let i = 0; i < dataSeries.length; i++) {
         timeArray.add(dataSeries[i], i + 1);
     }
     timeArray.clean();
+    timeArray.pad(maxLength(timeArray));
+
     return timeArray;
 };
 

@@ -71,7 +71,7 @@ module.exports = (websocket) => {
 	};
 
 	const testTimeStamp = () => {
-		return 1490600000000 + Math.round(509357 * Math.random());
+		return 1480000000000 + Math.round(509357 * Math.random());
 	};
 
 
