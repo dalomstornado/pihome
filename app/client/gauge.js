@@ -76,10 +76,7 @@ const init = (sensors) => {
     for (let gauge of gauges){
       let chartData = [['Label', 'Value'], [gauge.name, 0]];
       chartsData.set(gauge.id, chartData);
-
-      google.charts.setOnLoadCallback(function(){
-        drawGauge(gauge, 0);
-      });
+      drawGauge(gauge, 0);
     };
   };
 };
