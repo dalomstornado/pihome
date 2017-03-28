@@ -1,17 +1,17 @@
 //TODO: Make this use types
 const LowerLimit = {
 	TEMPERATURE: { WARNING: 7, ALARM: 4 },
-	HUMIDITY: { WARNING: 20, ALARM: 10 }, 
+	HUMIDITY: { WARNING: undefined, ALARM: undefined }, 
 	135: {
 		TEMPERATURE: { WARNING: -10, ALARM: -20 },
-		HUMIDITY: { WARNING: 20, ALARM: 10 } 
+		HUMIDITY: { WARNING: undefined, ALARM: undefined } 
 	}
 };
 const UpperLimit = {
-	TEMPERATURE: { WARNING: 28, ALARM: 32 },
+	TEMPERATURE: { WARNING: 30, ALARM: 35 },
 	HUMIDITY: { WARNING: 65, ALARM: 75 },
 	135: {
-		TEMPERATURE: { WARNING: 33, ALARM: 38 },
+		TEMPERATURE: { WARNING: undefined, ALARM: undefined },
 		HUMIDITY: { WARNING: 90, ALARM: 93 } 
 	}
 };
