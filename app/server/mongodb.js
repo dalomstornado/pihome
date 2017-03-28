@@ -118,7 +118,6 @@ const findTemperature = (sensorId) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			sensorId = parseInt(sensorId);
 			collection.find({ sensorId }, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
 				if (err) {
 					reject(err);
@@ -149,7 +148,6 @@ const findTemperatures = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			sensorId = parseInt(sensorId);
 			collection.find({ sensorId, date: { $gt: from }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
@@ -171,7 +169,6 @@ const findHumidity = (sensorId) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
-			sensorId = parseInt(sensorId);
 			collection.find({sensorId}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).limit(1).toArray((err, items) => {
 				if (err) {
 					reject(err);
@@ -192,7 +189,6 @@ const findHumidities = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
-			sensorId = parseInt(sensorId);
 			collection.find({ sensorId, date: { $gt: from }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);

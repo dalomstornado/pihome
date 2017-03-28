@@ -13,21 +13,21 @@ const returnData = (req, res, promiseFunction) => {
 };
 
 const temperature = (req, res) => {
-	returnData(req, res, mongodb.findTemperature(req.params.sensorId));
+	returnData(req, res, mongodb.findTemperature(parseInt(req.params.sensorId)));
 };
 
 const temperatures = (req, res) => {
 	const from = moment.utc(req.params.from, 'X')
-	returnData(req, res, mongodb.findTemperatures(req.params.sensorId, from.toDate()));
+	returnData(req, res, mongodb.findTemperatures(parseInt(req.params.sensorId), from.toDate()));
 };
 
 const humidity = (req, res) => {
-	returnData(req, res, mongodb.findHumidity(req.params.sensorId));
+	returnData(req, res, mongodb.findHumidity(parseInt(req.params.sensorId)));
 };
 
 const humidities = (req, res) => {
 	const from = moment.utc(req.params.from, 'X')
-	returnData(req, res, mongodb.findHumidities(req.params.sensorId, from.toDate()));
+	returnData(req, res, mongodb.findHumidities(parseInt(req.params.sensorId), from.toDate()));
 };
 
 module.exports = { temperature, temperatures, humidity, humidities };
