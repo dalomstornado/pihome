@@ -25,8 +25,9 @@ const postNotification = (message) => {
 
 const notify = (severity, message, moment) => {
 	sSeverity = Object.keys(types.Severity)[severity];
-	//postNotification(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
+	postNotification(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
 	console.log(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
 };
+//c
 
 module.exports = notify;
