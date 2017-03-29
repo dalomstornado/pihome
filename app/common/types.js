@@ -27,5 +27,6 @@ const Status = {
 
 const UNKNOWN = 'UNKNOWN';
 const NORESULT = 'NORESULT';
+const TIMESTAMPTYPE = 'X'
 
-module.exports = { MeasureType, DeviceType, PresenceStatus, Severity, Status, UNKNOWN, NORESULT };
+module.exports = { MeasureType, DeviceType, PresenceStatus, Severity, Status, UNKNOWN, NORESULT, TIMESTAMPTYPE };
