@@ -26,13 +26,10 @@ const getReducedMoment = (date) => {
     } 
 };
 
-const createTimeArray = (from, to = new Date()) => {
-    const start = getReducedMoment(from);
-    const stop = getReducedMoment(to);
-
+const createTimeArray = (from, to = getReducedMoment(new Date())) => {
     let ret = new Array();
-    let currentMoment = start;
-    while (currentMoment <= stop)
+    let currentMoment = getReducedMoment(from.toDate());
+    while (currentMoment <= to)
     {
         ret.push([currentMoment.toDate()])
         currentMoment = currentMoment.add(reduceInMinutes(), 'm');
@@ -106,17 +103,15 @@ const lineChartData = (from, dataSeries) => {
     return timeArray;
 };
 
-const createTestDataSeries = (from, to = new Date()) => {
-    const start = moment(from);
-    start.hours = 0 + Math.round(23 * Math.random());
-    start.minutes = 0;
-    const stop = moment(to);
-    stop.hours = 0;
-    stop.minutes = 0;
+const createTestDataSeries = (from, to = moment.utc()) => {
+    from.hours = 0 + Math.round(23 * Math.random());
+    from.minutes = 0;
+    to.hours = 0;
+    to.minutes = 0;
 
     const ret = new Array()
-    let currentMoment = start;
-    while (currentMoment <= stop)
+    let currentMoment = from;
+    while (currentMoment <= to)
     {
         const value = {'date': currentMoment.toDate(), 'value': Math.round(99 * Math.random()) };
         ret.push(value)

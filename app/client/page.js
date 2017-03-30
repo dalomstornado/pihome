@@ -12,7 +12,7 @@ const getFromMoment = () => {
 };
 
 const updateLineChart = (from, datas, measureType, namesLoaded) => {
-    const lineChartData = dataHandler.lineChartData(from.toDate(), datas); //TODO: Moment øverallt (utom mongo?)
+    const lineChartData = dataHandler.lineChartData(from, datas); //TODO: Moment øverallt (utom mongo?)
     const lineChart = deviceHandler.getLineChart(measureType);
     lineChartModule.drawLineChart(lineChart, lineChartData, namesLoaded);
 };

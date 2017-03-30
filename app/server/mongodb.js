@@ -148,10 +148,12 @@ const findTemperatures = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			collection.find({ sensorId, date: { $gt: from }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
+			console.log('from', from.toDate());
+			collection.find({ sensorId, date: { $gt: from.toDate() }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
+					console.log('item-length', items.length);
 					resolve(items);
 				}
 				db.close();
@@ -188,7 +190,7 @@ const findHumidities = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
-			collection.find({ sensorId, date: { $gt: from }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
+			collection.find({ sensorId, date: { $gt: from.toDate() }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
