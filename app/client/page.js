@@ -33,20 +33,24 @@ const callHistoricalData = (sensors) => {
     for (let i = 0; i < sensors.length; i++) {
         const sensor = sensors[i];
         api.getTemperatures(sensor.id, from).then((data) => {
-            temperatureDatas.push(data); //data should be one array with date, value
-            addIfNotExisting(namesLoadedTemperature, sensor.name);
-    
-            const drawTemperatureDatas = temperatureDatas.slice();
-            const drawNamesLoadedTemperature = namesLoadedTemperature.slice();
-            updateLineChart(from, drawTemperatureDatas, types.MeasureType.TEMPERATURE, drawNamesLoadedTemperature);
+            if (data.length) {
+                temperatureDatas.push(data); //data should be one array with date, value
+                addIfNotExisting(namesLoadedTemperature, sensor.name);
+        
+                const drawTemperatureDatas = temperatureDatas.slice();
+                const drawNamesLoadedTemperature = namesLoadedTemperature.slice();
+                updateLineChart(from, drawTemperatureDatas, types.MeasureType.TEMPERATURE, drawNamesLoadedTemperature);
+            }
         });
         api.getHumidities(sensor.id, from).then((data) => {
-            humidityDatas.push(data);
-            addIfNotExisting(namesLoadedHumidity, sensor.name);
+            if (data.length) {
+                humidityDatas.push(data);
+                addIfNotExisting(namesLoadedHumidity, sensor.name);
 
-            const drawHumidityDatas = humidityDatas.slice();
-            const drawNamesLoadedHumidity = namesLoadedHumidity.slice();
-            updateLineChart(from, humidityDatas, types.MeasureType.HUMIDITY, drawNamesLoadedHumidity);
+                const drawHumidityDatas = humidityDatas.slice();
+                const drawNamesLoadedHumidity = namesLoadedHumidity.slice();
+                updateLineChart(from, humidityDatas, types.MeasureType.HUMIDITY, drawNamesLoadedHumidity);
+            }
         });
     }
 };
