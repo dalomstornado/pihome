@@ -13,7 +13,7 @@ const reduceInMinutes = () => {
 };
 
 const getReducedMoment = (date) => {
-    const m = moment(date); //Not UTC, just stripping resolution.
+    const m = moment.utc(date);
     for (let i = 0; i < reduceHours.length; i++) {        
         if (m.hours() >= reduceHours[i].start && m.hours() < reduceHours[i].stop) {
             m.hours(reduceHours[i].hour);
@@ -81,13 +81,14 @@ const maxLength = (array) => {
     return maxLength;
 };
 
+//TODO: Seems to be lacking index 1 sometimes... but always same last index.
 Array.prototype.pad = function(maxLength) {
     for (let i = 0; i < this.length; i++) {
         let numberOfValuesToPad = maxLength - this[i].length;
         for(let x = 0; x < numberOfValuesToPad; x++) {
             let indexToUse = this[i].length - 1;
             let valueToPadWith = this[i][indexToUse];
-            this[i][++indexToUse] = valueToPadWith;
+            this[i].push(valueToPadWith);
         }
     }
 };
