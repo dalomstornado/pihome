@@ -7,7 +7,7 @@ const types = require('../common/types');
 
 const getFromMoment = () => {
     const fromDays = 30;
-    const from = moment.utc().subtract(fromDays, 'd');
+    const from = moment().subtract(fromDays, 'd');
     return from;
 };
 

@@ -22,13 +22,13 @@ module.exports = (websocket) => {
 		if (event !== types.UNKNOWN) {
   			processEvent(event, websocket);
   		} else {
-			console.log('Dropping event. Unknown sensor/device: ', event.sensor.id);	 
+			console.log('Dropping event. Unknown sensor/device. Event: ', event);	 
  		}
 	};
 
 	const doSensorEventListener = (deviceId, protocol, model, type, value, timestamp) => {
 		//console.log('New sensor event received: ', deviceId, protocol, model, type, value, timestamp);
-  		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment.utc(timestamp, types.TIMESTAMPTYPE));
+  		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment(timestamp, types.TIMESTAMPTYPE));
   		callProcessEvent(event);
 	}; 
 

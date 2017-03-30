@@ -13,7 +13,7 @@ const reduceInMinutes = () => {
 };
 
 const getReducedMoment = (date) => {
-    const m = moment.utc(date); //Not UTC, just stripping resolution.
+    const m = moment(date); //Not UTC, just stripping resolution.
     for (let i = 0; i < reduceHours.length; i++) {        
         if (m.hours() >= reduceHours[i].start && m.hours() < reduceHours[i].stop) {
             m.hours(reduceHours[i].hour);
@@ -40,7 +40,7 @@ const createTimeArray = (from, to = getReducedMoment(new Date())) => {
 
 const findTime = (m, timeArray) => {
     for (let i = 0; i < timeArray.length; i++) {
-        let m2 = moment.utc(timeArray[i][0]);
+        let m2 = moment(timeArray[i][0]);
         if (m2.isSame(m)) {
             return timeArray[i];
         }
