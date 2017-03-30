@@ -27,9 +27,8 @@ module.exports = (websocket) => {
 	};
 
 	const doSensorEventListener = (deviceId, protocol, model, type, value, timestamp) => {
-		console.log('New sensor event received: ', deviceId, protocol, model, type, value, timestamp);
+		//console.log('New sensor event received: ', deviceId, protocol, model, type, value, timestamp);
   		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment.utc(timestamp, types.TIMESTAMPTYPE));
-  		console.log('event moment', event.moment);
   		callProcessEvent(event);
 	}; 
 
@@ -78,6 +77,11 @@ module.exports = (websocket) => {
 	const test = () => {
 		const sensors = [151, 167, 183, 135];
 
+		//doSensorEventListener(151, '', '', 1, 20, 1490875200);
+		//doSensorEventListener(151, '', '', 1, 10, 1490007600);
+		//doSensorEventListener(151, '', '', 1, 0, 1489104000);
+		//doSensorEventListener(151, '', '', 1, 0, 1489054000);
+		/*
 		for(let i = 0; i < 4; i++){	
 			setInterval(() => {
 				doSensorEventListener(sensors[i], '', '', 1, getTempValue(), testTimeStamp());
@@ -86,6 +90,7 @@ module.exports = (websocket) => {
 				}, getLatency());
 			}, getUpdateInterval());	
 		}
+		*/
 	};
 	//TEST END
 

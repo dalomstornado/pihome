@@ -13,7 +13,7 @@ const reduceInMinutes = () => {
 };
 
 const getReducedMoment = (date) => {
-    const m = moment.utc(date);
+    const m = moment.utc(date); //Not UTC, just stripping resolution.
     for (let i = 0; i < reduceHours.length; i++) {        
         if (m.hours() >= reduceHours[i].start && m.hours() < reduceHours[i].stop) {
             m.hours(reduceHours[i].hour);
@@ -103,34 +103,4 @@ const lineChartData = (from, dataSeries) => {
     return timeArray;
 };
 
-const createTestDataSeries = (from, to = moment.utc()) => {
-    from.hours = 0 + Math.round(23 * Math.random());
-    from.minutes = 0;
-    to.hours = 0;
-    to.minutes = 0;
-
-    const ret = new Array()
-    let currentMoment = from;
-    while (currentMoment <= to)
-    {
-        const value = {'date': currentMoment.toDate(), 'value': Math.round(99 * Math.random()) };
-        ret.push(value)
-        currentMoment.add(400, 'm');
-    }
-    return ret;
-};
-
-const test = () => {
-    const from = new Date('2017-03-08');
-
-    let testData = createTestDataSeries(from);
-    let testData2 = createTestDataSeries(from);
-    let testData3 = createTestDataSeries(from);
-
-    let ret = lineChartData(from, [testData, testData2, testData3]);
-    
-    return ret;
-};
-//test();
-
-module.exports = { lineChartData, test }
+module.exports = { lineChartData}

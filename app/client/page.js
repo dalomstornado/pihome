@@ -51,12 +51,6 @@ const callHistoricalData = (sensors) => {
     }
 };
 
-const test = () => {
-    let data = dataHandler.test();
-    const lineChart = deviceHandler.getLineChart(types.MeasureType.TEMPERATURE);
-    lineChartModule.drawLineChart(lineChart, data, ['test1', 'test2', 'test3']);
-};
-
 const init = (sensors) => {
     callHistoricalData(sensors);
 };

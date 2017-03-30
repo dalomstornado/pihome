@@ -134,26 +134,14 @@ const findTemperature = (sensorId) => {
 	});
 };
 
-//TEST START
-const testTemp = () => {
-	return [{ date: new Date('2017-03-20'), value: -10 + Math.round(30 * Math.random()) }, { date: new Date('2017-03-25'), value: 15 }];
-};
-
-const testHumidity = () => {
-	return [{ date: new Date('2017-03-20'), value: 10 + Math.round(85 * Math.random()) }, { date: new Date('2017-03-25'), value: 15 }];
-};
-//TEST END
-
 const findTemperatures = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature')
-			console.log('from', from.toDate());
 			collection.find({ sensorId, date: { $gt: from.toDate() }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
-					console.log('item-length', items.length);
 					resolve(items);
 				}
 				db.close();
@@ -210,10 +198,10 @@ const init = () => {
 	console.log('MongoDB init run');
 	mongoClient.connect(url).then((db) => {
 		const cappedSizeMB = 1000000
-		db.createCollection('temperature', { 'capped': true, 'size': cappedSizeMB * 250 }); //max: 527040 (3 months, 4 devices, 1 per minute) => 1,5 år
-		db.createCollection('humidity', { 'capped': true, 'size': cappedSizeMB * 250 });
-		db.createCollection('device', { 'capped': true, 'size': cappedSizeMB * 100 });
-		db.createCollection('presence', { 'capped': true, 'size': cappedSizeMB * 50 });
+		db.createCollection('temperature');//, { 'capped': true, 'size': cappedSizeMB * 250 }); //max: 527040 (3 months, 4 devices, 1 per minute) => 1,5 år
+		db.createCollection('humidity');//, { 'capped': true, 'size': cappedSizeMB * 250 });
+		db.createCollection('device');//, { 'capped': true, 'size': cappedSizeMB * 100 });
+		db.createCollection('presence');//, { 'capped': true, 'size': cappedSizeMB * 50 });
 		findPresenceStatus().catch((err) => {
 			if (err === types.NORESULT) {
 				insertPresenceStatus(types.PresenceStatus.HOME);
