@@ -57,7 +57,7 @@ Array.prototype.add = function(dataSerie, index) {
                 thisTime[index] = (thisTime[index] + dataSerie[i].value) / 2;    
             } else {
                 thisTime[index] = dataSerie[i].value;
-            }    
+            }
         }
     }
 };
@@ -81,15 +81,22 @@ const maxLength = (array) => {
     return maxLength;
 };
 
-//TODO: Seems to be lacking index 1 sometimes... but always same last index.
 Array.prototype.pad = function(maxLength) {
     for (let i = 0; i < this.length; i++) {
-        let numberOfValuesToPad = maxLength - this[i].length;
-        for(let x = 0; x < numberOfValuesToPad; x++) {
-            let indexToUse = this[i].length - 1;
-            let valueToPadWith = this[i][indexToUse];
-            this[i].push(valueToPadWith);
-        }
+        for (let x = 1; x < maxLength; x++) {
+            let value = this[i][x];
+            if (value === undefined) {
+                //Getting last value
+                let lastValue = 0;
+                for (let y = i-1; y >= 0; y--) {
+                    lastValue = this[y][x];
+                    if (lastValue !== undefined) {
+                        break;
+                    }
+                }
+                this[i][x] = lastValue;
+            }
+        }        
     }
 };
 
