@@ -198,10 +198,10 @@ const init = () => {
 	console.log('MongoDB init run');
 	mongoClient.connect(url).then((db) => {
 		const cappedSizeMB = 1000000
-		db.createCollection('temperature');//, { 'capped': true, 'size': cappedSizeMB * 250 }); //max: 527040 (3 months, 4 devices, 1 per minute) => 1,5 år
-		db.createCollection('humidity');//, { 'capped': true, 'size': cappedSizeMB * 250 });
-		db.createCollection('device');//, { 'capped': true, 'size': cappedSizeMB * 100 });
-		db.createCollection('presence');//, { 'capped': true, 'size': cappedSizeMB * 50 });
+		db.createCollection('temperature', { 'capped': true, 'size': cappedSizeMB * 250 }); //max: 527040 (3 months, 4 devices, 1 per minute) => 1,5 år
+		db.createCollection('humidity', { 'capped': true, 'size': cappedSizeMB * 250 });
+		db.createCollection('device', { 'capped': true, 'size': cappedSizeMB * 100 });
+		db.createCollection('presence', { 'capped': true, 'size': cappedSizeMB * 50 });
 		findPresenceStatus().catch((err) => {
 			if (err === types.NORESULT) {
 				insertPresenceStatus(types.PresenceStatus.HOME);
