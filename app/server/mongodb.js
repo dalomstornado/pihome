@@ -1,6 +1,7 @@
 const mongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const types = require('../common/types');
+const Stopwatch = require('timer-stopwatch'); 
 
 const url = 'mongodb://localhost:27017/pihome';
 const date = 'date';
@@ -137,11 +138,15 @@ const findTemperature = (sensorId) => {
 const findTemperatures = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
-			let collection = db.collection('temperature')
+			let collection = db.collection('temperature');
+			const stopwatch = new Stopwatch();
+			stopwatch.start();
 			collection.find({ sensorId, date: { $gt: from.toDate() }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
+					stopwatch.stop();
+					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
 					resolve(items);
 				}
 				db.close();
@@ -178,10 +183,14 @@ const findHumidities = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
+			const stopwatch = new Stopwatch();
+			stopwatch.start();
 			collection.find({ sensorId, date: { $gt: from.toDate() }}, { date: 1, value: 1, _id: 0 }).sort({ date: -1 }).toArray((err, items) => {
 				if (err) {
 					reject(err);
 				} else {
+					stopwatch.stop();
+					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
 					resolve(items);
 				}
 				db.close();

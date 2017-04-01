@@ -1,4 +1,5 @@
 const moment = require('moment');
+const Stopwatch = require('timer-stopwatch'); 
 
 const reduceHours = 
     [{ start: 0, hour: 2, stop: 4 },
@@ -101,6 +102,9 @@ Array.prototype.pad = function(maxLength) {
 };
 
 const lineChartData = (from, dataSeries) => {
+    const stopwatch = new Stopwatch();
+    stopwatch.start();
+    
     const timeArray = createTimeArray(from);
     for(let i = 0; i < dataSeries.length; i++) {
         timeArray.add(dataSeries[i], i + 1);
@@ -108,6 +112,8 @@ const lineChartData = (from, dataSeries) => {
     timeArray.clean();
     timeArray.pad(maxLength(timeArray));
 
+    stopwatch.stop();
+    console.log(`Dathandler processed ${dataSeries.length * dataSeries[0].length} items in ${stopwatch.ms} ms.`);
     return timeArray;
 };
 
