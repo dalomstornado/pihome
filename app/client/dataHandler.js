@@ -2,12 +2,18 @@ const moment = require('moment');
 const Stopwatch = require('timer-stopwatch'); 
 
 const reduceHours = 
-    [{ start: 0, hour: 2, stop: 4 },
-    { start: 4, hour: 6, stop: 8 },
-    { start: 8, hour: 10, stop: 12 },
-    { start: 12, hour: 14, stop: 16 },
-    { start: 16, hour: 18, stop: 20 },
-    { start: 20, hour: 22, stop: 24 }];
+    [{ start: 0, hour: 1, stop: 2 },
+    { start: 2, hour: 3, stop: 4 },
+    { start: 4, hour: 5, stop: 6 },
+    { start: 6, hour: 7, stop: 8 },
+    { start: 8, hour: 9, stop: 10 },
+    { start: 10, hour: 11, stop: 12 }];
+    [{ start: 12, hour: 13, stop: 14 },
+    { start: 14, hour: 15, stop: 16 },
+    { start: 16, hour: 17, stop: 18 },
+    { start: 18, hour: 19, stop: 20 },
+    { start: 20, hour: 21, stop: 22 },
+    { start: 22, hour: 23, stop: 24 }];
 
 const reduceInMinutes = () => {
     return (reduceHours[0].stop - reduceHours[0].start) * 60;
