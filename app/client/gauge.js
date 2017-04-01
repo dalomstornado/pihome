@@ -3,13 +3,15 @@ import { getLowerLimit, getUpperLimit } from '../common/limits';
 import { getGauges } from '../common/deviceHandler';
 const $ = require('jquery');
 
+
+
 const optionsHumidity = (sensorId) => {
   const upperLimit = getUpperLimit(MeasureType.HUMIDITY, sensorId);
 
   return {
     width: 400, height: 120,
     redFrom: upperLimit.ALARM, redTo: 95,
-    yellowFrom: upperLimit.WARNING, yellowTo: upperLimit.ALARM,
+    yellowFrom: upperLimit.WARNING, yellowTo: ((upperLimit.ALARM) ? upperLimit.ALARM : 95),
     minorTicks: 5, min: 30,
     max: 95 
   } 
