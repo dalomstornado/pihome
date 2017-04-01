@@ -6,7 +6,7 @@ const LowerLimit = {
 		TEMPERATURE: { WARNING: -10, ALARM: -20 },
 		HUMIDITY: { WARNING: undefined, ALARM: undefined } 
 	},
-	136: { //Vind
+	151: { //Vind
 		TEMPERATURE: { WARNING: 0, ALARM: -10 },
 		HUMIDITY: { WARNING: undefined, ALARM: undefined } 
 	}
@@ -16,11 +16,11 @@ const UpperLimit = {
 	HUMIDITY: { WARNING: 65, ALARM: 75 },
 	135: { //Ute
 		TEMPERATURE: { WARNING: undefined, ALARM: undefined },
-		HUMIDITY: { WARNING: 90, ALARM: 93 } 
+		HUMIDITY: { WARNING: 90, ALARM: undefined } 
 	},
-	136: { //Vind
+	151: { //Vind
 		TEMPERATURE: { WARNING: undefined, ALARM: undefined },
-		HUMIDITY: { WARNING: 70, ALARM: 80 } 
+		HUMIDITY: { WARNING: 75, ALARM: 85 } 
 	}
 };
 
