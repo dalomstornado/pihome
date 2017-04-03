@@ -1,5 +1,7 @@
 const moment = require('moment');
+const Stopwatch = require('timer-stopwatch'); 
 
+/*
 const reduceMoment = (moment, hours) => {
     if (hours) {
         moment.hours(0);    
@@ -9,41 +11,62 @@ const reduceMoment = (moment, hours) => {
     moment.milliseconds(0);
     
     return moment;
+};*/
+
+const mySum = (acc, current) => {
+    return acc + current.value
 };
 
 const average = (array) => {
-    let sum = array.reduce((x, y) => x.value + y.value);
-    return sum / array.length;
+    if (array.length > 1) {
+        let sum = array.reduce(mySum);
+        return sum / array.length;  
+    } else if (array.length === 1) {
+        return array[0].value;
+    } else {
+        return undefined;
+    }
 }
 
-const match = (moment, aggregateOnMinutes) => {
+const match = (current, aggregateOnMinutes) => {
     return (entry) => {
         let entryMoment = moment(entry.date);
-        let diffMs = entryMoment.diff(moment);
-        return diffMs <= aggregateOnMinutes * 60 * 1000;
+        let diffMs = Math.abs(entryMoment.diff(current));
+        let max = aggregateOnMinutes * 60 * 1000
+        return diffMs <= max;
     };
 };
 
 const lineChartData = (dataSeries, from, aggregateOnMinutes) => {
     const stopwatch = new Stopwatch();
     stopwatch.start();
-
-    const now = moment();
-    const currentMoment = reduceMoment(from.clone(), true);
-    
     const ret = new Array();
-    while (currentMoment < now)
-    {
+
+    const stop = moment();
+    const current = from.clone();
+    while (current <= stop) {
         let entry = new Array();
-        entry.push(currentMoment.toDate());
+        entry.push(current.toDate());
         for(let i = 0; i < dataSeries.length; i++) {
-            let matches = dataSeries[i].filter(match(currentMoment, aggregateOnMinutes));
-            let average = average(matches);
-            entry.push(average);
+            let matches = dataSeries[i].filter(match(current, aggregateOnMinutes));
+            let avg = average(matches);
+            entry.push(avg);
         }
         ret.push(entry);        
-        currentMoment.add(aggregateOnMinutes, 'm');
+        current.add(aggregateOnMinutes, 'm');
     }
+    return ret;
 };
+
+const testDataSeries = [
+    [{date: moment().subtract(2, 'h').toDate(), value: 0},
+    {date: moment().subtract(1, 'h').toDate(), value: 5},
+    {date: moment().subtract(1, 'h').toDate(), value: 10},
+    {date: moment().subtract(0, 'h').toDate(), value: 20}],
+    [{date: moment().subtract(2, 'h').toDate(), value: 0},
+    {date: moment().subtract(1, 'h').toDate(), value: -10},
+    {date: moment().subtract(0, 'h').toDate(), value: -20}]
+];
+lineChartData(testDataSeries, moment().subtract(3, 'h').subtract(1, 's'), 60);
 
 module.exports = { lineChartData}

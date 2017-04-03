@@ -4,6 +4,7 @@ const deviceHandler = require('../common/deviceHandler');
 const api = require('./api');
 const moment = require('moment');
 const types = require('../common/types');
+const dh2 = require('./dataHandler2'); 
 
 const getFromMoment = () => {
     const fromDays = 30;
