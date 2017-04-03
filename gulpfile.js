@@ -99,3 +99,16 @@ gulp.task('dist-pi', ['dist'], function(){
 	gulp.src(['./dist/**/*'])
 		.pipe(gulp.dest('afp://raspberrypi.local/Websites/pihome/'));
 });
+
+gulp.task('testJs', ['clientJs'], function() {
+	return gulp.src("./tests/*.js")
+  	.pipe(sourcemaps.init())
+  	.pipe(babel())
+  	.pipe(gulp.dest("built-tests"));
+});
+
+gulp.task('test', ['testJs'], function () {
+  var mocha = require('gulp-mocha');
+  gulp.src("./built-tests/test.js", {read:false})
+  .pipe(mocha({reporter:'nyan'}));
+});
