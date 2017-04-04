@@ -14,13 +14,27 @@ const average = (array) => {
     }
 }
 
+const isMatch = (entryDate, current, aggregateOnMinutes) => {
+    let entryMoment = moment(entryDate);
+    let diffMs = Math.abs(entryMoment.diff(current));
+    let max = aggregateOnMinutes * 60 * 1000
+
+    return diffMs < max;
+}
+
+const match2 = (dataSeries, current, aggregateOnMinutes) => {
+    const ret = new Array();
+    for(let i=0; i < dataSeries.length; i++) {
+        if (isMatch(dataSeries[i].date, current, aggregateOnMinutes)) {
+            ret.push([dataSeries[i]]);
+        }
+    }
+    return ret;
+}
+
 const match = (current, aggregateOnMinutes) => {
     return (entry) => {
-        let entryMoment = moment(entry.date);
-        let diffMs = Math.abs(entryMoment.diff(current));
-        let max = aggregateOnMinutes * 60 * 1000
-        
-        return diffMs < max;
+        return isMatch(entry.date, current, aggregateOnMinutes);
     };
 };
 
@@ -44,7 +58,7 @@ const lineChartData = (dataSeries, from, aggregateOnMinutes) => {
         let entry = new Array();
         entry.push(current.toDate());
         for(let i = 0; i < dataSeries.length; i++) {
-            let matches = dataSeries[i].filter(match(current.clone(), aggregateOnMinutes));
+            let matches = match2(dataSeries[i], current, aggregateOnMinutes); //dataSeries[i].filter(match(current, aggregateOnMinutes));
             let avg = average(matches);
             entry.push(avg);
         }
