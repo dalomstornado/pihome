@@ -1,4 +1,5 @@
-const assert = require('assert
+const assert = require('assert');
+const expect = require('chai').expect;
 
 describe('Array', function() {
   describe('#indexOf()', function() {

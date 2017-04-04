@@ -12,6 +12,9 @@ var buffer = require('vinyl-buffer');
 var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var runSequence = require('run-sequence');
+//TEST
+var babel = require('gulp-babel');
+var mocha = require('gulp-mocha');
 
 gulp.task('default', ['nodemon']);
 
@@ -104,11 +107,11 @@ gulp.task('testJs', ['clientJs'], function() {
 	return gulp.src("./tests/*.js")
   	.pipe(sourcemaps.init())
   	.pipe(babel())
-  	.pipe(gulp.dest("built-tests"));
+  	.pipe(gulp.dest("./tests/built-tests"));
 });
 
 gulp.task('test', ['testJs'], function () {
   var mocha = require('gulp-mocha');
-  gulp.src("./built-tests/test.js", {read:false})
+  gulp.src("./tests/built-tests/dataHandlerTests.js", {read:false}) //TODO: Fix so we can have multiple tests.
   .pipe(mocha({reporter:'nyan'}));
 });

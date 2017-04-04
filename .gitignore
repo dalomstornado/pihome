@@ -46,3 +46,4 @@ dist
 app/static/css
 app/static/js
 app/js/app.js
+tests/built-tests
