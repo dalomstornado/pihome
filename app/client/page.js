@@ -4,7 +4,7 @@ const deviceHandler = require('../common/deviceHandler');
 const api = require('./api');
 const moment = require('moment');
 const types = require('../common/types');
-const dh2 = require('./dataHandler2'); 
+//const dh2 = require('./dataHandler2'); 
 
 const getFromMoment = () => {
     const fromDays = 30;
@@ -35,7 +35,7 @@ const callHistoricalData = (sensors) => {
         const sensor = sensors[i];
         api.getTemperatures(sensor.id, from).then((data) => {
             if (data.length) {
-                temperatureDatas.push(data); //data should be one array with date, value
+                temperatureDatas.push(data);
                 addIfNotExisting(namesLoadedTemperature, sensor.name);
         
                 const drawTemperatureDatas = temperatureDatas.slice();

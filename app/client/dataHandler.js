@@ -2,19 +2,25 @@ const moment = require('moment');
 const Stopwatch = require('timer-stopwatch'); 
 
 const reduceHours = 
-    [{ start: 0, hour: 2, stop: 4 },
-    { start: 4, hour: 6, stop: 8 },
-    { start: 8, hour: 10, stop: 12 },
-    { start: 12, hour: 14, stop: 16 },
-    { start: 16, hour: 18, stop: 20 },
-    { start: 20, hour: 22, stop: 24 }];
+    [{ start: 0, hour: 1, stop: 2 },
+    [{ start: 2, hour: 3, stop: 4 },
+    [{ start: 4, hour: 5, stop: 6 },
+    { start: 6, hour: 7, stop: 8 },
+    { start: 8, hour: 9, stop: 10 },
+    { start: 10, hour: 11, stop: 12 },
+    { start: 12, hour: 13, stop: 14 },
+    { start: 14, hour: 15, stop: 16 },
+    { start: 16, hour: 17, stop: 18 },
+    { start: 18, hour: 19, stop: 20 },
+    { start: 20, hour: 21, stop: 22 },
+    { start: 22, hour: 23, stop: 24 }]
 
 const reduceInMinutes = () => {
     return (reduceHours[0].stop - reduceHours[0].start) * 60;
 };
 
 const getReducedMoment = (date) => {
-    const m = moment.utc(date);
+    const m = moment(date);
     for (let i = 0; i < reduceHours.length; i++) {        
         if (m.hours() >= reduceHours[i].start && m.hours() < reduceHours[i].stop) {
             m.hours(reduceHours[i].hour);
@@ -35,7 +41,6 @@ const createTimeArray = (from, to = getReducedMoment(new Date())) => {
         ret.push([currentMoment.toDate()])
         currentMoment = currentMoment.add(reduceInMinutes(), 'm');
     }
-
     return ret;
 };
 
@@ -87,6 +92,7 @@ Array.prototype.pad = function(maxLength) {
         for (let x = 1; x < maxLength; x++) {
             let value = this[i][x];
             if (value === undefined) {
+                /*
                 //Getting last value
                 let lastValue = 0;
                 for (let y = i-1; y >= 0; y--) {
@@ -94,8 +100,8 @@ Array.prototype.pad = function(maxLength) {
                     if (lastValue !== undefined) {
                         break;
                     }
-                }
-                this[i][x] = lastValue;
+                }*/
+                this[i][x] = undefined; //lastValue;
             }
         }        
     }
