@@ -20,7 +20,7 @@ const reduceInMinutes = () => {
 };
 
 const getReducedMoment = (date) => {
-    const m = moment(date);
+    const m = moment.utc(date); //TODO: Fix so findTime does not need utc.
     for (let i = 0; i < reduceHours.length; i++) {        
         if (m.hours() >= reduceHours[i].start && m.hours() < reduceHours[i].stop) {
             m.hours(reduceHours[i].hour);
