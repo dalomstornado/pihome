@@ -119,7 +119,7 @@ const lineChartData = (from, dataSeries) => {
     timeArray.pad(maxLength(timeArray));
 
     stopwatch.stop();
-    console.log(`Dathandler processed ${dataSeries.length * dataSeries[0].length} items in ${stopwatch.ms} ms.`);
+    console.log(`Dathandler processed ${dataSeries.length} arrays resulting in ${timeArray.length * (timeArray[0].length - 1)} values in ${stopwatch.ms} ms.`);
     return timeArray;
 };
 
