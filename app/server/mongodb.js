@@ -2,7 +2,7 @@ const mongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const types = require('../common/types');
 const Stopwatch = require('timer-stopwatch'); 
-const sleep = require('then-sleep');
+//const sleep = require('then-sleep');
 
 const url = 'mongodb://localhost:27017/pihome';
 const date = 'date';
