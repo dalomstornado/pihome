@@ -3,8 +3,8 @@ const Stopwatch = require('timer-stopwatch');
 
 const reduceHours = 
     [{ start: 0, hour: 1, stop: 2 },
-    [{ start: 2, hour: 3, stop: 4 },
-    [{ start: 4, hour: 5, stop: 6 },
+    { start: 2, hour: 3, stop: 4 },
+    { start: 4, hour: 5, stop: 6 },
     { start: 6, hour: 7, stop: 8 },
     { start: 8, hour: 9, stop: 10 },
     { start: 10, hour: 11, stop: 12 },
@@ -13,7 +13,7 @@ const reduceHours =
     { start: 16, hour: 17, stop: 18 },
     { start: 18, hour: 19, stop: 20 },
     { start: 20, hour: 21, stop: 22 },
-    { start: 22, hour: 23, stop: 24 }]
+    { start: 22, hour: 23, stop: 24 }];
 
 const reduceInMinutes = () => {
     return (reduceHours[0].stop - reduceHours[0].start) * 60;

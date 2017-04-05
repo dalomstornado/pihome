@@ -3,11 +3,19 @@ const options = {
   height: 200,
 };
 
-const charts = new Map();
+let charts = null;
+let chartData = null;
+
+const drawLine = (lineChart, values, name) => {
+  google.charts.setOnLoadCallback(() => {
+
+  });
+};
 
 const drawLineChart = (lineChart, values, names) => {
   google.charts.setOnLoadCallback(() => {
-    let chartData = new google.visualization.DataTable();
+    chartData = new google.visualization.DataTable();
+    
     chartData.addColumn('date');
     for(let i = 0; i < names.length; i++) {
       chartData.addColumn('number', names[i]);    
@@ -26,4 +34,11 @@ const drawLineChart = (lineChart, values, names) => {
   });
 };
 
-export { drawLineChart };
+const init = () => {
+  google.charts.setOnLoadCallback(() => {
+    charts = new Map();
+    chartData = new google.visualization.DataTable();
+  });
+};
+
+export { drawLineChart, init };
