@@ -38,7 +38,7 @@ const callHistoricalData = (sensors) => {
                 temperatureDatas.push(data);
                 addIfNotExisting(namesLoadedTemperature, sensor.name);
         
-                const drawTemperatureDatas = temperatureDatas.slice();
+                const drawTemperatureDatas = temperatureDatas.slice(); //TODO: Check if this is needed.
                 const drawNamesLoadedTemperature = namesLoadedTemperature.slice();
                 updateLineChart(from, drawTemperatureDatas, types.MeasureType.TEMPERATURE, drawNamesLoadedTemperature);
             }
@@ -50,7 +50,7 @@ const callHistoricalData = (sensors) => {
 
                 const drawHumidityDatas = humidityDatas.slice();
                 const drawNamesLoadedHumidity = namesLoadedHumidity.slice();
-                updateLineChart(from, humidityDatas, types.MeasureType.HUMIDITY, drawNamesLoadedHumidity);
+                updateLineChart(from, drawHumidityDatas, types.MeasureType.HUMIDITY, drawNamesLoadedHumidity);
             }
         });
     }

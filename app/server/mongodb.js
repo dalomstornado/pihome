@@ -2,6 +2,7 @@ const mongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const types = require('../common/types');
 const Stopwatch = require('timer-stopwatch'); 
+const sleep = require('then-sleep');
 
 const url = 'mongodb://localhost:27017/pihome';
 const date = 'date';
@@ -147,6 +148,8 @@ const findTemperatures = (sensorId, from) => {
 				} else {
 					stopwatch.stop();
 					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
+					//let r = 0 + Math.round(10000 * Math.random());			
+					//sleep(r).then( () => {resolve(items)});
 					resolve(items);
 				}
 				db.close();
@@ -191,6 +194,8 @@ const findHumidities = (sensorId, from) => {
 				} else {
 					stopwatch.stop();
 					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
+					//let r = 0 + Math.round(10000 * Math.random());
+					//sleep(r).then( () => {resolve(items)});
 					resolve(items);
 				}
 				db.close();

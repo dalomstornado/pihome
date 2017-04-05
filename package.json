@@ -46,6 +46,7 @@
     "gulp-util": "^3.0.8",
     "mocha": "^3.2.0",
     "run-sequence": "^1.2.2",
+    "then-sleep": "^1.0.1",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   }
