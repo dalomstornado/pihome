@@ -25,17 +25,26 @@ const addData = (from, data, dataLoaded, namesLoaded, sensor, measureType) => {
     }
 };
 
+const drawLineChartJoined = (data, sensor, measureType) => {
+    const lineChartDataOne = dataHandler.lineChartDataOne(data);
+    const lineChart = deviceHandler.getLineChart(measureType);
+    return lineChartModule.drawLineChartJoined(lineChart, lineChartDataOne, sensor.name, measureType);
+};
+
 const callHistoricalData = (sensors, index) => {
     const sensor = sensors[index];    
     api.getTemperatures(sensor.id, _from).then((data) => {
-        addData(_from.subtract(10, 'd'), data, dataLoadedTemperature, namesLoadedTemperature, sensor, types.MeasureType.TEMPERATURE);
-        api.getHumidities(sensor.id, _from).then((data) => {
-            addData(_from, data, dataLoadedHumidity, namesLoadedHumidity, sensor, types.MeasureType.HUMIDITY);
-
-            index++;
-            if(index < sensors.length){
-                callHistoricalData(sensors, index);
-            }
+        //addData(_from.subtract(10, 'd'), data, dataLoadedTemperature, namesLoadedTemperature, sensor, types.MeasureType.TEMPERATURE);
+        drawLineChartJoined(data, sensor, types.MeasureType.TEMPERATURE).then(() => {
+            api.getHumidities(sensor.id, _from).then((data) => {
+                //addData(_from, data, dataLoadedHumidity, namesLoadedHumidity, sensor, types.MeasureType.HUMIDITY);
+                drawLineChartJoined(data, sensor, types.MeasureType.HUMIDITY).then(() => {
+                    index++;
+                    if(index < sensors.length) {
+                        callHistoricalData(sensors, index);
+                    }
+                });
+            });
         });
     });
 };

@@ -124,4 +124,12 @@ const lineChartData = (from, dataSeries) => {
     return timeArray;
 };
 
-module.exports = { lineChartData}
+const lineChartDataOne = (dataSerie) => {
+    const ret = new Array();
+    for(let i = 0; i < dataSerie.length; i++) {
+        ret.push([new Date(dataSerie[i].date), dataSerie[i].value])
+    }
+    return ret;
+}
+
+module.exports = { lineChartData, lineChartDataOne }
