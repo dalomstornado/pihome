@@ -27,8 +27,10 @@ module.exports = (websocket) => {
 	};
 
 	const doSensorEventListener = (deviceId, protocol, model, type, value, timestamp) => {
-		//console.log('New sensor event received: ', deviceId, protocol, model, type, value, timestamp);
-  		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), moment(timestamp, types.TIMESTAMPTYPE));
+		const m = moment(timestamp, types.TIMESTAMPTYPE);
+		console.log('New sensor event recieved with time ' + m.toDate()); //Todo check that this is parsed correctly.
+		
+  		const event = deviceHandler.createEvent(deviceId, getMeasureType(type), Number.parseFloat(value), m);
   		callProcessEvent(event);
 	}; 
 
