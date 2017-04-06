@@ -132,4 +132,13 @@ const lineChartDataOne = (dataSerie) => {
     return ret;
 }
 
-module.exports = { lineChartData, lineChartDataOne }
+const lineChartDataAllWithNull = (dataSeries) => {
+    const ret = new Array();
+    for(let i = 0; i < dataSeries.length; i++) {
+        for(let x = 0; x < dataSeries[i].length; x++) {
+            ret.push([new Date(dataSerie[i][x].date), dataSerie[i][x].value], null, null, null);
+        }
+    }
+};
+
+module.exports = { lineChartData, lineChartDataOne, lineChartDataAllWithNull }

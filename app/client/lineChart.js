@@ -8,8 +8,7 @@ const options = {
 };
 
 const charts = new Map();
-let joinedDataTablesTemperature = undefined;
-let joinedDataTablesHumidity = undefined; 
+let joinedDataTables = new Map();
 
 const drawLineChartJoined = (lineChart, values, name, measureType) => {
   return new Promise((resolve, reject) => {
@@ -22,22 +21,13 @@ const drawLineChartJoined = (lineChart, values, name, measureType) => {
       dataTable.addColumn('number', name);
       dataTable.addRows(values);
 
-      let joinedDataTables = undefined;
-      switch (measureType) {
-        case types.MeasureType.TEMPERATURE:
-          joinedDataTables = joinedDataTablesTemperature;
-          break;
-        case types.MeasureType.HUMIDITY:
-          joinedDataTables = joinedDataTablesHumidity;
-          break;
-      }
-
-      if (joinedDataTables) {
+      let thisJoinedDataTables = joinedDataTables.get(measureType);
+      if (thisJoinedDataTables) {
         const keys = [[0, 0]]
         const dtColumns = [1];
-        joinedDataTables = google.visualization.data.join(joinedDataTables, dataTable, 'full', keys, dtColumns, dtColumns);
+        thisJoinedDataTables = google.visualization.data.join(thisJoinedDataTables, dataTable, 'full', keys, dtColumns, dtColumns);
       } else {
-        joinedDataTables = dataTable;
+        thisJoinedDataTables = dataTable;
       }
 
       // Create a formatter.
@@ -52,7 +42,8 @@ const drawLineChartJoined = (lineChart, values, name, measureType) => {
         chart = new google.charts.Line(document.getElementById(lineChart.id));
         charts.set(lineChart.id, chart);
       }
-      chart.draw(joinedDataTables, options);
+      chart.draw(thisJoinedDataTables, options);
+      joinedDataTables.set(measureType, thisJoinedDataTables);
       stopwatch.stop();
       console.log(`Linechart drawn in ${stopwatch.ms} ms.`);
       resolve();
