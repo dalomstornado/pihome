@@ -136,6 +136,7 @@ const lineChartDataAllWithNull = (dataSeries) => {
     const ret = new Array();
     for(let i = 0; i < dataSeries.length; i++) {
         for(let x = 0; x < dataSeries[i].length; x++) {
+            //todo: switcha null placeringen.
             ret.push([new Date(dataSerie[i][x].date), dataSerie[i][x].value], null, null, null);
         }
     }
