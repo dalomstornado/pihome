@@ -124,20 +124,14 @@ const lineChartData = (from, dataSeries) => {
     return timeArray;
 };
 
-const lineChartDataOne = (dataSerie) => {
-    const ret = new Array();
-    for(let i = 0; i < dataSerie.length; i++) {
-        ret.push([new Date(dataSerie[i].date), dataSerie[i].value])
-    }
-    return ret;
-}
-
 const lineChartDataAllWithNull = (dataSeries) => {
+    const stopwatch = new Stopwatch();
+    stopwatch.start();
+
     const ret = new Array();
     for(let i = 0; i < dataSeries.length; i++) {
         for(let x = 0; x < dataSeries[i].length; x++) {
-            //let arguments
-
+            //TODO fix this dynamicly
             switch (i) {
                 case 0:
                 ret.push([new Date(dataSeries[i][x].date), dataSeries[i][x].value, null, null, null]);
@@ -154,7 +148,9 @@ const lineChartDataAllWithNull = (dataSeries) => {
             }
         }
     }
+    stopwatch.stop();
+    console.log(`Dathandler ${dataSeries.length} array(s), all times in ${stopwatch.ms} ms.`);
     return ret;
 };
 
-module.exports = { lineChartData, lineChartDataOne, lineChartDataAllWithNull }
+module.exports = { lineChartData, lineChartDataAllWithNull }
