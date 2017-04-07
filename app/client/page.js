@@ -47,6 +47,8 @@ const callHistoricalData = (sensors, index) => {
                 index++;
                     if(index < sensors.length) {
                         callHistoricalData(sensors, index);
+                    } else {
+                        updateLineChart2(_from, dataLoadedTemperature, types.MeasureType.TEMPERATURE, namesLoadedTemperature);
                     }
 
                 //drawLineChartJoined(data, sensor, types.MeasureType.HUMIDITY).then(() => {
@@ -59,7 +61,6 @@ const callHistoricalData = (sensors, index) => {
 
 const init = (sensors) => {
     callHistoricalData(sensors, 0);
-    updateLineChart2(_from, dataLoadedTemperature, types.MeasureType.TEMPERATURE, namesLoadedTemperature);
 };
 
 export { init };

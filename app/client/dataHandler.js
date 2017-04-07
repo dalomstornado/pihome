@@ -136,10 +136,25 @@ const lineChartDataAllWithNull = (dataSeries) => {
     const ret = new Array();
     for(let i = 0; i < dataSeries.length; i++) {
         for(let x = 0; x < dataSeries[i].length; x++) {
-            //todo: switcha null placeringen.
-            ret.push([new Date(dataSerie[i][x].date), dataSerie[i][x].value], null, null, null);
+            //let arguments
+
+            switch (i) {
+                case 0:
+                ret.push([new Date(dataSeries[i][x].date), dataSeries[i][x].value, null, null, null]);
+                break;
+                case 1:
+                ret.push([new Date(dataSeries[i][x].date), null, dataSeries[i][x].value, null, null]);
+                break;
+                case 2:
+                ret.push([new Date(dataSeries[i][x].date), null, null, dataSeries[i][x].value, null]);
+                break;
+                case 3:
+                ret.push([new Date(dataSeries[i][x].date), null, null, null, dataSeries[i][x].value]);
+                break;
+            }
         }
     }
+    return ret;
 };
 
 module.exports = { lineChartData, lineChartDataOne, lineChartDataAllWithNull }
