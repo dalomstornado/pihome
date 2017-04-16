@@ -182,6 +182,30 @@ const findHumidity = (sensorId) => {
 	});
 };
 
+/*
+db.getCollection('humidity').aggregate({
+    "$match": {"date": {$gt: ISODate("2018-03-21 21:02:01.000Z")}}
+}, { 
+    "$project": {
+        "date": "$date",
+        "y": { "$year": "$date" },
+        "m": { "$month": "$date" },
+        "d": { "$dayOfMonth": "$date" },
+        "h": { "$hour": "$date" },
+        "value": "$value",
+    }
+}, { 
+    "$group": {
+        "_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h"},
+        "date": { "$max": "$date" }, 
+        "value": { "$avg": "$value" }
+    }  
+}, {
+    "$sort": { "date": -1 }
+    }
+)
+*/
+
 const findHumidities = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
