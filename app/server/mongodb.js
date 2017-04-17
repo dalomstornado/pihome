@@ -192,27 +192,29 @@ const findTemperatures2 = (sensorId, from) => {
 			let collection = db.collection('temperature');
 			const stopwatch = new Stopwatch();
 			stopwatch.start();
-			collection.aggregate(
-				{ "$match": { 
-					"date": { $gt: from.toDate() },
-				 	sensorId
-				 },
-				 { "$project": {
+			collection.aggregate({
+    			"$match": {
+    				"sensorId": sensorId,
+    				"date": {$gt: from.toDate()}
+			 	 }
+			}, { 
+			    "$project": {
 			        "date": "$date",
 			        "y": { "$year": "$date" },
 			        "m": { "$month": "$date" },
 			        "d": { "$dayOfMonth": "$date" },
 			        "h": { "$hour": "$date" },
-			        "value": "$value" 
-			    } }, 
-				{ "$group": {
-		        	"_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h" },
+			        "value": "$value",
+			    }
+			}, { 
+			    "$group": {
+			        "_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h"},
 			        "date": { "$min": "$date" }, 
-			        "value": { "$avg": "$value" } 
-		    	} },
-			 	{ "$sort": { "date": -1 } }
-
-			 	}).toArray((err, items) => {			
+			        "value": { "$avg": "$value" }
+			    }  
+			}, {
+			    "$sort": { "date": -1 }
+			    }).toArray((err, items) => {			
 				if (err) {
 					reject(err);
 				} else {
