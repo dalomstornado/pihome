@@ -9,12 +9,14 @@ const dataLoadedTemperature = new Array();
 const dataLoadedHumidity = new Array();
 const namesLoadedTemperature = new Array();
 const namesLoadedHumidity = new Array();
-const _from = moment().subtract(10, 'd')
+const _from = moment().subtract(40, 'd')
 
 const updateLineChartAllValues = (dataLoaded, namesLoaded, measureType) => {
+    console.log('dataLoaded', dataLoaded);
     const lineChartData = dataHandler.lineChartDataAllWithNull(dataLoaded);
+    console.log('lineChartData', lineChartData);
     const lineChart = deviceHandler.getLineChart(measureType);
-    lineChartModule.drawLineChart(lineChart, lineChartData, namesLoaded);
+    lineChartModule.drawLineChart(lineChart, lineChartData.splice(), namesLoaded.splice());
 };
 
 const updateLineChartReducedValues = (dataLoaded, namesLoaded, measureType, from) => {
@@ -32,10 +34,10 @@ const callHistoricalDataOneByOne = (sensors, index) => {
     const sensor = sensors[index];    
     api.getTemperatures(sensor.id, _from).then((data) => {
         addData(data, dataLoadedTemperature, namesLoadedTemperature, sensor);
-        updateLineChartReducedValues(dataLoadedTemperature, namesLoadedTemperature, types.MeasureType.TEMPERATURE, _from);
+        updateLineChartAllValues(dataLoadedTemperature, namesLoadedTemperature, types.MeasureType.TEMPERATURE);
         api.getHumidities(sensor.id, _from).then((data) => {
             addData(data, dataLoadedHumidity, namesLoadedHumidity, sensor);
-            updateLineChartReducedValues(dataLoadedHumidity, namesLoadedHumidity, types.MeasureType.HUMIDITY, _from);    
+            updateLineChartAllValues(dataLoadedHumidity, namesLoadedHumidity, types.MeasureType.HUMIDITY);    
             index++;
             if(index < sensors.length) {
                 callHistoricalDataOneByOne(sensors, index);
@@ -72,9 +74,9 @@ const callHistoricalDataForHumidity = (sensors, index) => {
 };
 
 const init = (sensors) => {
-    callHistoricalDataForTemperature(sensors, 0);
-    callHistoricalDataForHumidity(sensors, 0);
-    //callHistoricalDataOneByOne(sensors, 0);
+    //callHistoricalDataForTemperature(sensors, 0);
+    //callHistoricalDataForHumidity(sensors, 0);
+    callHistoricalDataOneByOne(sensors, 0);
 };
 
 export { init };

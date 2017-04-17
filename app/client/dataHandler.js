@@ -133,6 +133,7 @@ const lineChartDataAllWithNull = (dataSeries) => {
         for(let x = 0; x < dataSeries[i].length; x++) {
             let res = [new Date(dataSeries[i][x].date), null, null, null, null];
             res[i+1] = dataSeries[i][x].value;
+            ret.push(res);
         }
     }
     stopwatch.stop();

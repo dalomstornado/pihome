@@ -213,13 +213,13 @@ const findTemperatures2 = (sensorId, from) => {
 			        "value": { "$avg": "$value" }
 			    }  
 			}, {
-			    "$sort": { "date": -1 }
+			    	"$sort": { "date": -1 }
 			    }).toArray((err, items) => {			
 				if (err) {
 					reject(err);
 				} else {
 					stopwatch.stop();
-					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
+					console.log(`Mongo2 resolved ${items.length} items in ${stopwatch.ms} ms.`);
 					resolve(items);
 				}
 				db.close();
