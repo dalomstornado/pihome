@@ -141,4 +141,45 @@ const lineChartDataAllWithNull = (dataSeries) => {
     return ret;
 };
 
-module.exports = { lineChartData, lineChartDataAllWithNull }
+const IsSameHour = (date1, date2) => {
+    const moment1 = moment(date1);
+    const moment2 = moment(date2);
+
+    return (moment1.diff(moment2, 'hours') < 1);
+};
+
+const RemoveMinuteResolution = (date) => {
+    const m = moment(date);
+    m.minutes(0);
+    m.seconds(0);
+    m.milliseconds(0);
+
+    return m.toDate();
+}
+
+const lineChartDataGroupedOverflow = (dataSeries) => {
+    const stopwatch = new Stopwatch();
+    stopwatch.start();
+
+    const ret = new Array();
+    for(let i = 0; i < dataSeries.length; i++) {
+        for(let x = 0; x < dataSeries[i].length; x++) {
+            let date = RemoveMinuteResolution(new Date(dataSeries[i][x].date));
+            if (i === 0) {
+                ret[x] = new Array();
+                ret[x][0] = date;    
+            } 
+            if(IsSameHour(date, ret[x][0])) {
+                ret[x][i + 1] = dataSeries[i][x].value;    
+            } else {
+                ret[x][i + 1] = null;
+            }
+        }
+    }
+
+    stopwatch.stop();
+    console.log(`Dathandler ${dataSeries.length} array(s), ${dataSeries[0].length} times in ${stopwatch.ms} ms.`);
+    return ret;
+}
+
+module.exports = { lineChartData, lineChartDataGroupedOverflow, lineChartDataAllWithNull }

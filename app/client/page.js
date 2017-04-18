@@ -12,11 +12,11 @@ const namesLoadedHumidity = new Array();
 const _from = moment().subtract(40, 'd')
 
 const updateLineChartAllValues = (dataLoaded, namesLoaded, measureType) => {
-    console.log('dataLoaded', dataLoaded);
-    const lineChartData = dataHandler.lineChartDataAllWithNull(dataLoaded);
+    //console.log('dataLoaded', dataLoaded);
+    const lineChartData = dataHandler.lineChartDataGroupedOverflow(dataLoaded);
     console.log('lineChartData', lineChartData);
     const lineChart = deviceHandler.getLineChart(measureType);
-    lineChartModule.drawLineChart(lineChart, lineChartData.splice(), namesLoaded.splice());
+    lineChartModule.drawLineChart(lineChart, lineChartData, namesLoaded);
 };
 
 const updateLineChartReducedValues = (dataLoaded, namesLoaded, measureType, from) => {
@@ -34,10 +34,10 @@ const callHistoricalDataOneByOne = (sensors, index) => {
     const sensor = sensors[index];    
     api.getTemperatures(sensor.id, _from).then((data) => {
         addData(data, dataLoadedTemperature, namesLoadedTemperature, sensor);
-        updateLineChartAllValues(dataLoadedTemperature, namesLoadedTemperature, types.MeasureType.TEMPERATURE);
+        updateLineChartAllValues(dataLoadedTemperature.slice(0), namesLoadedTemperature.slice(0), types.MeasureType.TEMPERATURE);
         api.getHumidities(sensor.id, _from).then((data) => {
             addData(data, dataLoadedHumidity, namesLoadedHumidity, sensor);
-            updateLineChartAllValues(dataLoadedHumidity, namesLoadedHumidity, types.MeasureType.HUMIDITY);    
+            updateLineChartAllValues(dataLoadedHumidity.slice(0), namesLoadedHumidity.slice(0), types.MeasureType.HUMIDITY);    
             index++;
             if(index < sensors.length) {
                 callHistoricalDataOneByOne(sensors, index);
