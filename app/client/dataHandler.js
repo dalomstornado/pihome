@@ -157,24 +157,31 @@ const RemoveMinuteResolution = (date) => {
     return m.toDate();
 }
 
-const lineChartDataGroupedOverflow = (dataSeries) => {
+const lineChartDataOverflow = (dataSeries) => {
     const stopwatch = new Stopwatch();
     stopwatch.start();
 
     const ret = new Array();
+    let maxX = 0;
     for(let i = 0; i < dataSeries.length; i++) {
         for(let x = 0; x < dataSeries[i].length; x++) {
             let date = RemoveMinuteResolution(new Date(dataSeries[i][x].date));
             if (i === 0) {
                 ret[x] = new Array();
                 ret[x][0] = date;    
-            } 
-            if(IsSameHour(date, ret[x][0])) {
-                ret[x][i + 1] = dataSeries[i][x].value;    
-            } else {
-                ret[x][i + 1] = null;
+            }
+            if (x < ret.length) {
+                if(IsSameHour(date, ret[x][0])) {
+                    ret[x][i + 1] = dataSeries[i][x].value;
+                }
             }
         }
+    }
+    //Remove lonely times
+    for(let i = 0; i < ret.length; i++) {
+        if (ret[i].length -1 < dataSeries.length) {
+            ret.splice(i, 1);
+        } 
     }
 
     stopwatch.stop();
@@ -182,4 +189,4 @@ const lineChartDataGroupedOverflow = (dataSeries) => {
     return ret;
 }
 
-module.exports = { lineChartData, lineChartDataGroupedOverflow, lineChartDataAllWithNull }
+module.exports = { lineChartData, lineChartDataOverflow, lineChartDataAllWithNull }
