@@ -41,7 +41,7 @@ const callHistoricalDataOneByOne = (sensors, index) => {
         newData(data, sensor, types.MeasureType.TEMPERATURE);
         api.getHumidities(sensor.id, _from).then((data) => {
             newData(data, sensor, types.MeasureType.HUMIDITY);
-            
+
             index++;
             if(index < sensors.length) {
                 callHistoricalDataOneByOne(sensors, index);

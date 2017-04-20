@@ -2,7 +2,6 @@ const mongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 const types = require('../common/types');
 const Stopwatch = require('timer-stopwatch'); 
-//const sleep = require('then-sleep');
 
 const url = 'mongodb://localhost:27017/pihome';
 const date = 'date';
@@ -148,8 +147,6 @@ const findTemperatures = (sensorId, from) => {
 				} else {
 					stopwatch.stop();
 					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
-					//let r = 0 + Math.round(10000 * Math.random());			
-					//sleep(r).then( () => {resolve(items)});
 					resolve(items);
 				}
 				db.close();
@@ -162,31 +159,7 @@ const findTemperatures = (sensorId, from) => {
 	});
 };
 
-/*
-db.getCollection('humidity').aggregate({
-    "$match": {"date": {$gt: ISODate("2018-03-21 21:02:01.000Z")}}
-}, { 
-    "$project": {
-        "date": "$date",
-        "y": { "$year": "$date" },
-        "m": { "$month": "$date" },
-        "d": { "$dayOfMonth": "$date" },
-        "h": { "$hour": "$date" },
-        "value": "$value",
-    }
-}, { 
-    "$group": {
-        "_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h"},
-        "date": { "$max": "$date" }, 
-        "value": { "$avg": "$value" }
-    }  
-}, {
-    "$sort": { "date": -1 }
-    }
-)
-*/
-
-const findTemperatures2 = (sensorId, from) => {
+const findTemperaturesAggregate = (sensorId, from) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature');
@@ -219,7 +192,7 @@ const findTemperatures2 = (sensorId, from) => {
 					reject(err);
 				} else {
 					stopwatch.stop();
-					console.log(`Mongo2 resolved ${items.length} items in ${stopwatch.ms} ms.`);
+					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
 					resolve(items);
 				}
 				db.close();
@@ -264,8 +237,52 @@ const findHumidities = (sensorId, from) => {
 				} else {
 					stopwatch.stop();
 					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
-					//let r = 0 + Math.round(10000 * Math.random());
-					//sleep(r).then( () => {resolve(items)});
+					resolve(items);
+				}
+				db.close();
+			});
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
+	});
+};
+
+const findHumiditiesAggregate = (sensorId, from) => {
+	return new Promise((resolve, reject) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('humidity')
+			const stopwatch = new Stopwatch();
+			stopwatch.start();
+			collection.aggregate({
+    			"$match": {
+    				"sensorId": sensorId,
+    				"date": {$gt: from.toDate()}
+			 	 }
+			}, { 
+			    "$project": {
+			        "date": "$date",
+			        "y": { "$year": "$date" },
+			        "m": { "$month": "$date" },
+			        "d": { "$dayOfMonth": "$date" },
+			        "h": { "$hour": "$date" },
+			        "value": "$value",
+			    }
+			}, { 
+			    "$group": {
+			        "_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h"},
+			        "date": { "$min": "$date" }, 
+			        "value": { "$avg": "$value" }
+			    }  
+			}, {
+			    	"$sort": { "date": -1 }
+			    }).toArray((err, items) => {
+				if (err) {
+					reject(err);
+				} else {
+					stopwatch.stop();
+					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
 					resolve(items);
 				}
 				db.close();
@@ -298,4 +315,4 @@ const init = () => {
 };
 init();
 
-module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findTemperature, findTemperatures, findTemperatures2, findHumidity, findHumidities, insertDeviceAction };
+module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findTemperature, findTemperatures, findTemperaturesAggregate, findHumidity, findHumidities, findHumiditiesAggregate, insertDeviceAction };

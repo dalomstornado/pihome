@@ -189,9 +189,10 @@ const lineChartDataOverflow = (dataSeries) => {
                 if(IsSameHour(ret[x][0], dataSeries[i].date)) {
                     ret[x][i + 1] = dataSeries[i][x].value;
                     setToNull = false;
-                } else if(setToNull) {
-                    ret[x][i + 1] = null;    
-                }
+                } 
+            }
+            if (setToNull) {
+                ret[x][i + 1] = null;
             }
         }
     }
