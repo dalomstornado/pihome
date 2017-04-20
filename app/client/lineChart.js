@@ -6,13 +6,14 @@ const charts = new Map();
 const options = {
   width: 700,
   height: 200,
-  interpolateNulls: true //TODO: check this
+  interpolateNulls: true
 };
 
 const drawLineChart = (lineChart, values, names) => {
   google.charts.setOnLoadCallback(() => {
     const stopwatch = new Stopwatch();
     stopwatch.start();
+
     const chartData = new google.visualization.DataTable();
     chartData.addColumn('date');
     for(let i = 0; i < names.length; i++) {
@@ -26,6 +27,7 @@ const drawLineChart = (lineChart, values, names) => {
       charts.set(lineChart.id, chart);
     }
     chart.draw(chartData, options);
+    
     stopwatch.stop();
     console.log(`Linechart drawn in ${stopwatch.ms} ms.`);
   });

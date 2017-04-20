@@ -12,8 +12,8 @@ const namesLoadedHumidity = new Array();
 const _from = moment().subtract(40, 'd')
 
 const drawLineChart = (dataLoaded, namesLoaded, measureType) => {
-    const lineChartData = dataHandler.lineChartDataOverflow(dataLoaded);
     const lineChart = deviceHandler.getLineChart(measureType);
+    const lineChartData = dataHandler.lineChartDataOverflow(dataLoaded);
     lineChartModule.drawLineChart(lineChart, lineChartData, namesLoaded);
 };
 
@@ -22,14 +22,26 @@ const addData = (data, dataLoaded, namesLoaded, sensor) => {
     namesLoaded.push(sensor.name);
 };
 
+const newData = (data, sensor, measureType) => {
+    switch (measureType) {
+        case types.MeasureType.TEMPERATURE:
+            addData(data, dataLoadedTemperature, namesLoadedTemperature, sensor);
+            drawLineChart(dataLoadedTemperature.slice(0), namesLoadedTemperature.slice(0), measureType);
+            break;
+        case types.MeasureType.HUMIDITY:
+            addData(data, dataLoadedHumidity, namesLoadedHumidity, sensor);
+            drawLineChart(dataLoadedHumidity.slice(0), namesLoadedHumidity.slice(0), measureType);
+            break;
+    }
+}
+
 const callHistoricalDataOneByOne = (sensors, index) => {
     const sensor = sensors[index];    
     api.getTemperatures(sensor.id, _from).then((data) => {
-        addData(data, dataLoadedTemperature, namesLoadedTemperature, sensor);
-        drawLineChart(dataLoadedTemperature.slice(0), namesLoadedTemperature.slice(0), types.MeasureType.TEMPERATURE);
+        newData(data, sensor, types.MeasureType.TEMPERATURE);
         api.getHumidities(sensor.id, _from).then((data) => {
-            addData(data, dataLoadedHumidity, namesLoadedHumidity, sensor);
-            drawLineChart(dataLoadedHumidity.slice(0), namesLoadedHumidity.slice(0), types.MeasureType.HUMIDITY);    
+            newData(data, sensor, types.MeasureType.HUMIDITY);
+            
             index++;
             if(index < sensors.length) {
                 callHistoricalDataOneByOne(sensors, index);

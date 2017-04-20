@@ -1,6 +1,7 @@
 const moment = require('moment');
 const Stopwatch = require('timer-stopwatch'); 
 
+//LINECHART BASED ON FICTIVE DATES
 const reduceHours = 
     [{ start: 0, hour: 1, stop: 2 },
     { start: 2, hour: 3, stop: 4 },
@@ -124,6 +125,7 @@ const lineChartData = (from, dataSeries) => {
     return timeArray;
 };
 
+//LINECHART WITH NULLS
 const lineChartDataAllWithNull = (dataSeries) => {
     const stopwatch = new Stopwatch();
     stopwatch.start();
@@ -141,6 +143,7 @@ const lineChartDataAllWithNull = (dataSeries) => {
     return ret;
 };
 
+//LINECHART WITH OVERFLOW
 const IsSameHour = (date1, date2) => {
     const moment1 = moment(date1);
     const moment2 = moment(date2);
@@ -157,31 +160,40 @@ const RemoveMinuteResolution = (date) => {
     return m.toDate();
 }
 
+const createTimeArrayFromData = (dataSerie) => {
+    const timeArray = new Array();
+    
+    for(let i = 0; i < dataSerie.length; i++) {
+        const date = RemoveMinuteResolution(new Date(dataSerie[i].date));
+        timeArray[i] = new Array();
+        timeArray[i][0] = date;
+        timeArray[i][1] = dataSerie[i].value;
+    }
+    
+    return timeArray;
+} 
+
 const lineChartDataOverflow = (dataSeries) => {
+    if (!dataSeries || !dataSeries[0].length ) {
+        return;
+    }
+
     const stopwatch = new Stopwatch();
     stopwatch.start();
-
-    const ret = new Array();
-    let maxX = 0;
-    for(let i = 0; i < dataSeries.length; i++) {
-        for(let x = 0; x < dataSeries[i].length; x++) {
-            let date = RemoveMinuteResolution(new Date(dataSeries[i][x].date));
-            if (i === 0) {
-                ret[x] = new Array();
-                ret[x][0] = date;    
-            }
-            if (x < ret.length) {
-                if(IsSameHour(date, ret[x][0])) {
+    const ret = createTimeArrayFromData(dataSeries[0]);
+    
+    for (let i = 1; i < dataSeries.length; i++) {
+        for(let x = 0; x < ret.length; x++) {
+            let setToNull = true;
+            if (dataSeries[i].length > x) {
+                if(IsSameHour(ret[x][0], dataSeries[i].date)) {
                     ret[x][i + 1] = dataSeries[i][x].value;
+                    setToNull = false;
+                } else if(setToNull) {
+                    ret[x][i + 1] = null;    
                 }
             }
         }
-    }
-    //Remove lonely times
-    for(let i = 0; i < ret.length; i++) {
-        if (ret[i].length -1 < dataSeries.length) {
-            ret.splice(i, 1);
-        } 
     }
 
     stopwatch.stop();
@@ -189,4 +201,4 @@ const lineChartDataOverflow = (dataSeries) => {
     return ret;
 }
 
-module.exports = { lineChartData, lineChartDataOverflow, lineChartDataAllWithNull }
+module.exports = { lineChartData, lineChartDataAllWithNull, lineChartDataOverflow }
