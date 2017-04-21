@@ -145,6 +145,10 @@ const lineChartDataAllWithNull = (dataSeries) => {
 
 //LINECHART WITH OVERFLOW
 const IsSameHour = (date1, date2) => {
+    if (!date1 || !date2) {
+        return false;
+    }
+
     const moment1 = moment(date1);
     const moment2 = moment(date2);
 
