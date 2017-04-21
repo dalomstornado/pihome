@@ -159,7 +159,8 @@ const findTemperatures = (sensorId, from) => {
 	});
 };
 
-const findTemperaturesAggregate = (sensorId, from) => {
+//AVG is calculated per hour. Skipping uneven hours in result. 
+const findTemperaturesAggregate = (sensorId, from, nHours = 2) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('temperature');
@@ -177,17 +178,21 @@ const findTemperaturesAggregate = (sensorId, from) => {
 			        "m": { "$month": "$date" },
 			        "d": { "$dayOfMonth": "$date" },
 			        "h": { "$hour": "$date" },
+			        "nh": { "$mod": [{ "$hour": "$date" }, nHours] },
 			        "value": "$value",
 			    }
 			}, { 
 			    "$group": {
 			        "_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h"},
+			        "nh": { "$first": "$nh" },
 			        "date": { "$min": "$date" }, 
 			        "value": { "$avg": "$value" }
 			    }  
 			}, {
-			    	"$sort": { "date": -1 }
-			    }).toArray((err, items) => {			
+			    	"$match": { "nh": 0 }
+			    }, {
+                    "$sort": {"date": 1}
+                    }).toArray((err, items) => {			
 				if (err) {
 					reject(err);
 				} else {
@@ -249,7 +254,7 @@ const findHumidities = (sensorId, from) => {
 	});
 };
 
-const findHumiditiesAggregate = (sensorId, from) => {
+const findHumiditiesAggregate = (sensorId, from, nHours = 2) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('humidity')
@@ -267,17 +272,21 @@ const findHumiditiesAggregate = (sensorId, from) => {
 			        "m": { "$month": "$date" },
 			        "d": { "$dayOfMonth": "$date" },
 			        "h": { "$hour": "$date" },
+			        "nh": { "$mod": [{ "$hour": "$date" }, nHours] },
 			        "value": "$value",
 			    }
 			}, { 
 			    "$group": {
 			        "_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h"},
+			        "nh": { "$first": "$nh" },
 			        "date": { "$min": "$date" }, 
 			        "value": { "$avg": "$value" }
 			    }  
 			}, {
-			    	"$sort": { "date": -1 }
-			    }).toArray((err, items) => {
+			    	"$match": { "nh": 0 }
+			    }, {
+                    "$sort": {"date": 1}
+                    }).toArray((err, items) => { //TODO: Double check the sorting.
 				if (err) {
 					reject(err);
 				} else {
