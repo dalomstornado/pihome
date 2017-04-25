@@ -187,9 +187,13 @@ const findTemperaturesAggregate = (sensorId, from, nHours = 2) => {
 			        "nh": { "$first": "$nh" },
 			        "date": { "$min": "$date" }, 
 			        "value": { "$avg": "$value" }
-			    }  
+			    }
 			}, {
 			    	"$match": { "nh": 0 }
+			}, {
+			    	"$sort": { "date": 1 }
+			}, {
+			    	"$match": { "nh": 0 } //Last command is lost
 			    }).toArray((err, items) => {			
 				if (err) {
 					reject(err);
@@ -273,15 +277,12 @@ const findHumiditiesAggregate = (sensorId, from, nHours = 2) => {
 			        "nh": { "$mod": [{ "$hour": "$date" }, nHours] },
 			        "value": "$value",
 			    }
-			}, { 
-			    "$group": {
-			        "_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h"},
-			        "nh": { "$first": "$nh" },
-			        "date": { "$min": "$date" }, 
-			        "value": { "$avg": "$value" }
-			    }  
 			}, {
 			    	"$match": { "nh": 0 }
+			}, {
+			    	"$sort": { "date": 1 }
+			}, {
+			    	"$match": { "nh": 0 } //Last command is lost
 			    }).toArray((err, items) => {
 				if (err) {
 

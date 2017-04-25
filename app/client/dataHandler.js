@@ -164,14 +164,14 @@ const RemoveMinuteResolution = (date) => {
     return m.toDate();
 }
 
-const createTimeArrayFromData = (dataSerie) => {
+const createTimeArrayFromData = (dataSerie, baseIndex) => {
     const timeArray = new Array();
     
     for(let i = 0; i < dataSerie.length; i++) {
         const date = RemoveMinuteResolution(new Date(dataSerie[i].date));
         timeArray[i] = new Array();
         timeArray[i][0] = date;
-        timeArray[i][1] = dataSerie[i].value;
+        timeArray[i][baseIndex + 1] = dataSerie[i].value;
     }
     
     return timeArray;
@@ -183,29 +183,50 @@ const sort = (dataSeries) => {
             return a.date - b.date;
         });
     }
-} 
+}
+
+const longest = (dataSeries) => {
+    let longest = 0;
+    let index = -1;
+    for (let i = 0; i < dataSeries.length; i++) {
+        let length = dataSeries[i].length; 
+        if (length > longest) {
+            longest = length
+            index = i;
+        }
+    }
+    return index;
+}
 
 const lineChartDataOverflow = (dataSeries) => {
-    if (!dataSeries || !dataSeries[0].length ) {
+    if (!dataSeries) {
         return;
     }
 
     const stopwatch = new Stopwatch();
     stopwatch.start();
-    sort(dataSeries);
-    const ret = createTimeArrayFromData(dataSeries[0]);
+    //sort(dataSeries);
+    const baseIndex = longest(dataSeries);
+    const ret = createTimeArrayFromData(dataSeries[baseIndex], baseIndex);
     
-    for (let i = 1; i < dataSeries.length; i++) {
+    //Serie
+    for (let i = 0; i < dataSeries.length; i++) {
+        if (i === baseIndex) {
+            continue;
+        }
+        let d = dataSeries[i];
+        //Hour positions
         for(let x = 0; x < ret.length; x++) {
-            let setToNull = true;
-            if (dataSeries[i].length > x) {
-                if(IsSameHour(ret[x][0], dataSeries[i].date)) {
-                    ret[x][i + 1] = dataSeries[i][x].value;
-                    setToNull = false;
+            let r = ret[x];
+            //Value
+            for (let y = 0; y < d.length; y++) {
+                if(IsSameHour(r[0], d.date)) {
+                    r[i + 1] = d[y].value;
+                    break;
                 } 
-            }
-            if (setToNull) {
-                ret[x][i + 1] = null;
+                if (y <= d.length) {
+                    r[i + 1] = null;
+                }
             }
         }
     }
