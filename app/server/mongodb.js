@@ -190,9 +190,7 @@ const findTemperaturesAggregate = (sensorId, from, nHours = 2) => {
 			    }  
 			}, {
 			    	"$match": { "nh": 0 }
-			    }, {
-                    "$sort": {"date": 1}
-                    }).toArray((err, items) => {			
+			    }).toArray((err, items) => {			
 				if (err) {
 					reject(err);
 				} else {
@@ -284,10 +282,9 @@ const findHumiditiesAggregate = (sensorId, from, nHours = 2) => {
 			    }  
 			}, {
 			    	"$match": { "nh": 0 }
-			    }, {
-                    "$sort": {"date": 1}
-                    }).toArray((err, items) => { //TODO: Double check the sorting.
+			    }).toArray((err, items) => {
 				if (err) {
+
 					reject(err);
 				} else {
 					stopwatch.stop();

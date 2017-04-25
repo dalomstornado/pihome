@@ -18,6 +18,10 @@ const drawLineChart = (dataLoaded, namesLoaded, measureType) => {
 };
 
 const addData = (data, dataLoaded, namesLoaded, sensor) => {
+    for(let i = 0; i < data.length; i++){
+        data[i].date = new Date(data[i].date);
+    }
+
     dataLoaded.push(data);
     namesLoaded.push(sensor.name);
 };

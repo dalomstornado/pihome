@@ -20,7 +20,7 @@ const drawLineChart = (lineChart, values, names) => {
       chartData.addColumn('number', names[i]);    
     }
     chartData.addRows(values);
-    chartData.sort([{column: 0}]);
+    //chartData.sort([{column: 0}]);
 
     let chart = charts.get(lineChart.id);
     if (!chart) {

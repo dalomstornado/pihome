@@ -175,6 +175,14 @@ const createTimeArrayFromData = (dataSerie) => {
     }
     
     return timeArray;
+}
+
+const sort = (dataSeries) => {
+    for(let i = 0; i < dataSeries.length; i++) {
+        dataSeries[i].sort((a, b) => {
+            return a.date - b.date;
+        });
+    }
 } 
 
 const lineChartDataOverflow = (dataSeries) => {
@@ -184,6 +192,7 @@ const lineChartDataOverflow = (dataSeries) => {
 
     const stopwatch = new Stopwatch();
     stopwatch.start();
+    sort(dataSeries);
     const ret = createTimeArrayFromData(dataSeries[0]);
     
     for (let i = 1; i < dataSeries.length; i++) {
