@@ -9,7 +9,7 @@ const dataLoadedTemperature = new Array();
 const dataLoadedHumidity = new Array();
 const namesLoadedTemperature = new Array();
 const namesLoadedHumidity = new Array();
-const _from = moment().subtract(40, 'd')
+const _from = moment().subtract(10, 'd')
 
 const drawLineChart = (dataLoaded, namesLoaded, measureType) => {
     const lineChart = deviceHandler.getLineChart(measureType);
