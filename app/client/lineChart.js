@@ -6,7 +6,7 @@ const charts = new Map();
 const options = {
   width: 700,
   height: 200,
-  interpolateNulls: true
+  interpolateNulls: false
 };
 
 const drawLineChart = (lineChart, values, names) => {
