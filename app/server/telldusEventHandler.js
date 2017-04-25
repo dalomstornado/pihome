@@ -68,22 +68,16 @@ module.exports = (websocket) => {
 	}
 
 	const getUpdateInterval = () => {
-		return 5000 + Math.round(15000 * Math.random());
+		return 2000 + Math.round(5000 * Math.random());
 	};
 
 	const testTimeStamp = () => {
-		return 1490000000 + Math.round(742000 * Math.random());
+		return moment().subtract(Math.round(Math.random() * 10 * 24), 'h').unix(); 
 	};
 
 
 	const test = () => {
 		const sensors = [151, 167, 183, 135];
-		/*
-		doSensorEventListener(151, '', '', 1, 20, 1490875200);
-		doSensorEventListener(151, '', '', 1, 10, 1490007600);
-		doSensorEventListener(151, '', '', 1, 0, 1489104000);
-		doSensorEventListener(151, '', '', 1, 0, 1489054000);
-		*/
 		for(let i = 0; i < 4; i++){	
 			setInterval(() => {
 				doSensorEventListener(sensors[i], '', '', 1, getTempValue(), testTimeStamp());

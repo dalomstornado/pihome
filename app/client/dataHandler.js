@@ -220,10 +220,11 @@ const lineChartDataOverflow = (dataSeries) => {
             let r = ret[x];
             //Value
             for (let y = 0; y < d.length; y++) {
-                if(IsSameHour(r[0], d.date)) {
-                    r[i + 1] = d[y].value;
+                let v = d[y];
+                if(IsSameHour(r[0], v.date)) {
+                    r[i + 1] = v.value;
                     break;
-                } else if (d.date > r[0]) {
+                } else if (v.date > r[0] || y === d.length - 1) {
                     r[i + 1] = null;
                     break;
                 }
