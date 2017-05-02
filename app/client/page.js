@@ -13,7 +13,8 @@ const _from = moment().subtract(10, 'd')
 
 const drawLineChart = (dataLoaded, namesLoaded, measureType) => {
     const lineChart = deviceHandler.getLineChart(measureType);
-    const lineChartData = dataHandler.lineChartDataOverflow(dataLoaded);
+    //const lineChartData = dataHandler.lineChartDataOverflow(dataLoaded);
+    const lineChartData = dataHandler.lineChartData(_from, dataLoaded);
     lineChartModule.drawLineChart(lineChart, lineChartData, namesLoaded);
 };
 

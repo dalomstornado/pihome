@@ -103,7 +103,7 @@ Array.prototype.pad = function(maxLength) {
                         break;
                     }
                 }*/
-                this[i][x] = undefined; //lastValue;
+                this[i][x] = null; //lastValue;
             }
         }        
     }
