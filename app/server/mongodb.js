@@ -277,6 +277,13 @@ const findHumiditiesAggregate = (sensorId, from, nHours = 2) => {
 			        "nh": { "$mod": [{ "$hour": "$date" }, nHours] },
 			        "value": "$value",
 			    }
+			}, { 
+			    "$group": {
+			        "_id": { "year": "$y", "month": "$m", "day": "$d", "hour": "$h"},
+			        "nh": { "$first": "$nh" },
+			        "date": { "$min": "$date" }, 
+			        "value": { "$avg": "$value" }
+			    }
 			}, {
 			    	"$match": { "nh": 0 }
 			}, {
