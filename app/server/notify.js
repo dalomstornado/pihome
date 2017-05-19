@@ -1,8 +1,11 @@
 const request = require('request');
+const moment = require('moment');
 const types = require('../common/types');
 
 const baseUrl = 'https://my.locative.io'
-const sessionId= '709f2632415bd579d26343feae85a5a07d6c7d0'
+const sessionId = '709f2632415bd579d26343feae85a5a07d6c7d0'
+const notifications = new Map();
+const intervalHour = 16;
 
 const getPrettyDate = () => {
 	return new Date().toISOString()
@@ -23,10 +26,18 @@ const postNotification = (message) => {
 	});
 };
 
-const notify = (severity, message, moment) => {
+const notify = (severity, sensor, message, m) => {
 	sSeverity = Object.keys(types.Severity)[severity];
-	postNotification(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
-	console.log(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
+	const notificationId = sSeverity + sensor.id;
+	const lastNotification = notifications[notificationId];
+
+	if (!lastNotification || moment().diff(lastNotification, 'hours') > intervalHour) {
+		postNotification(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
+		notifications[notificationId] = m;
+		console.log(`${m.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);	
+	} else {
+		console.log(`Notification dropped. ${message}`);
+	}
 };
 //c
 
