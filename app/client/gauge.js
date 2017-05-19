@@ -9,11 +9,11 @@ const optionsHumidity = (sensorId) => {
   const upperLimit = getUpperLimit(MeasureType.HUMIDITY, sensorId);
 
   return {
-    width: 400, height: 120,
-    redFrom: upperLimit.ALARM, redTo: 95,
+    width: 400, height: 150,
+    redFrom: upperLimit.ALARM, redTo: 99,
     yellowFrom: upperLimit.WARNING, yellowTo: ((upperLimit.ALARM) ? upperLimit.ALARM : 95),
     minorTicks: 5, min: 30,
-    max: 95 
+    max: 99 
   } 
 };
 
@@ -21,7 +21,7 @@ const optionsTemp = (sensorId) => {
   const lowerLimit = getLowerLimit(MeasureType.TEMPERATURE, sensorId);
 
   return {
-    width: 400, height: 120,
+    width: 400, height: 150,
     redFrom: -30, redTo: lowerLimit.ALARM,
     yellowFrom: lowerLimit.ALARM, yellowTo: lowerLimit.WARNING,
     minorTicks: 5, min: -30,
