@@ -87,12 +87,19 @@ module.exports = (websocket) => {
 			}, getUpdateInterval());	
 		}
 	};
+
+	const testOnOff = () => {
+		const sensors = [23417874, 23421126];
+		doDeviceEventListener(sensors[0], {name: 'ON'});
+		doDeviceEventListener(sensors[0], {name: 'OFF'});
+		doDeviceEventListener(sensors[0], {name: 'ON'});
+	};
 	//TEST END
 
 	module.init = () => {
 		const sensorListener = addSensorEventListener();
 		const deviceListener = addDeviceEventListener();
-		//test();
+		testOnOff();
 	};
 
 	return module;

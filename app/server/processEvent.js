@@ -23,7 +23,7 @@ const resolveOnOff = (resolve) => {
 	})
 	.catch((err) => {
 		console.log('Unable to get status of prescence. Returning severity ALARM.');
-		resolve(types.Severity.ALARM);
+		resolve(types.Severity.INFO); //Todo: change when stable
 	});
 };
 

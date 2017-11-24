@@ -28,7 +28,7 @@ const postNotification = (message) => {
 
 const notify = (severity, sensor, message, m) => {
 	sSeverity = Object.keys(types.Severity)[severity];
-	const notificationId = sSeverity + sensor.id;
+	const notificationId = sSeverity + sensor.id + message;
 	const lastNotification = notifications[notificationId];
 
 	if (!lastNotification || moment().diff(lastNotification, 'hours') > intervalHour) {
