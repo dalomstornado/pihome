@@ -90,9 +90,9 @@ module.exports = (websocket) => {
 
 	const testOnOff = () => {
 		const sensors = [23417874, 23421126];
-		doDeviceEventListener(sensors[0], {name: 'ON'});
-		doDeviceEventListener(sensors[0], {name: 'OFF'});
-		doDeviceEventListener(sensors[0], {name: 'ON'});
+		doDeviceEventListener(sensors[0], {name: types.Status.ON});
+		doDeviceEventListener(sensors[0], {name: types.Status.OFF});
+		doDeviceEventListener(sensors[0], {name: types.Status.ON});
 	};
 	//TEST END
 
