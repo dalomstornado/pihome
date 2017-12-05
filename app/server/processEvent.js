@@ -2,7 +2,7 @@ const types = require('../common/types');
 const notify = require('../server/notify');
 const limits = require('../common/limits');
 const mongodb = require('../server/mongodb');
-const triggerDevices = require('../server/telldusDeviceHandler');
+const telldusDeviceHandler = require('../server/telldusDeviceHandler');
 const websocket = require('../server/websocket');
 
 const getLowerLimit = (event) => {
@@ -61,7 +61,7 @@ const processEvent = (event, websocket) => {
 		event.severity = severity;
 		//1. Trigger and notify
 		if (event.severity >= types.Severity.ALARM) {
-			triggerDevices(event.sensor, event.measure.value);
+			telldusDeviceHandler.triggerDevices(event.sensor, event.measure.value);
 			notify(event.severity, event.sensor, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.measure.value}`, event.moment);
 		}
 

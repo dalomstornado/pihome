@@ -7,6 +7,7 @@ const router = require('./api/routes');
 const deviceHandler = require('./common/deviceHandler');
 const websocket = require('./server/websocket')(io);
 const telldusEventHandler = require('./server/telldusEventHandler')(websocket);
+const telldusDeviceHandler = require('./server/telldusDeviceHandler');
 
 const PORT = 8082;
 
@@ -53,6 +54,12 @@ app.get('/temperature/:sensorId', function(req, res){ //websockets
 
 app.get('/', function(req, res){
 	res.render('index', { sensors: deviceHandler.getSensors() });
+});
+
+app.get('/doors', function(req, res){
+  telldusDeviceHandler.getDeviceEntries().then((data) => {
+    res.render('doors', { deviceEntries: data });
+  });
 });
 
 app.get('/list', function(req, res){

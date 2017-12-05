@@ -1,0 +1,18 @@
+block title  
+	Title
+
+block content
+	script.
+		//window.app.device.init();
+		let deviceEntries = !{JSON.stringify(deviceEntries)};
+	div
+		table
+			thead
+			tr: th Entries
+			tbody
+				each deviceEntry in deviceEntries
+					tr
+						td #{deviceEntry.date}
+						td #{deviceEntry.sensorId}
+						td #{deviceEntry.severity}
+						td #{deviceEntry.value}

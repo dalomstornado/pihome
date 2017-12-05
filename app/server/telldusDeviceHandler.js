@@ -30,4 +30,8 @@ const triggerDevices = (sensor, status) => {
 	}
 };
 
-module.exports = triggerDevices;
+const getDeviceEntries = () => {
+	return mongodb.findDevicesEntries();
+};
+
+module.exports = { triggerDevices, getDeviceEntries };

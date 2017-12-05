@@ -309,6 +309,30 @@ const findHumiditiesAggregate = (sensorId, from, nHours = 2) => {
 	});
 };
 
+const findDevicesEntries = (top = 1000) => {
+	return new Promise((resolve, reject) => {
+		mongoClient.connect(url).then((db) => {
+			let collection = db.collection('device')
+			const stopwatch = new Stopwatch();
+			stopwatch.start();
+			collection.find().sort({ date: -1 }).limit(top).toArray((err, items) => {
+				if (err) {
+					reject(err);
+				} else {
+					stopwatch.stop();
+					console.log(`Mongo resolved ${items.length} items in ${stopwatch.ms} ms.`);
+					resolve(items);
+				}
+				db.close();
+			});
+		})		
+		.catch((err) => {
+			console.log("ERROR", err)
+			reject(err);
+		});
+	});
+};
+
 const init = () => {
 	console.log('MongoDB init run');
 	mongoClient.connect(url).then((db) => {
@@ -329,4 +353,7 @@ const init = () => {
 };
 init();
 
-module.exports = { insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findTemperature, findTemperatures, findTemperaturesAggregate, findHumidity, findHumidities, findHumiditiesAggregate, insertDeviceAction };
+module.exports = { 
+	insertPresenceStatus, findPresenceStatus, insertHumidity, insertTemperature, findTemperature, findTemperatures, findTemperaturesAggregate, findHumidity, findHumidities, findHumiditiesAggregate, insertDeviceAction,
+	findDevicesEntries 
+};
