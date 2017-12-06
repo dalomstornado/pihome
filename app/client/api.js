@@ -18,12 +18,4 @@ const getHumidities = (sensorId, from) => {
   });
 };
 
-const getDeviceEntries = (sensorId, from) => {
-  return $.ajax({
-    method: 'GET',
-    url: `${baseUrl}/device/deviceEntries`,
-    dataType: 'json'
-  });
-};
-
 module.exports = { getTemperatures, getHumidities }

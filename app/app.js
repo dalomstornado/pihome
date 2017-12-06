@@ -48,18 +48,20 @@ io.on('connection', function(socket) {
 	console.log('Socket connected!');
 });
 
-app.get('/temperature/:sensorId', function(req, res){ //websockets
+app.get('/temperature/:sensorId', function(req, res) { //websockets
 	res.json({temperature: + req.params.sensorId });
 });
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
 	res.render('index', { sensors: deviceHandler.getSensors() });
 });
 
-app.get('/doors', function(req, res){
-  telldusDeviceHandler.getDeviceEntries().then((data) => {
-    res.render('doors', { deviceEntries: data });
-  });
+app.get('/doors', function(req, res) {
+  telldusDeviceHandler.getDeviceEntries(renderDoors, req, res);
+});
+
+const renderDoors = ((req, res, deviceEntries) => {
+  res.render('doors', { deviceEntries });
 });
 
 app.get('/list', function(req, res){
