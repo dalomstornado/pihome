@@ -31,16 +31,18 @@ const triggerDevices = (sensor, status) => {
 };
 
 const getDeviceEntries = (renderDoors, req, res) => {
-	mongodb.findDevicesEntries().then((deviceEntries) => {
-		for (let i = 0; i < deviceEntries.length; i++) {
-			//TODO: Maybe move this since it is view specific.
-        	deviceEntries[i].date = moment(deviceEntries[i].date).format('YYYY-MM-DD hh:mm:ss'); 
-        	deviceEntries[i].sensor = deviceHandler.getSensorOrDevice(deviceEntries[i].sensorId);
-        	//TODO: Reverse lookup severity
-        	deviceEntries[i].value = types.Status[deviceEntries[i].value];
-      	}
-      	renderDoors(req, res, deviceEntries);
-	}); 
+	mongodb.findPresenceStatus().then((presenceStatus) => {
+		mongodb.findDevicesEntries().then((deviceEntries) => {
+			for (let i = 0; i < deviceEntries.length; i++) {
+				//TODO: Maybe move this since it is view specific.
+	        	deviceEntries[i].date = moment(deviceEntries[i].date).format('YYYY-MM-DD hh:mm:ss'); 
+	        	deviceEntries[i].sensor = deviceHandler.getSensorOrDevice(deviceEntries[i].sensorId);
+	        	//TODO: Reverse lookup severity
+	        	deviceEntries[i].value = types.Status[deviceEntries[i].value];
+	      	}
+	      	renderDoors(req, res, deviceEntries, presenceStatus);
+		});
+	});
 };
 
 module.exports = { triggerDevices, getDeviceEntries };

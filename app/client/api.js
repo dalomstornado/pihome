@@ -18,4 +18,20 @@ const getHumidities = (sensorId, from) => {
   });
 };
 
-module.exports = { getTemperatures, getHumidities }
+const setHome = () => {
+  return $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/presence/home`,
+    dataType: 'json'
+  });
+};
+
+const setAway = () => {
+  return $.ajax({
+    method: 'GET',
+    url: `${baseUrl}/presence/away`,
+    dataType: 'json'
+  });
+};
+
+module.exports = { getTemperatures, getHumidities, setHome, setAway }

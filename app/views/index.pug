@@ -12,6 +12,8 @@ block title
 	Title
 
 block content
+	link(href='/css/gauge.css', rel='stylesheet', type='text/css') 
+	script(src="https://www.gstatic.com/charts/loader.js")
 	script.
 		google.charts.load('current', {'packages':['gauge', 'line', 'corechart']});
 		let sensors = !{JSON.stringify(sensors)};

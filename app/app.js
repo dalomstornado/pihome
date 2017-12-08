@@ -60,8 +60,8 @@ app.get('/doors', function(req, res) {
   telldusDeviceHandler.getDeviceEntries(renderDoors, req, res);
 });
 
-const renderDoors = ((req, res, deviceEntries) => {
-  res.render('doors', { deviceEntries });
+const renderDoors = ((req, res, deviceEntries, presenceStatus) => {
+  res.render('doors', { deviceEntries, presenceStatus });
 });
 
 app.get('/list', function(req, res){

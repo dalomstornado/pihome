@@ -1,11 +1,14 @@
+extends ./layout
+
 block title  
 	Title
 
 block content
+	link(href='/css/entries.css', rel='stylesheet', type='text/css')
 	script.
-		//window.app.device.init();
+		window.app.device.init();
 		let deviceEntries = !{JSON.stringify(deviceEntries)};
-	div
+	.entries
 		table
 			thead
 				tr
@@ -20,3 +23,7 @@ block content
 						td #{deviceEntry.sensor.name}
 						td #{deviceEntry.severity}
 						td #{deviceEntry.value}
+	.home
+		label
+			input(type="checkbox" id='presenceStatus' name='home' checked=presenceStatus == 'HOME')
+			= 'Home'
