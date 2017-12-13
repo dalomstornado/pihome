@@ -14,6 +14,7 @@ const getUpperLimit = (event) => {
 };
 
 const resolveOnOff = (resolve) => {
+	resolve(types.Severity.ALARM);
 	mongodb.findPresenceStatus().then((prescence) => {
 		if (prescence === types.PresenceStatus.AWAY) {
 			resolve(types.Severity.ALARM);

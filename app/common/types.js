@@ -1,3 +1,8 @@
+const {Enum}  = require('enumify');
+
+class Severity extends Enum {}
+Severity.initEnum(['INFO', 'WARNING', 'ALARM']);
+
 const MeasureType = {
 	TEMPERATURE: 'TEMPERATURE',
 	HUMIDITY: 'HUMIDITY',
@@ -12,12 +17,6 @@ const DeviceType = {
 const PresenceStatus = {
 	HOME: 'HOME',
 	AWAY: 'AWAY'
-};
-
-const Severity = {
-	INFO: 0,
-	WARNING: 1,
-	ALARM: 2
 };
 
 const Status = {
