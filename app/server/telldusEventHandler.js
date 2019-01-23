@@ -1,7 +1,7 @@
 const types = require('../common/types');
 const deviceHandler = require('../common/deviceHandler');
 const processEvent = require('../server/processEvent');
-const telldus = require('telldus');
+const telldus = undefined;//require('telldus');
 const moment = require('moment');
 
 module.exports = (websocket) => {
@@ -97,9 +97,10 @@ module.exports = (websocket) => {
 	//TEST END
 
 	module.init = () => {
-		const sensorListener = addSensorEventListener();
-		const deviceListener = addDeviceEventListener();
+		//const sensorListener = addSensorEventListener();
+		//const deviceListener = addDeviceEventListener(); //Should this be in the devicehandler
 		testOnOff();
+		//test();
 	};
 
 	return module;
