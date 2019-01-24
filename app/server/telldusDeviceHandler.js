@@ -1,4 +1,4 @@
-const telldus = undefined; //require('telldus');
+const telldus = require('../server/telldusFake');
 const types = require('../common/types');
 const mongodb = require('../server/mongodb');
 const deviceHandler = require('../common/deviceHandler');
@@ -16,14 +16,23 @@ const triggerDevices = (sensor, status) => {
 	switch (status) {
 		case types.Status.ON:
 			telldus.turnOn(device.id, (err) => {
-				mongodb.insertDeviceAction(event);
-				console.log(sensor.name + ' triggers ' + device.name + ' ON'); //Rolling tid. Vs wrappa console.log
+				if (!err) {
+					mongodb.insertDeviceAction(event);
+					console.log(sensor.name + ' triggers ' + device.name + ' ON');	
+				} else {
+					console.log('telldus.turnOn reports error: ' + err);
+				}
+				
 			});
 			break;
 		case types.Status.OFF:
-			telldus.turnOff(deviceIds[i], (err) => {
-				mongodb.insertDeviceAction(event);
-				console.log(sensor.name + ' triggers ' + device.name + ' OFF');
+			telldus.turnOff(device.id, (err) => {
+				if (!err) {
+					mongodb.insertDeviceAction(event);
+					console.log(sensor.name + ' triggers ' + device.name + ' OFF');	
+				} else {
+					console.log('telldus.turnOff reports error: ' + err);
+				}
 			});
 			break;
 		}

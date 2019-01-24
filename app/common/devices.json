@@ -27,12 +27,17 @@
 		"id": 23417874,
 		"name": "Dörr",
 		"type": "ON_OFF",
-		"triggers": null
+		"triggers": [234]
 	},
 	{
 		"id": 23421126,
 		"name": "Källardörr",
 		"type": "ON_OFF",
 		"triggers": null
+	},
+	{
+		"id": 234,
+		"name": "Larm1",
+		"type": "ON_OFF"
 	}
 ]
