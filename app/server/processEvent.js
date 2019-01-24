@@ -14,7 +14,6 @@ const getUpperLimit = (event) => {
 };
 
 const resolveOnOff = (resolve) => {
-	resolve(types.Severity.ALARM);
 	mongodb.findPresenceStatus().then((prescence) => {
 		if (prescence === types.PresenceStatus.AWAY) {
 			resolve(types.Severity.ALARM);
@@ -49,10 +48,10 @@ const getSeverity = (event) => {
 
 	return new Promise((resolve, reject) => {
 		if (type === types.MeasureType.ON_OFF) {
-			resolveOnOff(resolve);
+		 	resolveOnOff(resolve);
 		} else if (type === types.MeasureType.TEMPERATURE 
 			|| type === types.MeasureType.HUMIDITY) {
-				resolveTempHumidity(resolve, event);
+			resolveTempHumidity(resolve, event);
 		}
 	});
 };
@@ -60,6 +59,7 @@ const getSeverity = (event) => {
 const processEvent = (event, websocket) => {
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
+		
 		//1. Trigger and notify
 		if (event.severity >= types.Severity.ALARM) {
 			telldusDeviceHandler.triggerDevices(event.sensor, event.measure.value);
