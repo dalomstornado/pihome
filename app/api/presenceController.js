@@ -1,22 +1,20 @@
-const mongodb = require('../server/mongodb');
+const locationEventHandler = require('../server/locationEventHandler');
 const types = require('../common/types');
 
-const insertPresenceStatus = (status, res) => {
-	mongodb.insertPresenceStatus(status).then(() => {
-		console.log(`Presence is set to: ${status}`);
-		res.sendStatus(200);
-	}, (error) => {
-		console.log(`Error inserting presencestatus: ${error}`);
-		res.sendStatus(500);
-	});
+const locationEvent = (status, res) => {
+   if (locationEventHandler.locationChange(status)) {
+    res.sendStatus(200);
+   } else {
+    res.sendStatus(500);
+   }
 };
 
 const home = (req, res) => {
-	insertPresenceStatus(types.PresenceStatus.HOME, res);
+	locationEvent(types.PresenceStatus.HOME, res);
 };
 
 const away = (req, res) => {
-	insertPresenceStatus(types.PresenceStatus.AWAY, res);
+	locationEvent(types.PresenceStatus.AWAY, res);
 };
 
 module.exports = { home, away };

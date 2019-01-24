@@ -37,6 +37,7 @@
 	},
 	{
 		"id": 234,
+		"triggerOnLocation": true,
 		"name": "Larm1",
 		"type": "ON_OFF"
 	}

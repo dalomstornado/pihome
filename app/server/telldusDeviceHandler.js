@@ -13,6 +13,9 @@ const triggerDevices = (sensor, status) => {
 	const device = deviceHandler.getSensorOrDevice(sensor.triggers[i]);
 	const event = deviceHandler.createEvent(device.id, types.MeasureType.ON_OFF, status.name);
 
+	//TODO: Get proper severity
+	event.severity = types.Severity.ALARM; 
+
 	switch (status) {
 		case types.Status.ON:
 			telldus.turnOn(device.id, (err) => {

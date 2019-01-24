@@ -32,7 +32,7 @@ const notify = (severity, sensor, message, m) => {
 	const lastNotification = notifications[notificationId];
 
 	if (!lastNotification || moment().diff(lastNotification, 'hours') > intervalHour) {
-		postNotification(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
+		//postNotification(`${moment.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);
 		notifications[notificationId] = m;
 		console.log(`${m.toString('YYYY-MM-DD HH:mm')} ${sSeverity}: ${message}`);	
 	} else {

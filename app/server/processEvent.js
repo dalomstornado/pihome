@@ -59,11 +59,11 @@ const getSeverity = (event) => {
 const processEvent = (event, websocket) => {
 	getSeverity(event).then((severity) => {
 		event.severity = severity;
-		
+
 		//1. Trigger and notify
 		if (event.severity >= types.Severity.ALARM) {
 			telldusDeviceHandler.triggerDevices(event.sensor, event.measure.value);
-			//notify(event.severity, event.sensor, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.measure.value}`, event.moment);
+			notify(event.severity, event.sensor, `Sensor ${event.sensor.name} has a ${event.measure.type} of ${event.measure.value}`, event.moment);
 		}
 
 		//2. Update client
