@@ -3,4 +3,9 @@ const turnOn = (deviceId, callback) => {
   callback();
 };
 
-module.exports = { turnOn };
+const turnOff = (deviceId, callback) => {
+  console.log('Telldus fake turns off ' + deviceId);
+  callback();
+};
+
+module.exports = { turnOn, turnOff };

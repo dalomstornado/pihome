@@ -12,10 +12,10 @@ const triggerDevices = (event) => {
 	for(let i = 0; i < event.sensor.triggers.length; i++) {
 		const newEvent = deviceHandler.createEventByEvent(event);
 		newEvent.sensor = deviceHandler.getSensorOrDevice(event.sensor.triggers[i]);
-		
-		switch (event.status) {
+
+		switch (event.measure.value) {
 			case types.Status.ON:
-				telldus.turnOn(device.id, (err) => {
+				telldus.turnOn(newEvent.sensor.id, (err) => {
 					if (!err) {
 						mongodb.insertDeviceAction(newEvent);
 						console.log(event.sensor.name + ' triggers ' + newEvent.sensor.name + ' ON');	
@@ -25,10 +25,10 @@ const triggerDevices = (event) => {
 				});
 				break;
 			case types.Status.OFF:
-				telldus.turnOff(event.device.id, (err) => {
+				telldus.turnOff(newEvent.sensor.id, (err) => {
 					if (!err) {
 						mongodb.insertDeviceAction(newEvent);
-						console.log(event.sensor.name + ' triggers ' + newEvent.device.name + ' OFF');	
+						console.log(event.sensor.name + ' triggers ' + newEvent.sensor.name + ' OFF');	
 					} else {
 						console.log('telldus.turnOff reports error: ' + err);
 					}

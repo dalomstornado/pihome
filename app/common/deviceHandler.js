@@ -56,6 +56,12 @@ const getSensorOrDevice = (id) => {
 	});
 };
 
+const getLocationBasedDevices = () => {
+	return devices.filter((device) => {
+		return device.triggerOnLocation === true
+	});
+};
+
 const createEventByEvent = (event) =>{
 	var newEvent = JSON.parse(JSON.stringify(event));
 	newEvent.moment = moment();
@@ -81,4 +87,4 @@ const createEvent = (id, measureType, value, eventMoment = moment()) => {
 	return types.UNKNOWN;
 };
 
-module.exports = { getLineCharts, getLineChart, getGauges, getGauge, getSensors, getSensorOrDevice, createEvent, createEventByEvent };
+module.exports = { getLineCharts, getLineChart, getGauges, getGauge, getSensors, getSensorOrDevice, createEvent, createEventByEvent, getLocationBasedDevices };
