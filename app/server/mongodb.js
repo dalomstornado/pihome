@@ -309,7 +309,7 @@ const findHumiditiesAggregate = (sensorId, from, nHours = 2) => {
 	});
 };
 
-const findDevicesEntries = (top = 1000) => {
+const findDevicesEntries = (top = 250) => {
 	return new Promise((resolve, reject) => {
 		mongoClient.connect(url).then((db) => {
 			let collection = db.collection('device')
