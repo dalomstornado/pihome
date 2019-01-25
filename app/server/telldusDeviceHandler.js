@@ -4,40 +4,36 @@ const mongodb = require('../server/mongodb');
 const deviceHandler = require('../common/deviceHandler');
 const moment = require('moment');
 
-const triggerDevices = (sensor, status) => {
-	if (!sensor.triggers) {
+const triggerDevices = (event) => {
+	if (!event.sensor.triggers) {
 		return;
 	}
 	
-	for(let i = 0; i < sensor.triggers.length; i++) {
-	const device = deviceHandler.getSensorOrDevice(sensor.triggers[i]);
-	const event = deviceHandler.createEvent(device.id, types.MeasureType.ON_OFF, status.name);
-
-	//TODO: Get proper severity
-	event.severity = types.Severity.ALARM; 
-
-	switch (status) {
-		case types.Status.ON:
-			telldus.turnOn(device.id, (err) => {
-				if (!err) {
-					mongodb.insertDeviceAction(event);
-					console.log(sensor.name + ' triggers ' + device.name + ' ON');	
-				} else {
-					console.log('telldus.turnOn reports error: ' + err);
-				}
-				
-			});
-			break;
-		case types.Status.OFF:
-			telldus.turnOff(device.id, (err) => {
-				if (!err) {
-					mongodb.insertDeviceAction(event);
-					console.log(sensor.name + ' triggers ' + device.name + ' OFF');	
-				} else {
-					console.log('telldus.turnOff reports error: ' + err);
-				}
-			});
-			break;
+	for(let i = 0; i < event.sensor.triggers.length; i++) {
+		const newEvent = deviceHandler.createEventByEvent(event);
+		newEvent.sensor = deviceHandler.getSensorOrDevice(event.sensor.triggers[i]);
+		
+		switch (event.status) {
+			case types.Status.ON:
+				telldus.turnOn(device.id, (err) => {
+					if (!err) {
+						mongodb.insertDeviceAction(newEvent);
+						console.log(event.sensor.name + ' triggers ' + newEvent.sensor.name + ' ON');	
+					} else {
+						console.log('telldus.turnOn reports error: ' + err);
+					}
+				});
+				break;
+			case types.Status.OFF:
+				telldus.turnOff(event.device.id, (err) => {
+					if (!err) {
+						mongodb.insertDeviceAction(newEvent);
+						console.log(event.sensor.name + ' triggers ' + newEvent.device.name + ' OFF');	
+					} else {
+						console.log('telldus.turnOff reports error: ' + err);
+					}
+				});
+				break;
 		}
 	}
 };

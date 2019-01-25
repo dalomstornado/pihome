@@ -56,6 +56,12 @@ const getSensorOrDevice = (id) => {
 	});
 };
 
+const createEventByEvent = (event) =>{
+	var newEvent = JSON.parse(JSON.stringify(event));
+	newEvent.moment = moment();
+	return newEvent;
+}
+
 const createEvent = (id, measureType, value, eventMoment = moment()) => {
 	const sensorOrDevice = getSensorOrDevice(id);
 	if (sensorOrDevice && measureType !== types.UNKNOWN) {
@@ -75,4 +81,4 @@ const createEvent = (id, measureType, value, eventMoment = moment()) => {
 	return types.UNKNOWN;
 };
 
-module.exports = { getLineCharts, getLineChart, getGauges, getGauge, getSensors, getSensorOrDevice, createEvent };
+module.exports = { getLineCharts, getLineChart, getGauges, getGauge, getSensors, getSensorOrDevice, createEvent, createEventByEvent };
